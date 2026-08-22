@@ -1,6 +1,6 @@
 # 🌍 WanderAI — Intelligent Travel Guide & Itinerary Planner for Incredible India
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-terrabharat.netlify.app-047857?style=for-the-badge&logo=netlify&logoColor=white)](https://terrabharat.netlify.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-wanderrai.netlify.app-047857?style=for-the-badge&logo=netlify&logoColor=white)](https://wanderrai.netlify.app)
 [![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -8,7 +8,7 @@
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
 [![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
-> **Live Platform URL**: [https://terrabharat.netlify.app](https://terrabharat.netlify.app)
+> **Live Platform URL**: [https://wanderrai.netlify.app](https://wanderrai.netlify.app)
 
 ---
 
