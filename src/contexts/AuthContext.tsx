@@ -1,66 +1,152 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
-export type User = {
-  id: string;
-  email?: string;
-  full_name?: string;
-};
+import { supabase } from '../utils/supabaseClient';
+import type { UserProfile } from '../types';
+import { getProfile, upsertProfile, getUserSettings } from '../services/supabaseService';
 
 interface AuthContextType {
-  user: User | null;
+  user: UserProfile | null;
   loading: boolean;
-  signIn: (opts: { email: string; full_name?: string; password?: string }) => Promise<void>;
+  signIn: (opts: { email: string; password: string }) => Promise<UserProfile>;
+  signUp: (opts: { email: string; password: string; full_name: string }) => Promise<UserProfile>;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const stored = localStorage.getItem('jharYatraUser');
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch {
-        setUser(null);
-      }
-    }
-    setLoading(false);
-  }, []);
+  // Sync Supabase Auth User to UserProfile
+  const syncSupabaseUser = async (sbUser: any): Promise<UserProfile> => {
+    const profile = await getProfile(sbUser.id);
+    const fullName = profile?.full_name || sbUser.user_metadata?.full_name || sbUser.email?.split('@')[0] || 'Traveler';
+    const isAdmin = sbUser.email?.toLowerCase().includes('admin') || sbUser.email === 'admin@wanderai.com';
+    const role = isAdmin ? 'admin' : ((profile?.bio?.includes('admin') ? 'admin' : 'tourist') as 'tourist' | 'admin');
 
-  const ADMIN_EMAIL = 'mayurpatil23.ca@jspmuni.ac.in';
-
-  const signIn = async ({ email, full_name, password }: { email: string; full_name?: string; password?: string }) => {
-    const normalizedEmail = email.trim().toLowerCase();
-
-    if (normalizedEmail !== ADMIN_EMAIL) {
-      throw new Error('Only admin users can login here.');
-    }
-
-    if (password !== '$$$Mayur629877') {
-      throw new Error('Incorrect security key.');
-    }
-
-    const userData: User = {
-      id: normalizedEmail,
-      email: normalizedEmail,
-      full_name: full_name?.trim() || undefined,
+    const appUser: UserProfile = {
+      id: sbUser.id,
+      email: sbUser.email || '',
+      full_name: fullName,
+      username: profile?.username || undefined,
+      bio: profile?.bio || undefined,
+      role,
+      created_at: sbUser.created_at || new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
 
-    setUser(userData);
-    localStorage.setItem('jharYatraUser', JSON.stringify(userData));
+    // Ensure profile row exists in public.profiles
+    if (!profile) {
+      await upsertProfile({
+        id: sbUser.id,
+        full_name: fullName,
+        email: sbUser.email,
+        username: sbUser.email?.split('@')[0]
+      });
+    }
+
+    // Ensure user settings exist
+    await getUserSettings(sbUser.id);
+
+    return appUser;
+  };
+
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        
+        if (session?.user) {
+          const appUser = await syncSupabaseUser(session.user);
+          setUser(appUser);
+        } else {
+          setUser(null);
+        }
+      } catch (err) {
+        console.warn('Supabase getSession error:', err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user) {
+        const appUser = await syncSupabaseUser(session.user);
+        setUser(appUser);
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const signIn = async ({ email, password }: { email: string; password: string }) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.trim().toLowerCase(),
+      password,
+    });
+
+    if (error) {
+      // If user doesn't exist or credentials failed, provide clear message
+      throw new Error(error.message || 'Invalid email or password.');
+    }
+
+    if (!data.user) {
+      throw new Error('Sign in failed. No user returned.');
+    }
+
+    const appUser = await syncSupabaseUser(data.user);
+    setUser(appUser);
+    return appUser;
+  };
+
+  const signUp = async ({ email, password, full_name }: { email: string; password: string; full_name: string }) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: email.trim().toLowerCase(),
+      password,
+      options: {
+        data: {
+          full_name,
+        },
+      },
+    });
+
+    if (error) {
+      throw new Error(error.message || 'Registration failed.');
+    }
+
+    if (!data.user) {
+      throw new Error('Registration failed. Please check your email.');
+    }
+
+    // Upsert into public.profiles
+    await upsertProfile({
+      id: data.user.id,
+      full_name,
+      email: data.user.email,
+      username: email.split('@')[0],
+    });
+
+    const appUser = await syncSupabaseUser(data.user);
+    setUser(appUser);
+    return appUser;
   };
 
   const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem('jharYatraUser');
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );

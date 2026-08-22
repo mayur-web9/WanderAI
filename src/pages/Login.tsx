@@ -1,12 +1,32 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, Navigate, useSearchParams } from 'react-router-dom';
+import { 
+  User, 
+  Lock, 
+  Eye, 
+  EyeOff, 
+  ArrowRight, 
+  Sparkles, 
+  ShieldCheck, 
+  Compass, 
+  AlertCircle,
+  MapPin,
+  Star
+} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { user, signIn } = useAuth();
+  const [mode, setMode] = useState<'user' | 'admin'>(() => {
+    const modeParam = searchParams.get('mode');
+    return modeParam === 'admin' ? 'admin' : 'user';
+  });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -14,119 +34,238 @@ const Login = () => {
     setError(null);
 
     if (!email.trim()) {
-      setError('Email is required.');
+      setError('Email address is required.');
       return;
     }
 
+    setLoading(true);
     try {
-      await signIn({ 
-        email: email.trim().toLowerCase(), 
-        password: password.trim() 
+      const authenticatedUser = await signIn({
+        email: email.trim().toLowerCase(),
+        password: password.trim(),
       });
-      navigate('/dashboard');
+      navigate(authenticatedUser.role === 'admin' ? '/dashboard' : '/');
     } catch (err: any) {
-      setError(err.message || 'Unable to sign in.');
+      setError(err.message || 'Unable to sign in. Please check your credentials.');
+    } finally {
+      setLoading(false);
     }
   };
 
   if (user) {
-    navigate('/dashboard');
-    return null;
+    return <Navigate to={user.role === 'admin' ? '/dashboard' : '/'} replace />;
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 bg-offwhite dark:bg-gray-950 transition-colors relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-
-      <div className="max-w-md w-full relative">
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-4xl mb-6 shadow-xl shadow-emerald-500/20">
-            🌿
-          </div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2">
-            Welcome Back
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Sign in to access your admin dashboard
-          </p>
+    <div className="w-full min-h-[calc(100vh-4rem)] flex items-stretch bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+      
+      {/* Left Column: Visual Showcase (Visible on Large Screens) */}
+      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-forest-950 via-forest-900 to-obsidian-950 text-white p-12 flex-col justify-between overflow-hidden">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none">
+          <div 
+            className="w-full h-full bg-cover bg-center"
+            style={{ backgroundImage: `url('/assets/destinations/Taj_mahal.jpg')` }}
+          />
         </div>
 
-        <div className="bg-offwhite dark:bg-gray-900 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-gray-800 p-8 sm:p-10 backdrop-blur-sm bg-offwhite/80 dark:bg-gray-900/80">
-          {error && (
-            <div className="mb-6 rounded-2xl bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 px-4 py-3 text-sm font-medium border border-red-100 dark:border-red-800/30 animate-in fade-in slide-in-from-top-2">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {error}
+        {/* Ambient Glows */}
+        <div className="absolute -top-20 -left-20 w-80 h-80 bg-forest-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-saffron-500/20 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Top Branding */}
+        <div className="relative z-10">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-forest-700 via-forest-600 to-saffron-500 flex items-center justify-center text-white shadow-md">
+              <MapPin className="w-5 h-5" />
+            </div>
+            <span className="font-display text-2xl font-bold tracking-tight text-white">
+              Wander<span className="text-saffron-400">AI</span>
+            </span>
+          </Link>
+        </div>
+
+        {/* Middle Value Proposition */}
+        <div className="relative z-10 space-y-6 max-w-lg">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-saffron-300 text-xs font-bold border border-white/20">
+            <Sparkles className="w-4 h-4 text-saffron-400" />
+            Next-Gen India Tourism Platform
+          </span>
+
+          <h2 className="text-3xl xl:text-4xl font-extrabold font-display leading-tight">
+            Discover Unseen Shrines, Backwaters, & Hidden Heritage with AI
+          </h2>
+
+          <p className="text-sm text-emerald-100/80 leading-relaxed">
+            Access your personalized multi-day itineraries, synced conversation history with WanderAI, and curated regional travel advisories.
+          </p>
+
+          <div className="space-y-3 pt-2">
+            {[
+              "Personalized Day-by-Day travel itineraries with Google Maps links",
+              "Instant answers on local cuisine, entry fees, and cultural norms",
+              "Verified insights for 150+ iconic and offbeat Indian destinations"
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3 text-xs text-gray-200">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+                  <span className="text-emerald-300 text-xs font-bold">✓</span>
+                </div>
+                <span>{item}</span>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Testimonial Card */}
+        <div className="relative z-10 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/15 max-w-md">
+          <div className="flex items-center gap-1 mb-1.5">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-3.5 h-3.5 fill-saffron-400 text-saffron-400" />
+            ))}
+          </div>
+          <p className="text-xs text-white/90 italic">
+            "WanderAI planned our 5-day Spiti Valley and Leh road trip flawlessly. The place notes and transport tips were spot-on!"
+          </p>
+          <p className="text-[10px] text-emerald-300 font-semibold mt-1">
+            — Priya Patel, Ahmedabad
+          </p>
+        </div>
+      </div>
+
+      {/* Right Column: Authentication Form Panel */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-16">
+        <div className="max-w-md w-full space-y-8">
+          
+          <div>
+            <div className="lg:hidden flex items-center gap-2 mb-6">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-forest-700 to-saffron-500 flex items-center justify-center text-white shadow-md">
+                <Compass className="w-5 h-5" />
+              </div>
+              <span className="font-display text-xl font-bold">WanderAI</span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 dark:text-white">
+              {mode === 'admin' ? 'Admin Portal Login' : 'Welcome Back'}
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+              {mode === 'admin'
+                ? 'Sign in to access your administrative dashboard and content management.'
+                : 'Sign in to access your saved travel itineraries and WanderAI conversations.'}
+            </p>
+          </div>
+
+          {/* Mode Switcher */}
+          <div className="p-1 bg-gray-200/80 dark:bg-gray-800/80 rounded-2xl flex border border-gray-200 dark:border-gray-700/60">
+            <button
+              type="button"
+              onClick={() => { setMode('user'); setError(null); }}
+              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                mode === 'user'
+                  ? 'bg-white dark:bg-gray-900 text-forest-700 dark:text-forest-400 shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <User className="w-3.5 h-3.5" />
+              Tourist Login
+            </button>
+            <button
+              type="button"
+              onClick={() => { setMode('admin'); setError(null); }}
+              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                mode === 'admin'
+                  ? 'bg-white dark:bg-gray-900 text-saffron-600 dark:text-saffron-400 shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Admin Portal
+            </button>
+          </div>
+
+          {error && (
+            <div className="rounded-2xl bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 px-4 py-3 text-xs font-medium border border-red-200 dark:border-red-900/60 flex items-start gap-2 animate-in fade-in duration-200">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+              <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
-                Admin Email
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5">
+                {mode === 'admin' ? 'Admin Email Address' : 'Email Address'}
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
+                <User className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
                 <input
                   id="email"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  placeholder="admin@jharyatra.com"
-                  className="block w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-offwhite dark:bg-gray-800/50 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                  placeholder={mode === 'admin' ? 'admin@wanderai.com' : 'you@example.com'}
                   required
+                  className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition shadow-xs"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
-                Security Key
+            {/* Password Field */}
+            <div>
+              <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5">
+                {mode === 'admin' ? 'Security Key / Password' : 'Password'}
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
+                <Lock className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
                 <input
                   id="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  type="password"
                   placeholder="••••••••"
-                  className="block w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-offwhite dark:bg-gray-800/50 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                  required
+                  className="w-full pl-11 pr-11 py-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition shadow-xs"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full inline-flex justify-center items-center px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              disabled={loading}
+              className="w-full py-4 rounded-2xl bg-gradient-to-r from-forest-700 to-forest-900 hover:from-forest-800 hover:to-forest-950 text-white font-bold text-sm shadow-lg shadow-forest-900/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
             >
-              Access Dashboard
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              {loading ? (
+                <span>Verifying credentials…</span>
+              ) : (
+                <>
+                  <span>{mode === 'admin' ? 'Access Admin Dashboard' : 'Sign In to Account'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
           </form>
 
-          <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800 text-center">
-            <p className="text-xs text-gray-400 dark:text-gray-500">
-              Only authorized personnel can access the administration area.
+          {/* Registration link */}
+          <div className="pt-6 border-t border-gray-200 dark:border-gray-800 text-center">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Don't have an account yet?{' '}
+              <Link to="/register" className="text-forest-700 dark:text-forest-400 font-bold hover:underline">
+                Create a free traveler account
+              </Link>
             </p>
           </div>
+
         </div>
       </div>
+
     </div>
   );
 };

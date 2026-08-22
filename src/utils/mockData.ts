@@ -137,7 +137,7 @@ export const mockDestinations: Destination[] = [
     latitude: 23.3058,
     longitude: 85.4425,
     images: [
-      '/assets/destinations/download4.jpg',
+      '/assets/destinations/jonha_falls.jpg',
     ],
     best_time: 'June to December',
     entry_fee: 20,
@@ -189,7 +189,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-03-25',
     date_end: '2026-03-27',
     location: 'Across India',
-    image_url: '/assets/events/fest1.jpg',
+    image_url: '/assets/events/sarhul_fest1.jpg',
     created_at: new Date().toISOString()
   },
   {
@@ -200,7 +200,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-09-15',
     date_end: '2026-09-16',
     location: 'Tribal Villages',
-    image_url: '/assets/events/fest2.jpg',
+    image_url: '/assets/events/karma_fest.jpg',
     created_at: new Date().toISOString()
   },
   {
@@ -211,7 +211,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-01-14',
     date_end: '2026-01-15',
     location: 'Purulia, Dhanbad',
-    image_url: '/assets/events/fest3.jpg',
+    image_url: '/assets/events/tusu_fest.jpg',
     created_at: new Date().toISOString()
   },
   {
@@ -222,7 +222,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-11-10',
     date_end: '2026-11-13',
     location: 'Riverbanks across India',
-    image_url: '/assets/events/fest4.jpg',
+    image_url: '/assets/events/Chhat_fest.jpg',
     created_at: new Date().toISOString()
   },
   {

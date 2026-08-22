@@ -1,116 +1,309 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Sun, Moon, User, MapPin } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { 
+  Menu, 
+  X, 
+  Sun, 
+  Moon, 
+  User, 
+  Compass, 
+  ChevronDown, 
+  LogOut, 
+  Sparkles, 
+  LayoutDashboard,
+  MapPin,
+  Calendar,
+  Store,
+  MessageSquare
+} from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close dropdown on route change
+  useEffect(() => {
+    setIsOpen(false);
+    setAccountOpen(false);
+  }, [location.pathname]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'AI Itinerary', path: '/itinerary' },
-    { name: 'Marketplaces', path: '/Marketplaces' },
-    { name: 'Events', path: '/events' },
-    { name: 'Feedback', path: '/feedback' },
+    { name: 'Home', path: '/', icon: Compass },
+    { name: 'AI Itinerary', path: '/itinerary', icon: Sparkles, badge: 'AI' },
+    { name: 'Marketplaces', path: '/Marketplaces', icon: Store },
+    { name: 'Events', path: '/events', icon: Calendar },
+    { name: 'Feedback', path: '/feedback', icon: MessageSquare },
   ];
 
+  const isHome = location.pathname === '/';
+
   return (
-    <nav className="sticky top-0 z-50 bg-offwhite dark:bg-gray-900 shadow-md transition-colors">
+    <nav 
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/85 dark:bg-obsidian-950/90 backdrop-blur-xl shadow-md border-b border-gray-200/80 dark:border-gray-800/80' 
+          : isHome
+            ? 'bg-forest-950/75 dark:bg-obsidian-950/80 backdrop-blur-md border-b border-white/10 dark:border-gray-800/40 text-white'
+            : 'bg-white/90 dark:bg-obsidian-950/90 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-800/60'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="bg-gradient-to-br from-forest-600 to-forest-800 p-2 rounded-lg group-hover:scale-105 transition-transform">
-              <MapPin className="h-6 w-6 text-white" />
+        <div className="flex justify-between items-center h-16 sm:h-18">
+          
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2.5 group">
+            <div className="relative">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-forest-700 via-forest-600 to-saffron-500 flex items-center justify-center shadow-md shadow-forest-900/20 group-hover:scale-105 group-hover:rotate-2 transition-transform duration-300">
+                <MapPin className="h-5 w-5 text-white" />
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-saffron-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-saffron-500"></span>
+              </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-forest-700 to-saffron-500 bg-clip-text text-transparent">
-                TerraBharat 
+              <span className={`font-display text-xl sm:text-2xl font-bold tracking-tight transition-colors ${
+                !scrolled && isHome ? 'text-white' : 'text-gray-900 dark:text-white'
+              }`}>
+                Wander<span className="text-saffron-500">AI</span>
               </span>
-              <span className="text-xs text-gray-600 dark:text-gray-400">Discover Unseen India</span>
+              <span className={`text-[10px] font-semibold tracking-wider uppercase -mt-1 ${
+                !scrolled && isHome ? 'text-emerald-200/80' : 'text-gray-500 dark:text-gray-400'
+              }`}>
+                Discover Unseen India
+              </span>
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-forest-50 dark:hover:bg-gray-800 hover:text-forest-700 dark:hover:text-forest-400 transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
+          {/* Desktop Nav Links */}
+          <div className={`hidden md:flex items-center space-x-1 p-1 rounded-2xl border transition-colors ${
+            !scrolled && isHome
+              ? 'bg-white/10 border-white/15'
+              : 'bg-gray-100/80 dark:bg-gray-900/70 border-gray-200/70 dark:border-gray-800/70'
+          }`}>
+            {navLinks.map((link) => {
+              const isActive = location.pathname.toLowerCase() === link.path.toLowerCase();
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 relative ${
+                    isActive
+                      ? !scrolled && isHome
+                        ? 'bg-white text-forest-900 shadow-sm'
+                        : 'bg-white dark:bg-gray-800 text-forest-700 dark:text-forest-400 shadow-sm'
+                      : !scrolled && isHome
+                        ? 'text-emerald-100 hover:text-white hover:bg-white/10'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-gray-800/60'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{link.name}</span>
+                  {link.badge && (
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-gradient-to-r from-saffron-500 to-saffron-600 text-white shadow-xs">
+                      {link.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
+          {/* Right Action Icons */}
           <div className="flex items-center space-x-2">
+            
+            {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className={`p-2 rounded-xl transition-all border ${
+                !scrolled && isHome
+                  ? 'bg-white/10 hover:bg-white/20 text-white border-white/15'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 border-gray-200/70 dark:border-gray-700/60'
+              }`}
               aria-label="Toggle theme"
+              title={theme === 'light' ? 'Switch to Dark mode' : 'Switch to Light mode'}
             >
               {theme === 'light' ? (
-                <Moon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                <Moon className="h-4 w-4" />
               ) : (
-                <Sun className="h-5 w-5 text-gray-300" />
+                <Sun className="h-4 w-4 text-saffron-400" />
               )}
             </button>
 
-            {user ? (
-              <Link
-                to="/dashboard"
-                className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-forest-600 text-white hover:bg-forest-700 transition-colors"
-              >
-                <User className="h-4 w-4" />
-                <span>Admin Dashboard</span>
-              </Link>
+            {/* User Profile / Login Dropdown */}
+            {!user ? (
+              <div className="relative hidden sm:block">
+                <button
+                  onClick={() => setAccountOpen((v) => !v)}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs transition-all shadow-xs border ${
+                    !scrolled && isHome
+                      ? 'bg-saffron-500 hover:bg-saffron-600 text-white border-saffron-400/40 shadow-saffron-500/20'
+                      : 'bg-forest-700 hover:bg-forest-800 text-white border-forest-600/40'
+                  }`}
+                >
+                  <User className="h-3.5 w-3.5" />
+                  <span>Account</span>
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+
+                {accountOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-800 py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                    <Link
+                      to="/login"
+                      className="flex items-center px-4 py-2.5 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-forest-50 dark:hover:bg-gray-800"
+                    >
+                      Tourist Login
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="flex items-center px-4 py-2.5 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-forest-50 dark:hover:bg-gray-800"
+                    >
+                      Register Free
+                    </Link>
+                    <div className="border-t border-gray-100 dark:border-gray-800 my-1" />
+                    <Link
+                      to="/login?mode=admin"
+                      className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-saffron-600 dark:text-saffron-400 hover:bg-saffron-50 dark:hover:bg-gray-800"
+                    >
+                      <LayoutDashboard className="w-3.5 h-3.5" />
+                      Admin Portal
+                    </Link>
+                  </div>
+                )}
+              </div>
             ) : (
-              <Link
-                to="/login"
-                className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-gradient-to-r from-forest-600 to-forest-700 text-white hover:from-forest-700 hover:to-forest-800 transition-all"
-              >
-                <User className="h-4 w-4" />
-                <span>Admin Login</span>
-              </Link>
+              <div className="relative">
+                <button
+                  onClick={() => setAccountOpen((v) => !v)}
+                  className="flex items-center gap-2 p-1.5 pl-2.5 rounded-xl bg-forest-50 dark:bg-forest-950/60 border border-forest-200 dark:border-forest-800 text-xs font-bold text-forest-800 dark:text-forest-200"
+                >
+                  <span>{user.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
+                  <div className="w-6 h-6 rounded-lg bg-forest-700 text-white flex items-center justify-center text-xs font-extrabold uppercase shadow-xs">
+                    {user.full_name?.charAt(0) || user.email?.charAt(0) || 'U'}
+                  </div>
+                </button>
+
+                {accountOpen && (
+                  <div className="absolute right-0 mt-2 w-52 rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-800 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
+                      <p className="text-xs font-bold text-gray-900 dark:text-white truncate">{user.full_name || 'Traveler'}</p>
+                      <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
+                    </div>
+
+                    {user.role === 'admin' && (
+                      <Link
+                        to="/dashboard"
+                        className="flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-forest-50 dark:hover:bg-gray-800"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-forest-600" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+
+                    <Link
+                      to="/itinerary"
+                      className="flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-forest-50 dark:hover:bg-gray-800"
+                    >
+                      <Sparkles className="w-4 h-4 text-saffron-500" />
+                      My Saved Plans
+                    </Link>
+
+                    <div className="border-t border-gray-100 dark:border-gray-800 my-1" />
+
+                    <button
+                      onClick={() => signOut()}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 text-left"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
 
+            {/* Mobile Hamburger Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Toggle menu"
+              className={`md:hidden p-2 rounded-xl ${
+                !scrolled && isHome ? 'text-white hover:bg-white/10' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
             >
-              {isOpen ? (
-                <X className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-              ) : (
-                <Menu className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-              )}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
       </div>
 
+      {/* Mobile Drawer Menu */}
       {isOpen && (
-        <div className="md:hidden border-t border-gray-200 dark:border-gray-800">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navLinks.map((link) => (
+        <div className="md:hidden border-t border-gray-200/80 dark:border-gray-800 bg-white/95 dark:bg-obsidian-950/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top duration-200 shadow-2xl">
+          {navLinks.map((link) => {
+            const isActive = location.pathname.toLowerCase() === link.path.toLowerCase();
+            const Icon = link.icon;
+            return (
               <Link
                 key={link.path}
                 to={link.path}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-forest-50 dark:hover:bg-gray-800 hover:text-forest-700 dark:hover:text-forest-400 transition-colors"
-                onClick={() => setIsOpen(false)}
+                className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-bold transition-all ${
+                  isActive
+                    ? 'bg-forest-600 text-white shadow-md'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/80'
+                }`}
               >
-                {link.name}
+                <div className="flex items-center gap-3">
+                  <Icon className="w-4 h-4" />
+                  <span>{link.name}</span>
+                </div>
+                {link.badge && (
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-saffron-500 text-white">
+                    {link.badge}
+                  </span>
+                )}
               </Link>
-            ))}
-            <Link
-              to={user ? '/dashboard' : '/login'}
-              className="block px-3 py-2 rounded-md text-base font-medium bg-forest-600 text-white hover:bg-forest-700 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              {user ? 'Admin Dashboard' : 'Admin Login'}
-            </Link>
+            );
+          })}
+
+          <div className="pt-3 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-2">
+            {!user ? (
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  to="/login"
+                  className="py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-center font-bold text-xs"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="py-2.5 rounded-xl bg-forest-600 text-white text-center font-bold text-xs"
+                >
+                  Register
+                </Link>
+              </div>
+            ) : (
+              <button
+                onClick={() => signOut()}
+                className="w-full py-2.5 rounded-xl bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 font-bold text-xs flex items-center justify-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out ({user.full_name || user.email})
+              </button>
+            )}
           </div>
         </div>
       )}

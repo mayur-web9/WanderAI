@@ -1,4 +1,5 @@
 export interface AiDestination {
+  id?: string;
   name: string;
   emoji: string;
   tag: string;
@@ -134,7 +135,7 @@ export const DESTINATIONS: AiDestination[] = [
     tag: 'Waterfall',
     desc: 'Also known as Gautamdhara, this beautiful 43m waterfall is perfect for trekking and picnics.',
     location: 'Ranchi, Jharkhand',
-    image: '/assets/destinations/Jonha falls.jpg',
+    image: '/assets/destinations/jonha_falls.jpg',
   },
   {
     name: 'Ranchi Lake',
@@ -161,7 +162,7 @@ export const FEATURES = [
   { icon: "🛡️", title: "Safety Guide", desc: "Real-time updates on weather, safety protocols, and local emergency contacts." },
   { icon: "🌿", title: "Eco-Tourism", desc: "Discover sustainable travel options that support local communities and nature." },
   { icon: "🍽️", title: "Food Finder", desc: "Find the most authentic local eateries and hidden culinary gems in any city." },
-  { icon: "🎟️", title: "Easy Booking", desc: "One-tap access to monument tickets, guide services, and cultural event permits." },
+  { icon: "🚌", title: "Transit & Route Guide", desc: "Smart transport advice for trains, cabs, scenic road trips, and state bus routes." },
   { icon: "📊", title: "Live Insights", desc: "Real-time data for tourism boards to improve visitor experiences and safety." },
 ];
 
