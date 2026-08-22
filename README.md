@@ -64,7 +64,7 @@ From snowy Himalayan passes and sacred Ganga ghats to serene Kerala backwaters a
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/mayur-web9/TerraBharat.git
+git clone https://github.com/mayur-web9/WanderAI.git
 cd travel.ai
 ```
 
