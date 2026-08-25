@@ -101,6 +101,107 @@ async function callGemini(messages: { role: string; content: string }[], systemP
   return `Namaste! 🙏 Here is customized travel guidance for India:\n\n✨ **Key Travel Highlights:**\n- **Heritage & Architecture:** Explore Agra's Taj Mahal, Jaipur's Amer Fort, Hampi's Vijayanagara ruins, and Konark Sun Temple.\n- **Spiritual Essence:** Evening Ganga Aarti in Varanasi & Haridwar, Golden Temple Langar in Amritsar, and Baidyanath Jyotirlinga in Deoghar.\n- **Authentic Bazaars:** Dilli Haat, Jaipur Johari Bazaar, and Hyderabad Laad Bazaar for handlooms, spices, and lacquer crafts.\n\nLet me know your starting city or preferred dates, and I will draft a day-by-day plan for you!`;
 }
 
+
+// Lightweight inline markdown formatter that converts **bold**, *italic*, `code`, # headers, and bullet points to clean JSX
+function renderInlineFormatted(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const regex = /(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    const token = match[0];
+    if (token.startsWith('**') && token.endsWith('**')) {
+      parts.push(<strong key={match.index} className="font-bold text-gray-900 dark:text-white">{token.slice(2, -2)}</strong>);
+    } else if (token.startsWith('`') && token.endsWith('`')) {
+      parts.push(<code key={match.index} className="px-1.5 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 text-saffron-600 dark:text-saffron-400 font-mono text-[11px]">{token.slice(1, -1)}</code>);
+    } else if (token.startsWith('*') && token.endsWith('*')) {
+      parts.push(<em key={match.index} className="italic text-gray-800 dark:text-gray-200">{token.slice(1, -1)}</em>);
+    }
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts.length > 0 ? parts : [text];
+}
+
+function FormattedMarkdown({ content }: { content: string }) {
+  if (!content) return null;
+  const lines = content.split('\n');
+
+  return (
+    <div className="space-y-1.5 text-xs sm:text-sm leading-relaxed text-gray-800 dark:text-gray-200">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) {
+          return <div key={idx} className="h-1" />;
+        }
+
+        // Header 3 / 4
+        if (trimmed.startsWith('### ')) {
+          return (
+            <h4 key={idx} className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white pt-1.5 pb-0.5 border-b border-gray-100 dark:border-gray-800/80 flex items-center gap-1.5">
+              {renderInlineFormatted(trimmed.slice(4))}
+            </h4>
+          );
+        }
+        if (trimmed.startsWith('## ')) {
+          return (
+            <h3 key={idx} className="font-bold text-sm sm:text-base text-gray-900 dark:text-white pt-2 pb-0.5 flex items-center gap-1.5">
+              {renderInlineFormatted(trimmed.slice(3))}
+            </h3>
+          );
+        }
+        if (trimmed.startsWith('# ')) {
+          return (
+            <h2 key={idx} className="font-extrabold text-base text-gray-900 dark:text-white pt-2 pb-0.5">
+              {renderInlineFormatted(trimmed.slice(2))}
+            </h2>
+          );
+        }
+
+        // Bullet point
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.startsWith('• ')) {
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-1 my-0.5 text-gray-700 dark:text-gray-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-forest-600 dark:bg-forest-400 mt-1.5 shrink-0" />
+              <div className="flex-1">
+                {renderInlineFormatted(trimmed.slice(2))}
+              </div>
+            </div>
+          );
+        }
+
+        // Numbered list (e.g. 1. , 2. )
+        const numMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
+        if (numMatch) {
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-1 my-0.5 text-gray-700 dark:text-gray-300">
+              <span className="text-[11px] font-bold text-forest-700 dark:text-forest-400 shrink-0 min-w-4">
+                {numMatch[1]}.
+              </span>
+              <div className="flex-1">
+                {renderInlineFormatted(numMatch[2])}
+              </div>
+            </div>
+          );
+        }
+
+        // Regular paragraph
+        return (
+          <p key={idx} className="my-0.5">
+            {renderInlineFormatted(line)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Ai() {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<"chat" | "plan" | "destinations">("chat");
@@ -356,7 +457,7 @@ Please format the response with:
           <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3.5 gap-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-forest-700 via-forest-600 to-saffron-500 flex items-center justify-center text-white shadow-md">
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-4 h-4" />
               </div>
               <div>
                 <h1 className="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-white flex items-center gap-2">
@@ -413,7 +514,7 @@ Please format the response with:
 
       {/* TAB CONTENT: 1. CHAT WITH WANDERAI */}
       {activeTab === "chat" && (
-        <div className="w-full flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col">
+        <div className="w-full flex-1 max-w-5xl mx-auto px-3 sm:px-6 py-3 sm:py-4 flex flex-col">
           {/* Quick Prompts Carousel */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
@@ -445,8 +546,8 @@ Please format the response with:
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 bg-white/70 dark:bg-obsidian-900/70 backdrop-blur-md rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-md flex flex-col overflow-hidden min-h-[440px] max-h-[72vh]">
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+          <div className="flex-1 bg-white/70 dark:bg-obsidian-900/70 backdrop-blur-md rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-md flex flex-col overflow-hidden h-[calc(100vh-210px)] min-h-[380px] max-h-[700px]">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4">
               {messages.map((msg, index) => {
                 const isBot = msg.role === "assistant";
                 return (
@@ -458,13 +559,13 @@ Please format the response with:
                   >
                     {/* Avatar */}
                     <div
-                      className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-md ${
+                      className={`w-7 h-7 sm:w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-sm ${
                         isBot
                           ? "bg-gradient-to-tr from-forest-700 to-forest-500 text-white"
                           : "bg-gradient-to-tr from-saffron-500 to-saffron-600 text-white"
                       }`}
                     >
-                      {isBot ? <Sparkles className="w-5 h-5" /> : <UserIcon className="w-5 h-5" />}
+                      {isBot ? <Sparkles className="w-3.5 h-3.5" /> : <UserIcon className="w-3.5 h-3.5" />}
                     </div>
 
                     {/* Bubble */}
@@ -487,9 +588,7 @@ Please format the response with:
                             : "bg-gradient-to-r from-forest-700 to-forest-800 text-white shadow-lg shadow-forest-900/15"
                         }`}
                       >
-                        <div className="whitespace-pre-wrap font-sans">
-                          {msg.content}
-                        </div>
+                        <FormattedMarkdown content={msg.content} />
 
                         {/* Copy button for bot response */}
                         {isBot && (
