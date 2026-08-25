@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Compass, Sparkles, Heart, Shield, ArrowRight, Check, Send, Mail } from 'lucide-react';
+import { MapPin, Phone, Compass, Sparkles, Shield, ArrowRight, Check, Send, Mail } from 'lucide-react';
 
 const Footer = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -191,9 +191,6 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 mt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
           <p>© {new Date().getFullYear()} WanderAI Travel Platform. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Crafted with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline" /> for India’s rich culture and heritage.
-          </p>
         </div>
       </div>
     </footer>

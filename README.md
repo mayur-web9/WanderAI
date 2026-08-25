@@ -125,5 +125,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 <p align="center">
-  Crafted with ❤️ for India’s rich heritage, culture, and tourism.
+  WanderAI Travel Platform. All rights reserved.
 </p>
