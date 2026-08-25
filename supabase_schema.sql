@@ -1,49 +1,87 @@
 -- ==============================================================================
--- WanderAI Travel Platform - Safe Co-existence Database Script
+-- WanderAI Travel Platform - 100% Conflict-Free Database Co-existence Script
 -- ==============================================================================
--- NOTE: This script creates dedicated 'travel_*' tables within your Supabase project
--- so it runs SAFELY alongside other projects (such as your aichatbot project)
--- without modifying, dropping, or conflicting with any existing tables!
+-- PURPOSE:
+-- This script sets up dedicated 'travel_*' tables for WanderAI in your shared
+-- Supabase project (xowroyukhnemfukrrruq.supabase.co).
 --
--- Run this script in the Supabase SQL Editor:
--- (Project URL: https://xowroyukhnemfukrrruq.supabase.co)
+-- GUARANTEE:
+-- • ZERO modifications, drops, or locks on 'velox_*' tables (VeloxAI).
+-- • ZERO modifications, drops, or locks on 'chats', 'messages', 'bookmarks', 'daily_activity'.
+-- • WanderAI uses its own dedicated 'travel_profiles' table and references 'auth.users(id)' directly.
+-- • Idempotent (safe to run multiple times without losing any data).
 -- ==============================================================================
 
--- 1. Enable UUID Extension (Idempotent)
+-- 1. Enable UUID Extension (Safe & Idempotent)
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ==============================================================================
--- 2. DEDICATED TRAVEL AI CHATS & MESSAGES
--- (Completely separated from other chatbot projects)
+-- 2. DEDICATED WANDERAI PROFILES & USER SETTINGS
+-- (Completely isolated from VeloxAI's velox_profiles and velox_user_settings)
+-- ==============================================================================
+
+CREATE TABLE IF NOT EXISTS public.travel_profiles (
+  id uuid NOT NULL,
+  full_name text,
+  username text,
+  email text,
+  bio text,
+  avatar_url text,
+  role text DEFAULT 'tourist',
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_profiles_pkey PRIMARY KEY (id),
+  CONSTRAINT travel_profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS public.travel_user_settings (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL UNIQUE,
+  theme text DEFAULT 'light',
+  preferred_language text DEFAULT 'English',
+  auto_save_itinerary boolean DEFAULT true,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_user_settings_pkey PRIMARY KEY (id),
+  CONSTRAINT travel_user_settings_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+);
+
+-- ==============================================================================
+-- 3. DEDICATED WANDERAI TRAVEL CHATS & MESSAGES
+-- (Isolated from VeloxAI's velox_chats and velox_messages)
 -- ==============================================================================
 
 CREATE TABLE IF NOT EXISTS public.travel_chats (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
   title text NOT NULL DEFAULT 'WanderAI Travel Plan',
   is_pinned boolean NOT NULL DEFAULT false,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
-  updated_at timestamp with time zone NOT NULL DEFAULT now()
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_chats_pkey PRIMARY KEY (id),
+  CONSTRAINT travel_chats_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.travel_messages (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  chat_id uuid NOT NULL REFERENCES public.travel_chats(id) ON DELETE CASCADE,
-  user_id uuid NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
-  role text NOT NULL CHECK (role IN ('user', 'assistant', 'system')),
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  chat_id uuid NOT NULL,
+  user_id uuid NOT NULL,
+  role text NOT NULL CHECK (role = ANY (ARRAY['user'::text, 'assistant'::text, 'system'::text])),
   content text NOT NULL,
   model text DEFAULT 'gemini-3.6-flash',
   tokens_used integer DEFAULT 0,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_messages_pkey PRIMARY KEY (id),
+  CONSTRAINT travel_messages_chat_id_fkey FOREIGN KEY (chat_id) REFERENCES public.travel_chats(id) ON DELETE CASCADE,
+  CONSTRAINT travel_messages_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 );
 
 -- ==============================================================================
--- 3. DEDICATED TOURISM TABLES
+-- 4. DEDICATED WANDERAI CATALOGUES: DESTINATIONS, FESTIVALS, BAZAARS & FEEDBACK
 -- ==============================================================================
 
--- 3.1 Travel Destinations Directory
 CREATE TABLE IF NOT EXISTS public.travel_destinations (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
   name text NOT NULL UNIQUE,
   emoji text DEFAULT '📍',
   tag text DEFAULT 'Historical',
@@ -57,49 +95,50 @@ CREATE TABLE IF NOT EXISTS public.travel_destinations (
   category text DEFAULT 'historical',
   entry_fee integer DEFAULT 0,
   is_featured boolean DEFAULT true,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_destinations_pkey PRIMARY KEY (id)
 );
 
--- 3.2 Cultural Events & Festivals Calendar
 CREATE TABLE IF NOT EXISTS public.travel_events (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name text NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL UNIQUE,
   description text,
   category text DEFAULT 'festival',
   date_start text,
   date_end text,
   location text,
   image_url text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_events_pkey PRIMARY KEY (id)
 );
 
--- 3.3 Traditional Bazaars & Marketplaces
 CREATE TABLE IF NOT EXISTS public.travel_marketplaces (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name text NOT NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL UNIQUE,
   description text,
   location text,
   image text,
   tags text[] DEFAULT '{}',
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_marketplaces_pkey PRIMARY KEY (id)
 );
 
--- 3.4 Traveler Feedback & Ratings
 CREATE TABLE IF NOT EXISTS public.travel_feedback (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES public.profiles(id) ON DELETE SET NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid,
   user_name text NOT NULL,
   user_email text NOT NULL,
   category text DEFAULT 'suggestion',
   message text NOT NULL,
   rating integer DEFAULT 5,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_feedback_pkey PRIMARY KEY (id),
+  CONSTRAINT travel_feedback_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE SET NULL
 );
 
--- 3.5 AI Saved Itineraries
 CREATE TABLE IF NOT EXISTS public.travel_itineraries (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES public.profiles(id) ON DELETE SET NULL,
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid,
   days text NOT NULL,
   interest text NOT NULL,
   budget text NOT NULL,
@@ -107,13 +146,18 @@ CREATE TABLE IF NOT EXISTS public.travel_itineraries (
   destination text NOT NULL,
   itinerary_text text NOT NULL,
   place_notes text,
-  created_at timestamp with time zone NOT NULL DEFAULT now()
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT travel_itineraries_pkey PRIMARY KEY (id),
+  CONSTRAINT travel_itineraries_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE SET NULL
 );
 
 -- ==============================================================================
--- 4. ROW LEVEL SECURITY (RLS) POLICIES FOR TRAVEL TABLES
+-- 5. ROW LEVEL SECURITY (RLS) POLICIES FOR WANDERAI (travel_*)
+-- (Isolated from VeloxAI policies)
 -- ==============================================================================
 
+ALTER TABLE public.travel_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.travel_user_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_chats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_destinations ENABLE ROW LEVEL SECURITY;
@@ -122,31 +166,73 @@ ALTER TABLE public.travel_marketplaces ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_feedback ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_itineraries ENABLE ROW LEVEL SECURITY;
 
--- Travel Chats & Messages
-DROP POLICY IF EXISTS "travel_chats_all" ON public.travel_chats;
-CREATE POLICY "travel_chats_all" ON public.travel_chats FOR ALL USING (true);
+-- 5.1 Travel Profiles Policies
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_profiles_select_all') THEN
+    CREATE POLICY travel_profiles_select_all ON public.travel_profiles FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_profiles_manage_own') THEN
+    CREATE POLICY travel_profiles_manage_own ON public.travel_profiles FOR ALL USING (auth.uid() = id);
+  END IF;
+END $$;
 
-DROP POLICY IF EXISTS "travel_messages_all" ON public.travel_messages;
-CREATE POLICY "travel_messages_all" ON public.travel_messages FOR ALL USING (true);
+-- 5.2 Travel User Settings Policies
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_settings_manage_own') THEN
+    CREATE POLICY travel_settings_manage_own ON public.travel_user_settings FOR ALL USING (auth.uid() = user_id);
+  END IF;
+END $$;
 
--- Tourism Content (Public read & manage)
-DROP POLICY IF EXISTS "travel_destinations_all" ON public.travel_destinations;
-CREATE POLICY "travel_destinations_all" ON public.travel_destinations FOR ALL USING (true);
+-- 5.3 Travel Chats & Messages Policies
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_chats_manage_own') THEN
+    CREATE POLICY travel_chats_manage_own ON public.travel_chats FOR ALL USING (auth.uid() = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_messages_manage_own') THEN
+    CREATE POLICY travel_messages_manage_own ON public.travel_messages FOR ALL USING (auth.uid() = user_id);
+  END IF;
+END $$;
 
-DROP POLICY IF EXISTS "travel_events_all" ON public.travel_events;
-CREATE POLICY "travel_events_all" ON public.travel_events FOR ALL USING (true);
+-- 5.4 Public Read Catalogues (Destinations, Events, Marketplaces)
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_destinations_read_public') THEN
+    CREATE POLICY travel_destinations_read_public ON public.travel_destinations FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_destinations_write_auth') THEN
+    CREATE POLICY travel_destinations_write_auth ON public.travel_destinations FOR ALL USING (auth.uid() IS NOT NULL);
+  END IF;
 
-DROP POLICY IF EXISTS "travel_marketplaces_all" ON public.travel_marketplaces;
-CREATE POLICY "travel_marketplaces_all" ON public.travel_marketplaces FOR ALL USING (true);
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_events_read_public') THEN
+    CREATE POLICY travel_events_read_public ON public.travel_events FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_events_write_auth') THEN
+    CREATE POLICY travel_events_write_auth ON public.travel_events FOR ALL USING (auth.uid() IS NOT NULL);
+  END IF;
 
-DROP POLICY IF EXISTS "travel_feedback_all" ON public.travel_feedback;
-CREATE POLICY "travel_feedback_all" ON public.travel_feedback FOR ALL USING (true);
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_marketplaces_read_public') THEN
+    CREATE POLICY travel_marketplaces_read_public ON public.travel_marketplaces FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_marketplaces_write_auth') THEN
+    CREATE POLICY travel_marketplaces_write_auth ON public.travel_marketplaces FOR ALL USING (auth.uid() IS NOT NULL);
+  END IF;
+END $$;
 
-DROP POLICY IF EXISTS "travel_itineraries_all" ON public.travel_itineraries;
-CREATE POLICY "travel_itineraries_all" ON public.travel_itineraries FOR ALL USING (true);
+-- 5.5 Travel Feedback & Saved Itineraries
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_feedback_insert_any') THEN
+    CREATE POLICY travel_feedback_insert_any ON public.travel_feedback FOR INSERT WITH CHECK (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_feedback_select_all') THEN
+    CREATE POLICY travel_feedback_select_all ON public.travel_feedback FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_itineraries_all') THEN
+    CREATE POLICY travel_itineraries_all ON public.travel_itineraries FOR ALL USING (true);
+  END IF;
+END $$;
 
 -- ==============================================================================
--- 5. INITIAL SEED DATA FOR TRAVEL TABLES
+-- 6. SEED INITIAL 27 DESTINATIONS, FESTIVALS & BAZAARS
+-- (ON CONFLICT DO NOTHING guarantees zero overwrites)
 -- ==============================================================================
 
 INSERT INTO public.travel_destinations (name, emoji, tag, "desc", location, image, is_featured)
@@ -165,7 +251,7 @@ VALUES
   ('Victoria Memorial Hall', '🏛️', 'Historical', 'An imposing British-era white Makrana marble monument set in 64 acres of landscaped gardens, housing rare national art galleries and archives.', 'Kolkata, West Bengal', '/assets/destinations/victoria_memorial.jpg', true),
   ('Ajanta & Ellora Caves', '🪨', 'Heritage', 'Rock-cut cave temples spanning ancient Buddhist, Hindu, and Jain heritage, featuring the monolithic Kailash Temple carved from a single cliff.', 'Aurangabad, Maharashtra', 'https://images.unsplash.com/photo-1600100397608-f010f443b221?q=80&w=1000&auto=format&fit=crop', true),
   ('Meenakshi Amman Temple', '🛕', 'Spiritual', 'Historic Dravidian temple complex on the Vaigai River with 14 towering gopurams decorated with thousands of colorful mythological sculptures.', 'Madurai, Tamil Nadu', 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?q=80&w=1000&auto=format&fit=crop', true),
-  ('Qutub Minar & Mehrauli Complex', '🗼', 'Historical', 'A 73-meter red sandstone minaret built in 1192, surrounded by ancient monuments including the rust-resistant 4th-century Iron Pillar of Chandragupta II.', 'New Delhi, Delhi', 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1000&auto=format&fit=crop', true),
+  ('Qutub Minar & Red Fort', '🗼', 'Historical', 'A 73-meter red sandstone minaret built in 1192, surrounded by ancient monuments including the rust-resistant 4th-century Iron Pillar of Chandragupta II.', 'New Delhi, Delhi', 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1000&auto=format&fit=crop', true),
   ('Sundarbans Biosphere Reserve', '🐊', 'Wildlife', 'The world''s largest mangrove forest, home to swimming Royal Bengal tigers, estuarine crocodiles, and rare Gangetic dolphins across tidal waterways.', 'Sundarbans, West Bengal', 'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?q=80&w=1000&auto=format&fit=crop', true),
   ('Rishikesh & Laxman Jhula', '🧘', 'Spiritual', 'The world capital of Yoga situated along the pristine emerald waters of the Ganges, offering white-water rafting, ashrams, and Triveni Ghat aarti.', 'Rishikesh, Uttarakhand', 'https://images.unsplash.com/photo-1598890777032-bde13fbe34c9?q=80&w=1000&auto=format&fit=crop', true),
   ('Living Root Bridges', '🌱', 'Nature', 'Bio-engineered botanical wonders hand-woven by the indigenous Khasi tribe across centuries from the aerial roots of Ficus elastica trees.', 'Cherrapunji, Meghalaya', 'https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?q=80&w=1000&auto=format&fit=crop', true),
@@ -187,13 +273,13 @@ VALUES
   ('Sarhul Spring Festival', 'Traditional tribal celebration worshipping Sal trees and the onset of new floral blooms.', 'festival', '2026-04-05', '2026-04-07', 'Ranchi, Jharkhand', '/assets/events/sarhul_fest1.jpg'),
   ('Karma Tribal Festival', 'Harvest and brotherhood festival celebrated with tribal drum rhythms and traditional Karma dance.', 'cultural', '2026-09-22', '2026-09-23', 'Jharkhand & Odisha', '/assets/events/karma_fest.jpg'),
   ('Chhath Puja Mahaparv', 'Ancient Vedic festival dedicated to Surya Dev and Chhathi Maiya with sacred river offerings.', 'festival', '2026-10-30', '2026-11-02', 'Bihar & Jharkhand', '/assets/events/Chhat_fest.jpg')
-ON CONFLICT DO NOTHING;
+ON CONFLICT (name) DO NOTHING;
 
 INSERT INTO public.travel_marketplaces (name, description, location, image, tags)
 VALUES 
-  ('Dilli Haat', 'Open-air craft bazaar showcasing regional rural food stalls, authentic state handlooms, and folk artisans.', 'INA, New Delhi', '/assets/marketplaces/dilli_haat.jpg', ARRAY['Crafts', 'Textiles', 'Food']),
-  ('Johari Bazaar', 'Historic marketplace famous for Rajasthani Kundan jewelry, gemstones, traditional lehengas, and Jaipuri quilts.', 'Jaipur, Rajasthan', '/assets/marketplaces/johari_bazaar.jpg', ARRAY['Jewelry', 'Textiles', 'Antiques']),
-  ('Devaraja Market', 'Century-old heritage market bustling with fragrant sandalwood, spices, jasmine flowers, and Mysore silk.', 'Mysuru, Karnataka', '/assets/marketplaces/devaraja_market.jpg', ARRAY['Spices', 'Crafts', 'Textiles']),
-  ('Anjuna Flea Market', 'Vibrant coastal market with handcrafted bohemian accessories, beachwear, Tibetan crafts, and live music.', 'Anjuna Beach, Goa', '/assets/marketplaces/anjuna_market.jpg', ARRAY['Crafts', 'Jewelry', 'Food']),
-  ('Tribal Haat Khunti', 'Weekly rural bazaar famous for organic forest produce, dokra metal crafts, lac bangles, and tribal textiles.', 'Khunti, Jharkhand', '/assets/marketplaces/tribal_haat.jpg', ARRAY['Crafts', 'Spices', 'Textiles'])
-ON CONFLICT DO NOTHING;
+  ('Dilli Haat', 'Open-air craft bazaar showcasing regional food stalls and handlooms from artisans across all Indian states.', 'INA, New Delhi', '/assets/marketplaces/dilli_haat.jpg', ARRAY['Crafts', 'Food', 'Culture']),
+  ('Colaba Causeway', 'Vibrant Mumbai street bazaar famous for antique clocks, boho accessories, vintage coins, and street cuisine.', 'Colaba, Mumbai', '/assets/marketplaces/colaba_causeway.jpg', ARRAY['Antiques', 'Fashion', 'Street Food']),
+  ('Johari Bazaar', 'Iconic Pink City marketplace world-famous for Kundan gemstone jewelry, silver trinkets, and Bandhani sarees.', 'Pink City, Jaipur', '/assets/marketplaces/johari_bazaar.jpg', ARRAY['Jewelry', 'Textiles', 'Heritage']),
+  ('Anjuna Flea Market', 'Legendary coastal Wednesday market with bohemian apparel, handmade handicrafts, spices, and live music.', 'Anjuna, Goa', '/assets/marketplaces/anjuna_flea_market.jpg', ARRAY['Boho', 'Handicrafts', 'Spices']),
+  ('Laad Bazaar (Choodi Bazaar)', 'Historic bazaar near Charminar famous for lacquer bangles, pearls, zari embroidery, and attar perfumes.', 'Old City, Hyderabad', '/assets/marketplaces/laad_bazaar.jpg', ARRAY['Jewelry', 'Textiles', 'Heritage'])
+ON CONFLICT (name) DO NOTHING;
