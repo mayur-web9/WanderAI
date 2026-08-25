@@ -13,7 +13,6 @@ import {
   LayoutDashboard,
   MapPin,
   Calendar,
-  Store,
   MessageSquare
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
@@ -44,8 +43,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Compass },
     { name: 'AI Itinerary', path: '/itinerary', icon: Sparkles, badge: 'AI' },
-    { name: 'Marketplaces', path: '/Marketplaces', icon: Store },
-    { name: 'Events', path: '/events', icon: Calendar },
+    { name: 'Events & Bazaars', path: '/events', icon: Calendar, badge: 'Culture' },
     { name: 'Feedback', path: '/feedback', icon: MessageSquare },
   ];
 
