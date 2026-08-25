@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   User, 
@@ -78,7 +78,7 @@ const Register = () => {
         <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none">
           <div 
             className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url('/assets/destinations/kerala_backwaters.jpg')` }}
+            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=85&auto=format&fit=crop')` }}
           />
         </div>
 
@@ -110,7 +110,7 @@ const Register = () => {
           </h2>
 
           <p className="text-sm text-emerald-100/80 leading-relaxed">
-            Join thousands of travelers exploring India’s heritage sites, pristine eco-trails, and vibrant bazaars with WanderAI.
+            Join thousands of travelers exploring Indiaâ€™s heritage sites, pristine eco-trails, and vibrant bazaars with WanderAI.
           </p>
 
           <div className="space-y-3 pt-2">
@@ -121,7 +121,7 @@ const Register = () => {
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-3 text-xs text-gray-200">
                 <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
-                  <span className="text-emerald-300 text-xs font-bold">✓</span>
+                  <span className="text-emerald-300 text-xs font-bold">âœ“</span>
                 </div>
                 <span>{item}</span>
               </div>
@@ -172,7 +172,7 @@ const Register = () => {
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold font-display text-gray-900 dark:text-white">Account Created!</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Welcome to WanderAI. Redirecting to home…</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Welcome to WanderAI. Redirecting to homeâ€¦</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -264,7 +264,7 @@ const Register = () => {
                 className="w-full mt-2 py-4 rounded-2xl bg-gradient-to-r from-saffron-500 to-saffron-600 hover:from-saffron-600 hover:to-saffron-700 text-white font-bold text-sm shadow-lg shadow-saffron-500/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
               >
                 {loading ? (
-                  <span>Creating Account…</span>
+                  <span>Creating Accountâ€¦</span>
                 ) : (
                   <>
                     <span>Create Free Account</span>
@@ -293,3 +293,4 @@ const Register = () => {
 };
 
 export default Register;
+

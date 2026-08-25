@@ -1,4 +1,4 @@
-import { handleImageError, FALLBACK_DESTINATION_IMAGE, FALLBACK_EVENT_IMAGE } from '../utils/imageFallback';
+﻿import { handleImageError, FALLBACK_DESTINATION_IMAGE, FALLBACK_EVENT_IMAGE } from '../utils/imageFallback';
 import { useState, useEffect, useMemo } from 'react';
 import { 
   ArrowRight, 
@@ -43,7 +43,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 4,
     vibe: 'nature',
     highlights: ['Alleppey Houseboat Cruise', 'Munnar Organic Tea Estates', 'Kathakali Cultural Night', 'Varkala Cliff Sunset'],
-    estimatedBudget: '₹14,000 - ₹22,000 / person',
+    estimatedBudget: 'â‚¹14,000 - â‚¹22,000 / person',
     prompt: 'Plan a detailed 4-day nature and relaxation trip to Kerala including Alleppey houseboat and Munnar tea hills with local seafood suggestions.'
   },
   {
@@ -53,7 +53,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 5,
     vibe: 'heritage',
     highlights: ['Sunrise at Taj Mahal Agra', 'Amer Fort & Hawa Mahal Jaipur', 'Chokhi Dhani Heritage Village', 'Johari Bazaar Gemstones'],
-    estimatedBudget: '₹18,000 - ₹28,000 / person',
+    estimatedBudget: 'â‚¹18,000 - â‚¹28,000 / person',
     prompt: 'Create a 5-day heritage trip covering Delhi, Agra (Taj Mahal), and Jaipur with exact visiting hours, entry tips, and traditional Rajasthani food.'
   },
   {
@@ -63,7 +63,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 3,
     vibe: 'spiritual',
     highlights: ['Dashashwamedh Ghat Evening Ganga Aarti', 'Subah-e-Banaras Sunrise Boat Ride', 'Kashi Vishwanath Corridor', 'Ancient Deer Park Sarnath'],
-    estimatedBudget: '₹7,500 - ₹12,000 / person',
+    estimatedBudget: 'â‚¹7,500 - â‚¹12,000 / person',
     prompt: 'Draft a 3-day spiritual immersion itinerary for Varanasi with boat timings, Ganga Aarti viewing tips, temple dress codes, and famous Banarasi street food.'
   },
   {
@@ -73,7 +73,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 6,
     vibe: 'adventure',
     highlights: ['Khardung La Pass (5,359m)', 'Cobalt-Blue Pangong Tso Lake', 'Nubra Valley Sand Dunes & Bactrian Camels', 'Thiksey Monastery Chants'],
-    estimatedBudget: '₹26,000 - ₹38,000 / person',
+    estimatedBudget: 'â‚¹26,000 - â‚¹38,000 / person',
     prompt: 'Design a 6-day adventure circuit in Leh-Ladakh with proper 48-hour acclimatization plan, Pangong Tso homestays, and Inner Line Permit guidance.'
   },
   {
@@ -83,13 +83,13 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 3,
     vibe: 'nature',
     highlights: ['Hundru & Jonha Cascades', 'Netarhat Queen of Chotanagpur Sunsets', 'Betla National Park Safari', 'Tribal Handloom & Dhuska Cuisine'],
-    estimatedBudget: '₹6,000 - ₹10,500 / person',
+    estimatedBudget: 'â‚¹6,000 - â‚¹10,500 / person',
     prompt: 'Give me a 3-day eco-tourism plan for Ranchi, Netarhat, and Hundru Falls in Jharkhand with tribal cuisine recommendations and scenic routes.'
   }
 ];
 
 const RANDOM_PROMPTS = [
-  "Plan a 3-day weekend food and heritage trip to Jaipur under ₹10,000",
+  "Plan a 3-day weekend food and heritage trip to Jaipur under â‚¹10,000",
   "Recommend offbeat tranquil hill stations in Himachal Pradesh for solo travelers",
   "What is the best 5-day circuit for temples and beaches in Tamil Nadu?",
   "How to travel by Vande Bharat train from Delhi to Varanasi with day-by-day plan?",
@@ -132,7 +132,7 @@ const Home = () => {
           short_description: d.desc || '',
           description: d.desc || '',
           entry_fee: 0,
-          images: [d.image || '/assets/destinations/taj_mahal.jpg'],
+          images: [d.image || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'],
           is_featured: true,
           created_at: new Date().toISOString(),
         }));
@@ -263,7 +263,7 @@ const Home = () => {
 
               {/* Subtitle */}
               <p className="text-sm sm:text-base text-emerald-100/90 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                From high-altitude Himalayan mountain passes and sacred ghats in Varanasi to tranquil backwaters in Kerala and vibrant traditional bazaars—explore India with customized, intelligent AI travel planning.
+                From high-altitude Himalayan mountain passes and sacred ghats in Varanasi to tranquil backwaters in Kerala and vibrant traditional bazaarsâ€”explore India with customized, intelligent AI travel planning.
               </p>
 
               {/* Action Buttons */}
@@ -486,10 +486,10 @@ const Home = () => {
               <div className="flex flex-wrap gap-2 pt-2">
                 {[
                   { id: 'all', label: 'All Circuits' },
-                  { id: 'nature', label: '🌿 Nature' },
-                  { id: 'heritage', label: '🏰 Heritage' },
-                  { id: 'spiritual', label: '🕉️ Spiritual' },
-                  { id: 'adventure', label: '⛰️ Adventure' }
+                  { id: 'nature', label: 'ðŸŒ¿ Nature' },
+                  { id: 'heritage', label: 'ðŸ° Heritage' },
+                  { id: 'spiritual', label: 'ðŸ•‰ï¸ Spiritual' },
+                  { id: 'adventure', label: 'â›°ï¸ Adventure' }
                 ].map((v) => (
                   <button
                     key={v.id}
@@ -527,7 +527,7 @@ const Home = () => {
                         </div>
                         <div>
                           <div className="font-bold text-sm text-white">{circuit.name}</div>
-                          <div className="text-xs text-gray-400">{circuit.region} • {circuit.vibe.toUpperCase()}</div>
+                          <div className="text-xs text-gray-400">{circuit.region} â€¢ {circuit.vibe.toUpperCase()}</div>
                         </div>
                       </div>
                       <span className={`text-xs font-bold ${isSelected ? 'text-saffron-300' : 'text-gray-400'}`}>
@@ -714,7 +714,7 @@ const Home = () => {
               {/* Image Container */}
               <div className="relative h-48 sm:h-52 overflow-hidden">
                 <img
-                  src={destination.images?.[0] || '/assets/destinations/taj_mahal.jpg'}
+                  src={destination.images?.[0] || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'}
                   alt={destination.name}
                   onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -799,10 +799,10 @@ const Home = () => {
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { id: 'heritage', emoji: '🏰', title: 'Royal Heritage', desc: 'Forts, Palaces & Lore' },
-                  { id: 'nature', emoji: '🌿', title: 'Nature & Mist', desc: 'Backwaters, Hills & Falls' },
-                  { id: 'adventure', emoji: '⛰️', title: 'High Adventure', desc: 'Passes, Rafting & Treks' },
-                  { id: 'food', emoji: '🍛', title: 'Culinary Trails', desc: 'Bazaars, Spices & Cuisines' }
+                  { id: 'heritage', emoji: 'ðŸ°', title: 'Royal Heritage', desc: 'Forts, Palaces & Lore' },
+                  { id: 'nature', emoji: 'ðŸŒ¿', title: 'Nature & Mist', desc: 'Backwaters, Hills & Falls' },
+                  { id: 'adventure', emoji: 'â›°ï¸', title: 'High Adventure', desc: 'Passes, Rafting & Treks' },
+                  { id: 'food', emoji: 'ðŸ›', title: 'Culinary Trails', desc: 'Bazaars, Spices & Cuisines' }
                 ].map((v) => (
                   <button
                     key={v.id}
@@ -891,7 +891,7 @@ const Home = () => {
                 {/* Event Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={event.image_url || '/assets/events/sarhul_fest1.jpg'}
+                    src={event.image_url || 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop'}
                     alt={event.name}
                     onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -924,7 +924,7 @@ const Home = () => {
                     <div className="flex items-center justify-between text-gray-300">
                       <span className="text-gray-400">Dates:</span>
                       <span className="font-bold text-saffron-300">
-                        {new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} – {new Date(event.date_end).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        {new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} â€“ {new Date(event.date_end).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
                     </div>
                   </div>
@@ -1035,3 +1035,4 @@ const Home = () => {
 };
 
 export default Home;
+

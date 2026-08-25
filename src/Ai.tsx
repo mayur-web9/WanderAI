@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+﻿import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
   Sparkles, 
@@ -164,7 +164,7 @@ function FormattedMarkdown({ content }: { content: string }) {
         }
 
         // Bullet point
-        if (trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.startsWith('• ')) {
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.startsWith('â€¢ ')) {
           return (
             <div key={idx} className="flex items-start gap-2 pl-1 my-0.5 text-gray-700 dark:text-gray-300">
               <span className="w-1.5 h-1.5 rounded-full bg-forest-600 dark:bg-forest-400 mt-1.5 shrink-0" />
@@ -203,11 +203,11 @@ function FormattedMarkdown({ content }: { content: string }) {
 
 // Categorized Prompt Chips
 const PROMPT_CATEGORIES = [
-  { id: 'all', label: '🌟 All Prompts' },
-  { id: 'itinerary', label: '🗺️ Itineraries' },
-  { id: 'food', label: '🍲 Food & Bazaars' },
-  { id: 'budget', label: '🎒 Budget & Transit' },
-  { id: 'culture', label: '🛕 Temples & Culture' },
+  { id: 'all', label: 'ðŸŒŸ All Prompts' },
+  { id: 'itinerary', label: 'ðŸ—ºï¸ Itineraries' },
+  { id: 'food', label: 'ðŸ² Food & Bazaars' },
+  { id: 'budget', label: 'ðŸŽ’ Budget & Transit' },
+  { id: 'culture', label: 'ðŸ›• Temples & Culture' },
 ];
 
 const CURATED_PROMPTS = [
@@ -215,7 +215,7 @@ const CURATED_PROMPTS = [
   { category: 'itinerary', text: '5-day tranquil Kerala backwaters, tea gardens & houseboat trip' },
   { category: 'food', text: 'Must-try street food walking tour in Varanasi & Old Delhi' },
   { category: 'food', text: 'Best handicraft bazaars and jewelry haats in Jaipur and Hyderabad' },
-  { category: 'budget', text: 'How to travel across Himachal & Ladakh on a ₹15,000 budget' },
+  { category: 'budget', text: 'How to travel across Himachal & Ladakh on a â‚¹15,000 budget' },
   { category: 'budget', text: 'Guide to luxury & Vande Bharat express train routes in India' },
   { category: 'culture', text: 'Ancient rock-cut temple wonders of Ajanta, Ellora, and Hampi' },
   { category: 'culture', text: 'Sacred river ghats, evening Ganga Aarti rituals, and dress etiquette' },
@@ -242,7 +242,7 @@ export default function Ai() {
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([
     {
       role: 'assistant',
-      content: 'Namaste! 🙏 I am your **WanderAI Travel Companion**. How can I help plan your journey across India today? You can ask for custom day-by-day itineraries, regional delicacies, budget tips, train routes, or cultural festival dates!'
+      content: 'Namaste! ðŸ™ I am your **WanderAI Travel Companion**. How can I help plan your journey across India today? You can ask for custom day-by-day itineraries, regional delicacies, budget tips, train routes, or cultural festival dates!'
     }
   ]);
   const [input, setInput] = useState('');
@@ -256,7 +256,7 @@ export default function Ai() {
   const [plannerCity, setPlannerCity] = useState('');
   const [plannerDays, setPlannerDays] = useState('3');
   const [plannerStyle, setPlannerStyle] = useState('Heritage & Palaces');
-  const [plannerBudget, setPlannerBudget] = useState('Mid-Range (₹₹)');
+  const [plannerBudget, setPlannerBudget] = useState('Mid-Range (â‚¹â‚¹)');
   const [plannerPace, setPlannerPace] = useState('Balanced');
   const [itinerary, setItinerary] = useState('');
   const [plannerLoading, setPlannerLoading] = useState(false);
@@ -406,7 +406,7 @@ export default function Ai() {
 
     if (saved) {
       setPlannerSaved(true);
-      setSavedSuccessMsg('✨ Plan saved to your Saved Itineraries!');
+      setSavedSuccessMsg('âœ¨ Plan saved to your Saved Itineraries!');
       getDbItineraries(user.id).then(data => {
         if (data) setSavedItinerariesList(data);
       });
@@ -449,7 +449,7 @@ export default function Ai() {
 
 Format with:
 1. Day-by-Day schedule (Morning, Afternoon, Evening) with exact highlights and travel timings.
-2. Estimated daily budget breakdown in INR (₹) including food, entry fees, and local transit.
+2. Estimated daily budget breakdown in INR (â‚¹) including food, entry fees, and local transit.
 3. Authentic regional foods & best local eateries to try.
 4. Essential local packing, weather, and cultural guidelines.`;
 
@@ -755,7 +755,7 @@ Format with:
                   </div>
                   <div className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/60 flex items-center gap-2 text-xs font-semibold text-gray-600 dark:text-gray-400">
                     <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
-                    <span>WanderAI is researching destinations & routes…</span>
+                    <span>WanderAI is researching destinations & routesâ€¦</span>
                   </div>
                 </div>
               )}
@@ -884,12 +884,12 @@ Format with:
                     onChange={(e) => setPlannerStyle(e.target.value)}
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-forest-500"
                   >
-                    <option>🏰 Heritage & Royal Palaces</option>
-                    <option>🌿 Nature, Waterfalls & Eco-Trails</option>
-                    <option>🕉️ Spiritual Ghats & Ancient Temples</option>
-                    <option>⛰️ High Altitude Adventure & Treks</option>
-                    <option>🍲 Authentic Food, Spices & Bazaars</option>
-                    <option>🏖️ Coastal Beaches & Relaxation</option>
+                    <option>ðŸ° Heritage & Royal Palaces</option>
+                    <option>ðŸŒ¿ Nature, Waterfalls & Eco-Trails</option>
+                    <option>ðŸ•‰ï¸ Spiritual Ghats & Ancient Temples</option>
+                    <option>â›°ï¸ High Altitude Adventure & Treks</option>
+                    <option>ðŸ² Authentic Food, Spices & Bazaars</option>
+                    <option>ðŸ–ï¸ Coastal Beaches & Relaxation</option>
                   </select>
                 </div>
 
@@ -917,9 +917,9 @@ Format with:
                       onChange={(e) => setPlannerBudget(e.target.value)}
                       className="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
                     >
-                      <option>Budget (₹)</option>
-                      <option>Mid-Range (₹₹)</option>
-                      <option>Luxury (₹₹₹)</option>
+                      <option>Budget (â‚¹)</option>
+                      <option>Mid-Range (â‚¹â‚¹)</option>
+                      <option>Luxury (â‚¹â‚¹â‚¹)</option>
                     </select>
                   </div>
                 </div>
@@ -933,7 +933,7 @@ Format with:
                   {plannerLoading ? (
                     <>
                       <Sparkles className="w-4 h-4 animate-spin text-saffron-300" />
-                      <span>Generating Detailed Itinerary…</span>
+                      <span>Generating Detailed Itineraryâ€¦</span>
                     </>
                   ) : (
                     <>
@@ -954,10 +954,10 @@ Format with:
                   <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
                     <div>
                       <h3 className="text-base font-bold font-display text-gray-900 dark:text-white">
-                        {plannerCity} — {plannerDays}-Day Trip Plan
+                        {plannerCity} â€” {plannerDays}-Day Trip Plan
                       </h3>
                       <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                        {plannerStyle} • {plannerBudget} • {plannerPace}
+                        {plannerStyle} â€¢ {plannerBudget} â€¢ {plannerPace}
                       </p>
                     </div>
 
@@ -1011,7 +1011,7 @@ Format with:
               ) : (
                 <div className="py-16 text-center space-y-3 my-auto">
                   <div className="w-12 h-12 rounded-2xl bg-forest-50 dark:bg-forest-950 text-forest-700 dark:text-forest-400 flex items-center justify-center mx-auto text-xl shadow-xs">
-                    🗺️
+                    ðŸ—ºï¸
                   </div>
                   <h3 className="text-base font-bold text-gray-800 dark:text-gray-200">
                     Ready to Generate Your Indian Adventure
@@ -1081,7 +1081,7 @@ Format with:
                 {/* Image */}
                 <div className="relative h-40 sm:h-44 overflow-hidden">
                   <img
-                    src={dest.image || '/assets/destinations/taj_mahal.jpg'}
+                    src={dest.image || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'}
                     alt={dest.name}
                     onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -1170,7 +1170,7 @@ Format with:
 
           {savedLoading ? (
             <div className="py-12 text-center text-xs text-gray-400">
-              Loading your saved itineraries…
+              Loading your saved itinerariesâ€¦
             </div>
           ) : savedItinerariesList.length === 0 ? (
             <div className="py-16 text-center rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-8 space-y-3">
@@ -1201,7 +1201,7 @@ Format with:
                         {String(item.destination || item.city || 'Saved Indian Itinerary')}
                       </h4>
                       <p className="text-[11px] text-gray-500">
-                        {String(item.days || '')} Days • {String(item.interest || '')} • {String(item.budget || '')}
+                        {String(item.days || '')} Days â€¢ {String(item.interest || '')} â€¢ {String(item.budget || '')}
                       </p>
                     </div>
                     <button
@@ -1226,3 +1226,4 @@ Format with:
     </div>
   );
 }
+

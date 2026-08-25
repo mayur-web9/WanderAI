@@ -1,4 +1,4 @@
-import { supabase } from '../utils/supabaseClient';
+﻿import { supabase } from '../utils/supabaseClient';
 import { 
   Event, 
   Marketplace, 
@@ -216,11 +216,11 @@ export async function getDbDestinations(): Promise<AiDestination[]> {
       return (data as Array<Record<string, unknown>>).map((d) => ({
         id: typeof d.id === 'string' ? d.id : String(d.id || ''),
         name: typeof d.name === 'string' ? d.name : 'Destination',
-        emoji: typeof d.emoji === 'string' ? d.emoji : '📍',
+        emoji: typeof d.emoji === 'string' ? d.emoji : 'ðŸ“',
         tag: typeof d.tag === 'string' ? d.tag : (typeof d.category === 'string' ? d.category : 'Historical'),
         desc: typeof d.desc === 'string' ? d.desc : (typeof d.description === 'string' ? d.description : (typeof d.short_description === 'string' ? d.short_description : '')),
         location: typeof d.location === 'string' ? d.location : (typeof d.district === 'string' ? `${d.district}, India` : 'India'),
-        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : '/assets/destinations/taj_mahal.jpg')
+        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop')
       }));
     }
   } catch {
@@ -235,7 +235,7 @@ export async function saveDbDestination(dest: AiDestination): Promise<AiDestinat
   try {
     const payload = {
       name: dest.name,
-      emoji: dest.emoji || '📍',
+      emoji: dest.emoji || 'ðŸ“',
       tag: dest.tag,
       desc: dest.desc,
       location: dest.location,
@@ -494,3 +494,4 @@ export async function getDbItineraries(userId?: string): Promise<ItineraryRecord
   }
   return [];
 }
+

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useNavigate, Link, Navigate, useSearchParams } from 'react-router-dom';
 import { 
   User, 
@@ -67,7 +67,7 @@ const Login = () => {
         <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none">
           <div 
             className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url('/assets/destinations/taj_mahal.jpg')` }}
+            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=1600&q=85&auto=format&fit=crop')` }}
           />
         </div>
 
@@ -110,7 +110,7 @@ const Login = () => {
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-3 text-xs text-gray-200">
                 <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
-                  <span className="text-emerald-300 text-xs font-bold">✓</span>
+                  <span className="text-emerald-300 text-xs font-bold">âœ“</span>
                 </div>
                 <span>{item}</span>
               </div>
@@ -129,7 +129,7 @@ const Login = () => {
             "WanderAI planned our 5-day Spiti Valley and Leh road trip flawlessly. The place notes and transport tips were spot-on!"
           </p>
           <p className="text-[10px] text-emerald-300 font-semibold mt-1">
-            — Priya Patel, Ahmedabad
+            â€” Priya Patel, Ahmedabad
           </p>
         </div>
       </div>
@@ -223,7 +223,7 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   required
                   className="w-full pl-11 pr-11 py-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition shadow-xs"
                 />
@@ -245,7 +245,7 @@ const Login = () => {
               className="w-full py-4 rounded-2xl bg-gradient-to-r from-forest-700 to-forest-900 hover:from-forest-800 hover:to-forest-950 text-white font-bold text-sm shadow-lg shadow-forest-900/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
             >
               {loading ? (
-                <span>Verifying credentials…</span>
+                <span>Verifying credentialsâ€¦</span>
               ) : (
                 <>
                   <span>{mode === 'admin' ? 'Access Admin Dashboard' : 'Sign In to Account'}</span>
@@ -273,3 +273,4 @@ const Login = () => {
 };
 
 export default Login;
+

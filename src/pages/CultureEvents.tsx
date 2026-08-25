@@ -1,4 +1,4 @@
-import { handleImageError, FALLBACK_EVENT_IMAGE, FALLBACK_MARKETPLACE_IMAGE } from '../utils/imageFallback';
+﻿import { handleImageError, FALLBACK_EVENT_IMAGE, FALLBACK_MARKETPLACE_IMAGE } from '../utils/imageFallback';
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { 
@@ -113,7 +113,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
           </h1>
 
           <p className="text-sm sm:text-base text-emerald-100/90 max-w-2xl mx-auto leading-relaxed">
-            Immerse yourself in India’s vibrant harvest celebrations, sacred rituals, authentic craft haats, and century-old spice bazaars.
+            Immerse yourself in Indiaâ€™s vibrant harvest celebrations, sacred rituals, authentic craft haats, and century-old spice bazaars.
           </p>
 
           {/* Unified Mode Switcher Tabs */}
@@ -275,7 +275,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                     {/* Image Header */}
                     <div className="relative h-44 sm:h-48 overflow-hidden">
                       <img
-                        src={event.image_url || '/assets/events/sarhul_fest1.jpg'}
+                        src={event.image_url || 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop'}
                         alt={event.name}
                         onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -312,7 +312,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                             <Clock className="w-3.5 h-3.5 text-forest-600" /> Dates:
                           </span>
                           <span className="font-bold text-saffron-600 dark:text-saffron-400">
-                            {new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} – {new Date(event.date_end).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            {new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} â€“ {new Date(event.date_end).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
                           </span>
                         </div>
                       </div>
@@ -389,7 +389,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                     {/* Image Header */}
                     <div className="relative h-44 sm:h-48 overflow-hidden">
                       <img
-                        src={market.image || '/assets/marketplaces/dilli_haat.jpg'}
+                        src={market.image || 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80&auto=format&fit=crop'}
                         alt={market.name}
                         onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -461,3 +461,4 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
     </div>
   );
 }
+

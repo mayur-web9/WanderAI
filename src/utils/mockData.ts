@@ -1,4 +1,4 @@
-import { Destination, Event, Review, Marketplace } from '../types';
+﻿import { Destination, Event, Review, Marketplace } from '../types';
 
 export const DEFAULT_MARKETPLACES: Marketplace[] = [
   {
@@ -6,7 +6,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Dilli Haat, Delhi",
     description: "An open-air food plaza and craft bazaar that offers a taste of India's cultural diversity. Artisans from across the country sell traditional handicrafts and handlooms.",
     location: "INA, New Delhi",
-    image: "/assets/marketplaces/dilli_haat.jpg",
+    image: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80&auto=format&fit=crop",
     tags: ["Crafts", "Food", "Culture"]
   },
   {
@@ -14,7 +14,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Colaba Causeway, Mumbai",
     description: "The shopping soul of Mumbai. From trendy accessories and clothing to antique clocks and vintage collectibles, this market has it all.",
     location: "Colaba, Mumbai",
-    image: "/assets/marketplaces/colaba_causeway.jpg",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
     tags: ["Antiques", "Fashion", "Street Food"]
   },
   {
@@ -22,7 +22,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Johari Bazaar, Jaipur",
     description: "Famous for its stunning collection of precious and semi-precious gemstones, traditional jewelry, and authentic Rajasthani textiles.",
     location: "Pink City, Jaipur",
-    image: "/assets/marketplaces/johari_bazaar.jpg",
+    image: "https://images.unsplash.com/photo-1519058082350-fd9d1fe91489?w=800&q=80&auto=format&fit=crop",
     tags: ["Jewelry", "Textiles", "Heritage"]
   },
   {
@@ -30,7 +30,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Anjuna Flea Market, Goa",
     description: "A vibrant Wednesday market that captures Goa's bohemian spirit. You can find everything from beachwear and hammocks to local spices and handmade jewelry.",
     location: "Anjuna, Goa",
-    image: "/assets/marketplaces/anjuna_flea_market.jpg",
+    image: "https://images.unsplash.com/photo-1533050228-dc88c74e91ca?w=800&q=80&auto=format&fit=crop",
     tags: ["Bohemian", "Music", "Spices"]
   },
   {
@@ -38,7 +38,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Laad Bazaar, Hyderabad",
     description: "Located near the Charminar, this historic market is world-famous for its exquisite lacquer bangles encrusted with stones.",
     location: "Charminar, Hyderabad",
-    image: "/assets/marketplaces/laad_bazaar.jpg",
+    image: "https://images.unsplash.com/photo-1612528442702-28c6a0abb6f4?w=800&q=80&auto=format&fit=crop",
     tags: ["Bangles", "Lacquer", "Historic"]
   },
   {
@@ -46,7 +46,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Floating Vegetable Market, Srinagar",
     description: "A unique early morning experience where vendors sell fresh produce from their traditional wooden boats (shikaras) on the serene Dal Lake.",
     location: "Dal Lake, Srinagar",
-    image: "/assets/marketplaces/floating_market.jpg",
+    image: "https://images.unsplash.com/photo-1587502536263-c9b7ac76c3bc?w=800&q=80&auto=format&fit=crop",
     tags: ["Nature", "Local", "Unique"]
   },
   {
@@ -54,7 +54,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Police Bazar, Shillong",
     description: "The commercial hub of Shillong. A perfect mix of traditional and modern, where you can find exquisite Meghalayan handlooms, bamboo crafts, and amazing local street food.",
     location: "Khyndailad, Shillong",
-    image: "/assets/marketplaces/police_bazar.jpg",
+    image: "https://images.unsplash.com/photo-1524594152303-9fd13543fe96?w=800&q=80&auto=format&fit=crop",
     tags: ["Handlooms", "Bamboo", "Street Food"]
   },
   {
@@ -62,7 +62,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Janpath Market, Delhi",
     description: "A popular boutique market known for its long line of small kiosks selling ethnic clothing, silver jewelry, and handicrafts from across India and Tibet.",
     location: "Connaught Place, New Delhi",
-    image: "/assets/marketplaces/janpath_market.jpg",
+    image: "https://images.unsplash.com/photo-1575101600-7da29a27cb7b?w=800&q=80&auto=format&fit=crop",
     tags: ["Jewelry", "Handicrafts", "Bargain"]
   },
   {
@@ -70,7 +70,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Pondy Bazaar, Chennai",
     description: "One of the busiest shopping areas in Chennai, offering everything from silk sarees and traditional footwear to modern electronics and local accessories.",
     location: "T. Nagar, Chennai",
-    image: "/assets/marketplaces/pondy_bazaar.jpg",
+    image: "https://images.unsplash.com/photo-1583391265427-83c9d9250f37?w=800&q=80&auto=format&fit=crop",
     tags: ["Sarees", "Footwear", "Busy"]
   }
 ];
@@ -86,7 +86,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 27.1751,
     "longitude": 78.0421,
     "images": [
-      "/assets/destinations/taj_mahal.jpg"
+      "https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 50,
@@ -103,7 +103,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 25.3176,
     "longitude": 82.9739,
     "images": [
-      "/assets/destinations/varanasi_ghats.jpg"
+      "https://images.unsplash.com/photo-1587922547015-8ae2b155d6d2?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
@@ -120,7 +120,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 9.4981,
     "longitude": 76.3388,
     "images": [
-      "/assets/destinations/kerala_backwaters.jpg"
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "September to March",
     "entry_fee": 0,
@@ -137,7 +137,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 15.335,
     "longitude": 76.46,
     "images": [
-      "/assets/destinations/hampi_ruins.jpg"
+      "https://images.unsplash.com/photo-1564507592333-04cd2a2f359a?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to February",
     "entry_fee": 40,
@@ -154,7 +154,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 34.1526,
     "longitude": 77.5771,
     "images": [
-      "/assets/destinations/leh_ladakh.jpg"
+      "https://images.unsplash.com/photo-1621786030484-4b5f5de4a788?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "May to September",
     "entry_fee": 0,
@@ -171,7 +171,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 31.62,
     "longitude": 74.8765,
     "images": [
-      "/assets/destinations/golden_temple.jpg"
+      "https://images.unsplash.com/photo-1585136917625-b29f83aa3174?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
@@ -188,7 +188,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 10.0889,
     "longitude": 77.0595,
     "images": [
-      "/assets/destinations/munnar_tea_gardens.jpg"
+      "https://images.unsplash.com/photo-1571068316344-75bc3048de5e?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "September to April",
     "entry_fee": 25,
@@ -205,7 +205,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 12.3051,
     "longitude": 76.6551,
     "images": [
-      "/assets/destinations/mysore_palace.jpg"
+      "https://images.unsplash.com/photo-1598091383021-15ddea64c8b0?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 100,
@@ -222,7 +222,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 26.9855,
     "longitude": 75.8513,
     "images": [
-      "/assets/destinations/amer_fort.jpg"
+      "https://images.unsplash.com/photo-1524492412435-32cd049bde7d?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 100,
@@ -239,7 +239,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 19.8876,
     "longitude": 86.0945,
     "images": [
-      "/assets/destinations/konark_sun_temple.jpg"
+      "https://images.unsplash.com/photo-1600100397608-f010f443b221?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "November to February",
     "entry_fee": 40,
@@ -256,7 +256,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 26.0173,
     "longitude": 76.5026,
     "images": [
-      "/assets/destinations/ranthambore.jpg"
+      "https://images.unsplash.com/photo-1615279867456-1e2f5e9e2291?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
     "entry_fee": 600,
@@ -273,7 +273,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 22.5448,
     "longitude": 88.3426,
     "images": [
-      "/assets/destinations/victoria_memorial.jpg"
+      "https://images.unsplash.com/photo-1558431382-27e303142255?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 50,
@@ -460,7 +460,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 23.3058,
     "longitude": 85.4425,
     "images": [
-      "/assets/destinations/jonha_falls.jpg"
+      "https://images.unsplash.com/photo-1530879064-4cad9f7be6ec?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "July to December",
     "entry_fee": 30,
@@ -503,7 +503,7 @@ export const mockDestinations: Destination[] = [
   },
   {
     "id": "netarhat-hills",
-    "name": "Netarhat — Queen of Chotanagpur",
+    "name": "Netarhat â€” Queen of Chotanagpur",
     "district": "Latehar",
     "category": "park",
     "description": "A tranquil hill station at 3,700 ft known for cool pine forests, pear orchards, Magnolia Sunset Point, and Lower Ghaghri waterfall trails.",
@@ -528,7 +528,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 23.3643,
     "longitude": 85.3365,
     "images": [
-      "/assets/destinations/lake.jpg"
+      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "Year-round",
     "entry_fee": 10,
@@ -546,7 +546,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-03-25',
     date_end: '2026-03-27',
     location: 'Across India',
-    image_url: '/assets/events/sarhul_fest1.jpg',
+    image_url: 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {
@@ -557,7 +557,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-09-15',
     date_end: '2026-09-16',
     location: 'Tribal Villages',
-    image_url: '/assets/events/karma_fest.jpg',
+    image_url: 'https://images.unsplash.com/photo-1567337710282-87b0e0e5e1c5?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {
@@ -568,7 +568,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-01-14',
     date_end: '2026-01-15',
     location: 'Purulia, Dhanbad',
-    image_url: '/assets/events/tusu_fest.jpg',
+    image_url: 'https://images.unsplash.com/photo-1519817298949-0e2a6e97c13f?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {
@@ -579,7 +579,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-11-10',
     date_end: '2026-11-13',
     location: 'Riverbanks across India',
-    image_url: '/assets/events/chhat_fest.jpg',
+    image_url: 'https://images.unsplash.com/photo-1604313741082-56d9c3a5e05e?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {
@@ -590,7 +590,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-06-05',
     date_end: '2026-06-06',
     location: 'Rural Jharkhand',
-    image_url: '/assets/events/rohini.jpg',
+    image_url: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {
@@ -601,7 +601,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-11-15',
     date_end: '2026-11-17',
     location: 'Santhal Pargana',
-    image_url: '/assets/events/bandna.jpg',
+    image_url: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {    id: '7',
@@ -611,7 +611,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-10-13',
     date_end: '2026-10-22',
     location: 'Mysore, Karnataka',
-    image_url: '/assets/events/mysore_dussehra.jpg',
+    image_url: 'https://images.unsplash.com/photo-1568454537842-d933259e7f6f?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {    id: '8',
@@ -621,7 +621,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-11-18',
     date_end: '2026-11-26',
     location: 'Pushkar, Rajasthan',
-    image_url: '/assets/events/pushkar_fair.jpg',
+    image_url: 'https://images.unsplash.com/photo-1524749631380-db2f0b5dd9e2?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   },
   {    id: '9',
@@ -631,7 +631,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-12-01',
     date_end: '2026-12-10',
     location: 'Kisama, Nagaland',
-    image_url: '/assets/events/hornbill_festival.jpg',
+    image_url: 'https://images.unsplash.com/photo-1577644545636-f08b87f7736c?w=800&q=80&auto=format&fit=crop',
     created_at: new Date().toISOString()
   }
 ];
@@ -746,3 +746,4 @@ export const mockReviews: (Review & { user_name: string; location: string })[] =
     created_at: new Date().toISOString()
   }
 ];
+
