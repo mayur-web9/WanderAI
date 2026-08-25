@@ -14,13 +14,35 @@ import {
   Search,
   CheckCircle2,
   BookmarkCheck,
+  MessageSquare,
+  Route,
+  ShieldCheck,
+  Leaf,
+  Utensils,
+  Train,
+  Compass,
+  Crown,
+  Mountain,
+  Flame,
+  ChefHat,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { mockDestinations, mockEvents, mockReviews } from '../utils/mockData';
 import { Destination, Event as AppEvent } from '../types';
-import { FEATURES, QUICK_PROMPTS } from '../utils/aiData';
+import { QUICK_PROMPTS } from '../utils/aiData';
 import { getDbDestinations, getDbEvents } from '../services/supabaseService';
 
+// Feature cards with Lucide icons (replaces corrupted emoji strings)
+const FEATURES = [
+  { icon: MessageSquare, color: 'text-blue-500', title: 'Multilingual Chat', desc: 'Get travel advice in 10+ Indian languages including Hindi, Marathi, Bengali, and Tamil.' },
+  { icon: Route, color: 'text-forest-600', title: 'Smart Planner', desc: 'Generate custom day-by-day itineraries based on your interests, pace, and budget.' },
+  { icon: Zap, color: 'text-amber-500', title: 'Culture & Bazaars', desc: 'Discover historic artisan craft haats, handloom markets, and living tribal harvest festivals.' },
+  { icon: ShieldCheck, color: 'text-emerald-600', title: 'Safety Guide', desc: 'Real-time updates on weather, safety protocols, and 24x7 tourist emergency contacts.' },
+  { icon: Leaf, color: 'text-green-600', title: 'Eco-Tourism', desc: 'Discover sustainable travel options that support local communities and pristine nature.' },
+  { icon: Utensils, color: 'text-orange-500', title: 'Food Finder', desc: 'Find the most authentic local eateries and hidden culinary specialties in any city.' },
+  { icon: Train, color: 'text-sky-500', title: 'Transit & Route Guide', desc: 'Smart transport advice for Indian Railways trains, cabs, scenic road trips, and bus routes.' },
+  { icon: Compass, color: 'text-purple-500', title: 'Destination Explorer', desc: 'Browse 150+ handpicked Indian heritage and nature spots with instant Google Maps links.' },
+];
 // Interactive Preview Itinerary Models for the Live Playground
 interface PlaygroundCircuit {
   id: string;
@@ -592,8 +614,8 @@ const Home = () => {
                   to={getFeatureTarget(feature.title)}
                   className="group relative flex flex-col p-6 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 hover:border-forest-500/60 dark:hover:border-forest-500/60 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5"
                 >
-                  <div className="w-13 h-13 rounded-2xl bg-forest-50 dark:bg-forest-950/60 border border-forest-100 dark:border-forest-900/60 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
+                  <div className="w-13 h-13 rounded-2xl bg-forest-50 dark:bg-forest-950/60 border border-forest-100 dark:border-forest-900/60 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {(() => { const Icon = feature.icon; return <Icon className={`w-6 h-6 ${feature.color}`} />; })()}
                   </div>
                   <h3 className="text-base font-bold font-display text-gray-900 dark:text-white mb-2 group-hover:text-forest-700 dark:group-hover:text-forest-400 transition-colors">
                     {feature.title}
@@ -763,10 +785,10 @@ const Home = () => {
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { id: 'heritage', emoji: 'ðŸ°', title: 'Royal Heritage', desc: 'Forts, Palaces & Lore' },
-                  { id: 'nature', emoji: 'ðŸŒ¿', title: 'Nature & Mist', desc: 'Backwaters, Hills & Falls' },
-                  { id: 'adventure', emoji: 'â›°ï¸', title: 'High Adventure', desc: 'Passes, Rafting & Treks' },
-                  { id: 'food', emoji: 'ðŸ›', title: 'Culinary Trails', desc: 'Bazaars, Spices & Cuisines' }
+                  { id: "heritage",  VibeIcon: Crown,    title: "Royal Heritage",  desc: "Forts, Palaces & Lore",        color: "text-amber-500" },
+                  { id: "nature",    VibeIcon: Mountain,  title: "Nature & Mist",   desc: "Backwaters, Hills & Falls",    color: "text-emerald-500" },
+                  { id: "adventure", VibeIcon: Flame,     title: "High Adventure",  desc: "Passes, Rafting & Treks",      color: "text-orange-500" },
+                  { id: "food",      VibeIcon: ChefHat,   title: "Culinary Trails", desc: "Bazaars, Spices & Cuisines",   color: "text-rose-500" }
                 ].map((v) => (
                   <button
                     key={v.id}
@@ -777,7 +799,7 @@ const Home = () => {
                         : 'bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700/60 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
-                    <div className="text-2xl mb-1.5">{v.emoji}</div>
+                    <div className="text-2xl mb-1.5">{(() => { const VI = v.VibeIcon; return <VI className={`w-7 h-7 mb-1.5 ${v.color}`} />; })()}</div>
                     <div className="font-bold text-xs text-gray-900 dark:text-white">{v.title}</div>
                     <div className="text-[11px] text-gray-500 dark:text-gray-400">{v.desc}</div>
                   </button>
@@ -999,6 +1021,10 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+
 
 
 
