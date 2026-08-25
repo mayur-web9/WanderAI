@@ -6,7 +6,7 @@
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-[![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Gemini AI](https://img.shields.io/badge/AI_Travel_Engine-16a34a?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
 > **Live Platform URL**: [https://wanderrai.netlify.app](https://wanderrai.netlify.app)
 
@@ -23,7 +23,7 @@ From snowy Himalayan passes and sacred Ganga ghats to serene Kerala backwaters a
 ## ⚡ Core Features
 
 ### 1. 🤖 WanderAI Conversational Assistant
-- **Real-Time Interactive Travel Guide**: Powered by Google Gemini AI with high-accuracy Indian tourism data.
+- **Real-Time Interactive Travel Guide**: Powered by WanderAI Neural Travel Intelligence with high-accuracy Indian tourism data.
 - **Deep Feature & Prompt Linking**: One-click prompt exploration for eco-tours, beach getaways, train transit guides, and regional culinary trails.
 - **Multilingual & Cultural Etiquette**: Contextual advice on sacred temple norms, best photography hours, entry protocols, and offbeat recommendations.
 
@@ -54,7 +54,7 @@ From snowy Himalayan passes and sacred Ganga ghats to serene Kerala backwaters a
 - **Frontend Framework**: React 18 with TypeScript & Vite
 - **Styling & UI**: Tailwind CSS, PostCSS, Lucide Icons, Glassmorphism design system
 - **Routing**: React Router v7
-- **AI Intelligence**: Google Gemini API (`gemini-3.6-flash` / multi-model fallback)
+- **AI Intelligence**: WanderAI Multi-Model API Pool (`gemini-3.6-flash` / multi-model fallback)
 - **Database & Auth**: Supabase (PostgreSQL, Row Level Security, Auth triggers)
 - **Deployment**: Netlify
 
