@@ -1,6 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Compass, Sparkles, Shield, ArrowRight, Check, Send, Mail } from 'lucide-react';
+import { 
+  Compass, 
+  Sparkles, 
+  MapPin, 
+  Phone, 
+  Mail, 
+  Send, 
+  Check, 
+  Shield, 
+  ArrowRight
+} from 'lucide-react';
 
 const Footer = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -8,43 +18,43 @@ const Footer = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newsletterEmail.trim() && newsletterEmail.includes('@')) {
+    if (newsletterEmail.trim()) {
       setSubscribed(true);
-      setTimeout(() => {
-        setNewsletterEmail('');
-        setSubscribed(false);
-      }, 4000);
+      setNewsletterEmail('');
+      setTimeout(() => setSubscribed(false), 5000);
     }
   };
 
   return (
-    <footer className="bg-sand-100 dark:bg-obsidian-900 border-t border-gray-200/80 dark:border-gray-800 text-gray-700 dark:text-gray-300 transition-colors">
-      {/* Main Footer Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-12">
+    <footer className="bg-sand-100 dark:bg-obsidian-900 border-t border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 pt-12 pb-8 transition-colors duration-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* Col 1: Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-forest-800 via-forest-600 to-saffron-500 flex items-center justify-center shadow-md">
-                <MapPin className="h-5 w-5 text-white" />
+          {/* Col 1: Brand Info & Newsletter (Takes 2 cols on desktop) */}
+          <div className="space-y-4 lg:col-span-2">
+            <Link to="/" className="inline-flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-forest-700 dark:bg-forest-600 flex items-center justify-center text-white shadow-md">
+                <MapPin className="w-5 h-5 text-saffron-400" />
               </div>
               <div className="flex flex-col">
-                <span className="font-display text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <span className="font-display font-black text-xl tracking-tight text-forest-900 dark:text-white">
                   Wander<span className="text-saffron-500">AI</span>
                 </span>
-                <span className="text-[11px] font-medium tracking-wide uppercase text-gray-500 dark:text-gray-400">
+                <span className="text-[10px] tracking-wider uppercase font-semibold text-gray-500 dark:text-gray-400 -mt-1">
                   Discover Unseen India
                 </span>
               </div>
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-sm">
-              Empowering global and domestic travelers to explore India’s majestic landscapes, sacred shrines, hidden tribal heritage, and authentic bazaars using intelligent AI guidance.
+            </Link>
+
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+              India’s next-generation AI travel planner. Personalizing itineraries across 28 states with local cultural insights, seasonal fairs, and hidden heritage trails.
             </p>
-            
-            {/* System Status & Badges */}
-            <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-forest-100 dark:bg-forest-900/40 text-forest-800 dark:text-forest-300 border border-forest-200 dark:border-forest-800">
+
+            {/* Live System Operational Status */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 Proprietary AI Engine
               </span>
@@ -107,13 +117,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/marketplaces" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Traditional Bazaars
-                </Link>
-              </li>
-              <li>
                 <Link to="/events" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Cultural Festivals
+                  Events & Bazaars
                 </Link>
               </li>
               <li>
@@ -124,41 +129,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Col 3: Popular Regions */}
-          <div>
-            <h3 className="font-display text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
-              Top Circuits
-            </h3>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link to="/itinerary?tab=chat&prompt=Plan%20a%20Himalayan%20trek%20in%20Ladakh%20and%20Spiti" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Himalayan Adventures
-                </Link>
-              </li>
-              <li>
-                <Link to="/itinerary?tab=chat&prompt=Recommend%20a%20Kerala%20Backwaters%20and%20Munnar%20circuit" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Kerala & Backwaters
-                </Link>
-              </li>
-              <li>
-                <Link to="/itinerary?tab=chat&prompt=Draft%20a%20Rajasthan%20Royal%20Palaces%20and%20desert%20itinerary" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Rajasthan Royal Palaces
-                </Link>
-              </li>
-              <li>
-                <Link to="/itinerary?tab=chat&prompt=What%20are%20the%20best%20waterfalls%20and%20eco%20shrines%20in%20Jharkhand%3F" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Jharkhand Eco Shrines
-                </Link>
-              </li>
-              <li>
-                <Link to="/itinerary?tab=chat&prompt=Guide%20me%20through%20Varanasi%20ghats%2C%20evening%20aarti%2C%20and%20food%20walks" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Varanasi Spiritual Ghats
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Safety & Helpline */}
+          {/* Col 3: Safety & Helpline */}
           <div>
             <h3 className="font-display text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-1.5">
               <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
