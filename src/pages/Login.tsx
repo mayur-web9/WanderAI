@@ -67,7 +67,7 @@ const Login = () => {
         <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none">
           <div 
             className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url('/assets/destinations/Taj_mahal.jpg')` }}
+            style={{ backgroundImage: `url('/assets/destinations/taj_mahal.jpg')` }}
           />
         </div>
 

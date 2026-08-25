@@ -1,3 +1,4 @@
+import { handleImageError, FALLBACK_DESTINATION_IMAGE } from './utils/imageFallback';
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { 
@@ -871,8 +872,9 @@ Please format the response with:
                 {/* Image & Badges */}
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src={d.image}
+                    src={d.image || '/assets/destinations/taj_mahal.jpg'}
                     alt={d.name}
+                    onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

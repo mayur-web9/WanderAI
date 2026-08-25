@@ -1,3 +1,4 @@
+import { handleImageError, FALLBACK_DESTINATION_IMAGE, FALLBACK_EVENT_IMAGE } from '../utils/imageFallback';
 import { useState, useEffect } from 'react';
 import { 
   ArrowRight, 
@@ -41,7 +42,7 @@ const Home = () => {
           short_description: d.desc || '',
           description: d.desc || '',
           entry_fee: 0,
-          images: [d.image || '/assets/destinations/Taj_mahal.jpg'],
+          images: [d.image || '/assets/destinations/taj_mahal.jpg'],
           is_featured: true,
           created_at: new Date().toISOString(),
         }));
@@ -341,8 +342,9 @@ const Home = () => {
               {/* Image Container */}
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src={destination.images[0]}
+                  src={destination.images?.[0] || '/assets/destinations/taj_mahal.jpg'}
                   alt={destination.name}
+                  onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -424,6 +426,7 @@ const Home = () => {
                   <img
                     src={event.image_url || '/assets/events/sarhul_fest1.jpg'}
                     alt={event.name}
+                    onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />

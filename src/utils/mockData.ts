@@ -86,7 +86,7 @@ export const mockDestinations: Destination[] = [
     latitude: 23.4415,
     longitude: 85.5936,
     images: [
-      '/assets/destinations/Download3.jpg',
+      '/assets/destinations/download3.jpg',
     ],
     best_time: 'July to October',
     entry_fee: 30,
@@ -171,7 +171,7 @@ export const mockDestinations: Destination[] = [
     latitude: 23.3975,
     longitude: 85.3234,
     images: [
-      '/assets/destinations/Hill.jpg',
+      '/assets/destinations/hill.jpg',
     ],
     best_time: 'October to March',
     entry_fee: 0,
@@ -222,7 +222,7 @@ export const mockEvents: Event[] = [
     date_start: '2026-11-10',
     date_end: '2026-11-13',
     location: 'Riverbanks across India',
-    image_url: '/assets/events/Chhat_fest.jpg',
+    image_url: '/assets/events/chhat_fest.jpg',
     created_at: new Date().toISOString()
   },
   {

@@ -220,7 +220,7 @@ export async function getDbDestinations(): Promise<AiDestination[]> {
         tag: typeof d.tag === 'string' ? d.tag : (typeof d.category === 'string' ? d.category : 'Historical'),
         desc: typeof d.desc === 'string' ? d.desc : (typeof d.description === 'string' ? d.description : (typeof d.short_description === 'string' ? d.short_description : '')),
         location: typeof d.location === 'string' ? d.location : (typeof d.district === 'string' ? `${d.district}, India` : 'India'),
-        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : '/assets/destinations/Taj_mahal.jpg')
+        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : '/assets/destinations/taj_mahal.jpg')
       }));
     }
   } catch {

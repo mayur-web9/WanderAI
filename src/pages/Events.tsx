@@ -1,3 +1,4 @@
+import { handleImageError, FALLBACK_EVENT_IMAGE } from '../utils/imageFallback';
 import { useState, useEffect } from 'react';
 import { 
   Calendar, 
@@ -99,10 +100,11 @@ const Events = () => {
               >
                 {/* Image Header with Category Badge */}
                 <div className="relative h-56 overflow-hidden">
-                  <img 
-                    src={event.image_url || '/assets/events/sarhul_fest1.jpg'} 
-                    alt={event.name} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                  <img
+                    src={event.image_url || '/assets/events/sarhul_fest1.jpg'}
+                    alt={event.name}
+                    onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   

@@ -15,7 +15,7 @@ export const DESTINATIONS: AiDestination[] = [
     tag: "Historical", 
     desc: "Agra's iconic white marble mausoleum, a symbol of eternal love and a UNESCO World Heritage site.",
     location: "Agra, Uttar Pradesh",
-    image: "/assets/destinations/Taj_mahal.jpg"
+    image: "/assets/destinations/taj_mahal.jpg"
   },
   { 
     name: "Varanasi Ghats", 
@@ -111,7 +111,7 @@ export const DESTINATIONS: AiDestination[] = [
     tag: 'Waterfall',
     desc: 'A spectacular 98m waterfall on the Subarnarekha River, surrounded by dense forests.',
     location: 'Ranchi, Jharkhand',
-    image: '/assets/destinations/Download3.jpg',
+    image: '/assets/destinations/download3.jpg',
   },
   {
     name: 'Betla National Park',
@@ -151,7 +151,7 @@ export const DESTINATIONS: AiDestination[] = [
     tag: 'Historical',
     desc: 'A historical site where Rabindranath Tagore stayed, offering panoramic views of Ranchi city.',
     location: 'Ranchi, Jharkhand',
-    image: '/assets/destinations/Hill.jpg',
+    image: '/assets/destinations/hill.jpg',
   }
 ];
 
