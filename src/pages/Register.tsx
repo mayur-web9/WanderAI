@@ -105,7 +105,7 @@ const Register = () => {
             Create Your Free Account
           </span>
 
-          <h2 className="text-3xl xl:text-4xl font-extrabold font-display leading-tight">
+          <h2 className="text-2xl xl:text-3xl font-extrabold font-display leading-tight">
             Unlock Personalized Travel Itineraries & Cultural Intelligence
           </h2>
 

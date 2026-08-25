@@ -94,7 +94,7 @@ const Login = () => {
             Next-Gen India Tourism Platform
           </span>
 
-          <h2 className="text-3xl xl:text-4xl font-extrabold font-display leading-tight">
+          <h2 className="text-2xl xl:text-3xl font-extrabold font-display leading-tight">
             Discover Unseen Shrines, Backwaters, & Hidden Heritage with AI
           </h2>
 

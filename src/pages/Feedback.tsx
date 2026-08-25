@@ -72,7 +72,7 @@ const Feedback = () => {
             <MessageSquare className="w-3.5 h-3.5" />
             We Value Your Voice
           </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-gray-900 dark:text-white">
+          <h1 className="text-2xl sm:text-4xl font-extrabold font-display tracking-tight text-gray-900 dark:text-white">
             Share Your Experience & Insights
           </h1>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-3 leading-relaxed">

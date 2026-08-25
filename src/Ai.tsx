@@ -445,7 +445,7 @@ Please format the response with:
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 bg-white/70 dark:bg-obsidian-900/70 backdrop-blur-md rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-md flex flex-col overflow-hidden min-h-[550px]">
+          <div className="flex-1 bg-white/70 dark:bg-obsidian-900/70 backdrop-blur-md rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-md flex flex-col overflow-hidden min-h-[440px] max-h-[72vh]">
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
               {messages.map((msg, index) => {
                 const isBot = msg.role === "assistant";
@@ -581,7 +581,7 @@ Please format the response with:
               <Sparkles className="w-3.5 h-3.5 text-saffron-500" />
               Tailored Day-by-Day Itineraries
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-gray-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 dark:text-white">
               Plan Your Dream Indian Journey
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
@@ -823,7 +823,7 @@ Please format the response with:
               <Compass className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
               Handpicked Indian Wonders
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-gray-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 dark:text-white">
               Discover Iconic & Unseen Destinations
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
@@ -870,7 +870,7 @@ Please format the response with:
                 className="group relative flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-forest-500/40 dark:hover:border-forest-500/40 transition-all duration-300 transform hover:-translate-y-1"
               >
                 {/* Image & Badges */}
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-44 sm:h-48 overflow-hidden">
                   <img
                     src={d.image || '/assets/destinations/taj_mahal.jpg'}
                     alt={d.name}

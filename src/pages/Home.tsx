@@ -231,7 +231,7 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION WITH INTERACTIVE AI HUB */}
       {/* ========================================================================= */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white pt-24 pb-16">
+      <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white pt-20 pb-12 sm:pt-24 sm:pb-16">
         
         {/* Ambient background glowing circles */}
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-saffron-500/15 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
@@ -254,7 +254,7 @@ const Home = () => {
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold font-display tracking-tight leading-[1.08] text-white">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-display tracking-tight leading-[1.12] text-white">
                 Discover the Soul of <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-saffron-400 via-amber-300 to-orange-400">
                   Incredible India
@@ -262,7 +262,7 @@ const Home = () => {
               </h1>
 
               {/* Subtitle */}
-              <p className="text-base sm:text-lg text-emerald-100/90 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+              <p className="text-sm sm:text-base text-emerald-100/90 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
                 From high-altitude Himalayan mountain passes and sacred ghats in Varanasi to tranquil backwaters in Kerala and vibrant traditional bazaars—explore India with customized, intelligent AI travel planning.
               </p>
 
@@ -459,8 +459,8 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 3. INTERACTIVE INSTANT TRIP PLAYGROUND (New Feature) */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-br from-forest-900 via-forest-800 to-obsidian-900 text-white p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden border border-forest-700/60">
+      <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-gradient-to-br from-forest-900 via-forest-800 to-obsidian-900 text-white p-5 sm:p-7 lg:p-8 shadow-2xl relative overflow-hidden border border-forest-700/60">
           
           {/* Subtle decoration */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-saffron-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -474,7 +474,7 @@ const Home = () => {
                 Interactive Circuit Preview
               </span>
 
-              <h2 className="text-3xl sm:text-4xl font-extrabold font-display leading-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-display leading-tight">
                 Preview Top Curated Circuits Across India
               </h2>
 
@@ -541,7 +541,7 @@ const Home = () => {
 
             {/* Right Live Teaser Display */}
             <div className="lg:col-span-6">
-              <div className="rounded-3xl bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6 sm:p-8 shadow-2xl border border-white/20 dark:border-gray-800 space-y-6">
+              <div className="rounded-3xl bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4 sm:p-6 shadow-2xl border border-white/20 dark:border-gray-800 space-y-6">
                 
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -605,14 +605,14 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 4. PLATFORM CAPABILITIES GRID */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 bg-white/70 dark:bg-obsidian-900/60 border-y border-gray-200/60 dark:border-gray-800/60">
+      <section className="py-10 sm:py-14 bg-white/70 dark:bg-obsidian-900/60 border-y border-gray-200/60 dark:border-gray-800/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-forest-100 dark:bg-forest-900/40 text-forest-700 dark:text-forest-300 border border-forest-200 dark:border-forest-800 mb-3">
               <Zap className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
               Smart Travel Capabilities
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold font-display text-gray-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-gray-900 dark:text-white">
               Engineered for Seamless Exploration
             </h2>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-3 leading-relaxed">
@@ -651,7 +651,7 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 5. INTERACTIVE FEATURED DESTINATIONS EXPLORER */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-forest-400">
@@ -712,7 +712,7 @@ const Home = () => {
               className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5"
             >
               {/* Image Container */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-48 sm:h-52 overflow-hidden">
                 <img
                   src={destination.images?.[0] || '/assets/destinations/taj_mahal.jpg'}
                   alt={destination.name}
@@ -775,14 +775,14 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 6. INTERACTIVE TRAVEL PERSONA & VIBE QUIZ */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 bg-sand-100 dark:bg-obsidian-900 border-y border-gray-200/80 dark:border-gray-800">
+      <section className="py-10 sm:py-14 bg-sand-100 dark:bg-obsidian-900 border-y border-gray-200/80 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-saffron-100 dark:bg-saffron-950/60 text-saffron-800 dark:text-saffron-300 border border-saffron-300 dark:border-saffron-800">
             <Sparkles className="w-3.5 h-3.5 text-saffron-500" />
             Interactive Matchmaker
           </span>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-display text-gray-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-gray-900 dark:text-white">
             Find Your Ideal Indian Vacation Vibe
           </h2>
           
@@ -790,7 +790,7 @@ const Home = () => {
             Choose your preferred travel rhythm and vacation duration below to let WanderAI construct your tailored Indian route.
           </p>
 
-          <div className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 border border-gray-200/80 dark:border-gray-800 shadow-xl space-y-6 text-left">
+          <div className="bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-xl space-y-6 text-left">
             
             {/* Step 1: Vibe */}
             <div>
@@ -867,7 +867,7 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 7. UPCOMING CULTURAL FESTIVALS SECTION */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 bg-forest-950 text-white relative overflow-hidden">
+      <section className="py-10 sm:py-14 bg-forest-950 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-saffron-500/20 text-saffron-300 border border-saffron-500/30 mb-3">
@@ -949,7 +949,7 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 8. TRAVELER TESTIMONIALS SECTION */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-forest-400">
             Community Experiences
@@ -966,7 +966,7 @@ const Home = () => {
           {mockReviews.slice(0, 3).map((review) => (
             <div
               key={review.id}
-              className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 border border-gray-200/80 dark:border-gray-800 shadow-sm flex flex-col justify-between"
+              className="bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-sm flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center gap-1 mb-4">
@@ -1002,7 +1002,7 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 9. FINAL CALL TO ACTION */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-18 bg-gradient-to-r from-forest-800 via-forest-900 to-saffron-700 text-white relative overflow-hidden">
+      <section className="py-10 sm:py-14 bg-gradient-to-r from-forest-800 via-forest-900 to-saffron-700 text-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-saffron-300 text-xs font-bold border border-white/20">
             <Sparkles className="w-4 h-4" />

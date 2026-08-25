@@ -97,7 +97,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
     <div className="w-full min-h-screen bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       
       {/* Header Banner */}
-      <section className="relative pt-28 pb-14 bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white overflow-hidden">
+      <section className="relative pt-20 pb-8 sm:pt-24 sm:pb-10 bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white overflow-hidden">
         {/* Subtle glow circles */}
         <div className="absolute top-10 -left-10 w-80 h-80 bg-saffron-500/15 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 -right-10 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -108,7 +108,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
             <span>Living Heritage, Fairs & Artisans</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-display tracking-tight text-white">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white">
             Cultural Festivals & Traditional Bazaars
           </h1>
 
@@ -273,7 +273,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                     className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm hover:shadow-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5"
                   >
                     {/* Image Header */}
-                    <div className="relative h-56 overflow-hidden">
+                    <div className="relative h-44 sm:h-48 overflow-hidden">
                       <img
                         src={event.image_url || '/assets/events/sarhul_fest1.jpg'}
                         alt={event.name}
@@ -301,7 +301,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                     </div>
 
                     {/* Card Body */}
-                    <div className="p-6 flex flex-col flex-1 justify-between space-y-4">
+                    <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between space-y-4">
                       <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">
                         {event.description}
                       </p>
@@ -387,7 +387,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                     className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm hover:shadow-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5"
                   >
                     {/* Image Header */}
-                    <div className="relative h-56 overflow-hidden">
+                    <div className="relative h-44 sm:h-48 overflow-hidden">
                       <img
                         src={market.image || '/assets/marketplaces/dilli_haat.jpg'}
                         alt={market.name}
@@ -416,7 +416,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                     </div>
 
                     {/* Card Body */}
-                    <div className="p-6 flex flex-col flex-1 justify-between space-y-4">
+                    <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between space-y-4">
                       <div>
                         <div className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
                           <MapPin className="h-3.5 w-3.5 mr-1 text-forest-600 dark:text-forest-400 shrink-0" />
