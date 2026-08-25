@@ -27,7 +27,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
       return null;
     }
     return data;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
@@ -47,7 +47,7 @@ export async function upsertProfile(profile: Partial<Profile> & { id: string }):
       return null;
     }
     return data;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
@@ -64,7 +64,7 @@ export async function getUserSettings(userId: string): Promise<UserSettings | nu
       return null;
     }
     return data;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
@@ -100,8 +100,8 @@ export async function getOrCreateActiveChat(userId: string, title = 'WanderAI Tr
     if (!insertErr && newChat) {
       return newChat;
     }
-  } catch (err) {
-    console.warn('travel_chats query fallback:', err);
+  } catch {
+    console.warn('travel_chats query fallback:');
   }
 
   // Fallback to legacy chats table if travel_chats is not yet migrated
@@ -112,7 +112,9 @@ export async function getOrCreateActiveChat(userId: string, title = 'WanderAI Tr
       .eq('user_id', userId)
       .limit(1);
     if (legacyChat && legacyChat.length > 0) return legacyChat[0];
-  } catch {}
+  } catch {
+    // Silently fallback on missing table/column
+  }
 
   return null;
 }
@@ -128,8 +130,8 @@ export async function fetchChatMessages(chatId: string): Promise<Message[]> {
     if (!error && data) {
       return data;
     }
-  } catch (err) {
-    console.warn('travel_messages query fallback:', err);
+  } catch {
+    console.warn('travel_messages query fallback:');
   }
 
   // Fallback to legacy messages table if needed
@@ -140,7 +142,9 @@ export async function fetchChatMessages(chatId: string): Promise<Message[]> {
       .eq('chat_id', chatId)
       .order('created_at', { ascending: true });
     if (legacyMsgs) return legacyMsgs;
-  } catch {}
+  } catch {
+    // Silently fallback on missing table/column
+  }
 
   return [];
 }
@@ -171,8 +175,8 @@ export async function saveMessageToSupabase(
       await supabase.from('travel_chats').update({ updated_at: new Date().toISOString() }).eq('id', chatId);
       return data;
     }
-  } catch (err) {
-    console.warn('saveMessage travel_messages fallback:', err);
+  } catch {
+    console.warn('saveMessage travel_messages fallback:');
   }
 
   // Fallback attempt to messages table
@@ -190,7 +194,9 @@ export async function saveMessageToSupabase(
       .select()
       .single();
     return data;
-  } catch {}
+  } catch {
+    // Silently fallback on missing table/column
+  }
 
   return null;
 }
@@ -207,18 +213,18 @@ export async function getDbDestinations(): Promise<AiDestination[]> {
       .order('name', { ascending: true });
 
     if (!error && data && data.length > 0) {
-      return data.map((d: any) => ({
-        id: d.id,
-        name: d.name,
-        emoji: d.emoji || '📍',
-        tag: d.tag || d.category || 'Historical',
-        desc: d.desc || d.description || d.short_description || '',
-        location: d.location || (d.district ? `${d.district}, India` : 'India'),
-        image: d.image || (d.images && d.images[0]) || '/assets/destinations/Taj_mahal.jpg'
+      return (data as Array<Record<string, unknown>>).map((d) => ({
+        id: typeof d.id === 'string' ? d.id : String(d.id || ''),
+        name: typeof d.name === 'string' ? d.name : 'Destination',
+        emoji: typeof d.emoji === 'string' ? d.emoji : '📍',
+        tag: typeof d.tag === 'string' ? d.tag : (typeof d.category === 'string' ? d.category : 'Historical'),
+        desc: typeof d.desc === 'string' ? d.desc : (typeof d.description === 'string' ? d.description : (typeof d.short_description === 'string' ? d.short_description : '')),
+        location: typeof d.location === 'string' ? d.location : (typeof d.district === 'string' ? `${d.district}, India` : 'India'),
+        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : '/assets/destinations/Taj_mahal.jpg')
       }));
     }
-  } catch (err) {
-    console.warn('travel_destinations query fallback:', err);
+  } catch {
+    console.warn('travel_destinations query fallback');
   }
 
   // Fallback to local data
@@ -258,8 +264,8 @@ export async function saveDbDestination(dest: AiDestination): Promise<AiDestinat
         .single();
       if (!error && data) return { ...dest, id: data.id };
     }
-  } catch (err) {
-    console.warn('saveDbDestination error:', err);
+  } catch {
+    console.warn('saveDbDestination error:');
   }
   return dest;
 }
@@ -271,7 +277,7 @@ export async function deleteDbDestination(idOrName: string): Promise<boolean> {
       .delete()
       .or(`id.eq.${idOrName},name.eq.${idOrName}`);
     return !error;
-  } catch (err) {
+  } catch {
     return false;
   }
 }
@@ -289,8 +295,8 @@ export async function getDbEvents(): Promise<Event[]> {
     if (!error && data && data.length > 0) {
       return data;
     }
-  } catch (err) {
-    console.warn('travel_events query fallback:', err);
+  } catch {
+    console.warn('travel_events query fallback:');
   }
   return mockEvents;
 }
@@ -323,8 +329,8 @@ export async function saveDbEvent(event: Event): Promise<Event> {
         .single();
       if (!error && data) return data;
     }
-  } catch (err) {
-    console.warn('saveDbEvent error:', err);
+  } catch {
+    console.warn('saveDbEvent error:');
   }
   return event;
 }
@@ -333,7 +339,7 @@ export async function deleteDbEvent(id: string): Promise<boolean> {
   try {
     const { error } = await supabase.from('travel_events').delete().eq('id', id);
     return !error;
-  } catch (err) {
+  } catch {
     return false;
   }
 }
@@ -351,8 +357,8 @@ export async function getDbMarketplaces(): Promise<Marketplace[]> {
     if (!error && data && data.length > 0) {
       return data;
     }
-  } catch (err) {
-    console.warn('travel_marketplaces query fallback:', err);
+  } catch {
+    console.warn('travel_marketplaces query fallback:');
   }
   return DEFAULT_MARKETPLACES as unknown as Marketplace[];
 }
@@ -383,8 +389,8 @@ export async function saveDbMarketplace(market: Marketplace): Promise<Marketplac
         .single();
       if (!error && data) return data;
     }
-  } catch (err) {
-    console.warn('saveDbMarketplace error:', err);
+  } catch {
+    console.warn('saveDbMarketplace error:');
   }
   return market;
 }
@@ -393,7 +399,7 @@ export async function deleteDbMarketplace(id: string): Promise<boolean> {
   try {
     const { error } = await supabase.from('travel_marketplaces').delete().eq('id', id);
     return !error;
-  } catch (err) {
+  } catch {
     return false;
   }
 }
@@ -411,8 +417,8 @@ export async function getDbFeedback(): Promise<Feedback[]> {
     if (!error && data) {
       return data;
     }
-  } catch (err) {
-    console.warn('travel_feedback query fallback:', err);
+  } catch {
+    console.warn('travel_feedback query fallback:');
   }
   return [];
 }
@@ -428,8 +434,8 @@ export async function submitDbFeedback(feedback: Omit<Feedback, 'id' | 'created_
     if (!error && data) {
       return data;
     }
-  } catch (err) {
-    console.warn('submitDbFeedback error:', err);
+  } catch {
+    console.warn('submitDbFeedback error:');
   }
   return null;
 }
@@ -438,7 +444,7 @@ export async function deleteDbFeedback(id: string): Promise<boolean> {
   try {
     const { error } = await supabase.from('travel_feedback').delete().eq('id', id);
     return !error;
-  } catch (err) {
+  } catch {
     return false;
   }
 }
@@ -467,8 +473,8 @@ export async function saveDbItinerary(plan: {
     if (!error && data) {
       return data;
     }
-  } catch (err) {
-    console.warn('saveDbItinerary error:', err);
+  } catch {
+    console.warn('saveDbItinerary error:');
   }
   return null;
 }
@@ -483,8 +489,8 @@ export async function getDbItineraries(userId?: string): Promise<ItineraryRecord
     if (!error && data) {
       return data;
     }
-  } catch (err) {
-    console.warn('getDbItineraries error:', err);
+  } catch {
+    console.warn('getDbItineraries error:');
   }
   return [];
 }

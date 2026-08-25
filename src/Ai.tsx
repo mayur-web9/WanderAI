@@ -193,7 +193,7 @@ export default function Ai() {
       if (user?.id && activeChatId) {
         saveMessageToSupabase(activeChatId, user.id, 'assistant', reply).catch(() => null);
       }
-    } catch (e: any) {
+    } catch {
       setMessages((prev) => [
         ...prev, 
         { 
@@ -303,7 +303,7 @@ Please format the response with:
 
     try {
       const result = await callGemini([{ role: "user", content: prompt }], SYSTEM_PROMPT);
-      const parts = result.split(/\n?Detailed Place Notes\s*[:\-]?/i);
+      const parts = result.split(/\n?Detailed Place Notes\s*[:-]?/i);
       let mainItinerary = result;
       let notes = "All detailed guidelines, local food suggestions, and logistics are included in the itinerary above.";
 
@@ -327,8 +327,9 @@ Please format the response with:
         place_notes: notes,
       }).catch(() => null);
 
-    } catch (e: any) {
-      setItinerary("⚠️ Error generating plan: " + (e.message || "Please check your network and try again."));
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : 'Please check your network and try again.';
+      setItinerary("⚠️ Error generating plan: " + errorMsg);
       setPlaceDetails("");
     }
     setItiLoading(false);

@@ -60,8 +60,10 @@ const Register = () => {
       setTimeout(() => {
         navigate('/');
       }, 1200);
-    } catch (err: any) {
-      setError(err.message || 'Unable to register account.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unable to register account.';
+      setError(message);
+      
     } finally {
       setLoading(false);
     }

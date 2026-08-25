@@ -45,8 +45,10 @@ const Login = () => {
         password: password.trim(),
       });
       navigate(authenticatedUser.role === 'admin' ? '/dashboard' : '/');
-    } catch (err: any) {
-      setError(err.message || 'Unable to sign in. Please check your credentials.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unable to sign in. Please check your credentials.';
+      setError(message);
+      
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
+import type { User } from '@supabase/supabase-js';
 import type { UserProfile } from '../types';
 import { getProfile, upsertProfile, getUserSettings } from '../services/supabaseService';
 
@@ -18,7 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   // Sync Supabase Auth User to UserProfile
-  const syncSupabaseUser = async (sbUser: any): Promise<UserProfile> => {
+  const syncSupabaseUser = async (sbUser: User): Promise<UserProfile> => {
     const profile = await getProfile(sbUser.id);
     const fullName = profile?.full_name || sbUser.user_metadata?.full_name || sbUser.email?.split('@')[0] || 'Traveler';
     const isAdmin = sbUser.email?.toLowerCase().includes('admin') || sbUser.email === 'admin@wanderai.com';

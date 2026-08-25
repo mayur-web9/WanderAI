@@ -27,7 +27,7 @@ const Feedback = () => {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const categories: { id: FeedbackType['category']; label: string; icon: any }[] = [
+  const categories: { id: FeedbackType['category']; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'suggestion', label: 'Suggestion', icon: Sparkles },
     { id: 'praise', label: 'Praise', icon: ThumbsUp },
     { id: 'bug', label: 'Bug Report', icon: Bug },
