@@ -1,23 +1,18 @@
 -- ==============================================================================
--- WanderAI Travel Platform - 100% Conflict-Free Database Co-existence Script
+-- WanderAI Travel Platform - 100% Conflict-Free Database Setup Script
 -- ==============================================================================
--- PURPOSE:
--- This script sets up dedicated 'travel_*' tables for WanderAI in your shared
--- Supabase project (xowroyukhnemfukrrruq.supabase.co).
---
 -- GUARANTEE:
 -- • ZERO modifications, drops, or locks on 'velox_*' tables (VeloxAI).
--- • ZERO modifications, drops, or locks on 'chats', 'messages', 'bookmarks', 'daily_activity'.
--- • WanderAI uses its own dedicated 'travel_profiles' table and references 'auth.users(id)' directly.
--- • Idempotent (safe to run multiple times without losing any data).
+-- • ZERO modifications on 'chats', 'messages', 'bookmarks', 'daily_activity'.
+-- • WanderAI uses dedicated 'travel_*' tables referencing 'auth.users(id)'.
+-- • Robust against pre-existing tables & missing constraints.
 -- ==============================================================================
 
--- 1. Enable UUID Extension (Safe & Idempotent)
+-- 1. Enable UUID Extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ==============================================================================
 -- 2. DEDICATED WANDERAI PROFILES & USER SETTINGS
--- (Completely isolated from VeloxAI's velox_profiles and velox_user_settings)
 -- ==============================================================================
 
 CREATE TABLE IF NOT EXISTS public.travel_profiles (
@@ -48,7 +43,6 @@ CREATE TABLE IF NOT EXISTS public.travel_user_settings (
 
 -- ==============================================================================
 -- 3. DEDICATED WANDERAI TRAVEL CHATS & MESSAGES
--- (Isolated from VeloxAI's velox_chats and velox_messages)
 -- ==============================================================================
 
 CREATE TABLE IF NOT EXISTS public.travel_chats (
@@ -77,12 +71,12 @@ CREATE TABLE IF NOT EXISTS public.travel_messages (
 );
 
 -- ==============================================================================
--- 4. DEDICATED WANDERAI CATALOGUES: DESTINATIONS, FESTIVALS, BAZAARS & FEEDBACK
+-- 4. DEDICATED WANDERAI CATALOGUES (DESTINATIONS, FESTIVALS, BAZAARS, FEEDBACK)
 -- ==============================================================================
 
 CREATE TABLE IF NOT EXISTS public.travel_destinations (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
-  name text NOT NULL UNIQUE,
+  name text NOT NULL,
   emoji text DEFAULT '📍',
   tag text DEFAULT 'Historical',
   "desc" text,
@@ -101,7 +95,7 @@ CREATE TABLE IF NOT EXISTS public.travel_destinations (
 
 CREATE TABLE IF NOT EXISTS public.travel_events (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
-  name text NOT NULL UNIQUE,
+  name text NOT NULL,
   description text,
   category text DEFAULT 'festival',
   date_start text,
@@ -114,7 +108,7 @@ CREATE TABLE IF NOT EXISTS public.travel_events (
 
 CREATE TABLE IF NOT EXISTS public.travel_marketplaces (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
-  name text NOT NULL UNIQUE,
+  name text NOT NULL,
   description text,
   location text,
   image text,
@@ -152,8 +146,34 @@ CREATE TABLE IF NOT EXISTS public.travel_itineraries (
 );
 
 -- ==============================================================================
--- 5. ROW LEVEL SECURITY (RLS) POLICIES FOR WANDERAI (travel_*)
--- (Isolated from VeloxAI policies)
+-- 5. ENSURE UNIQUE CONSTRAINTS FOR ON CONFLICT HANDLING
+-- (Guaranteed safe even if tables existed prior without unique keys)
+-- ==============================================================================
+
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'travel_destinations_name_key'
+  ) THEN
+    ALTER TABLE public.travel_destinations ADD CONSTRAINT travel_destinations_name_key UNIQUE (name);
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'travel_events_name_key'
+  ) THEN
+    ALTER TABLE public.travel_events ADD CONSTRAINT travel_events_name_key UNIQUE (name);
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'travel_marketplaces_name_key'
+  ) THEN
+    ALTER TABLE public.travel_marketplaces ADD CONSTRAINT travel_marketplaces_name_key UNIQUE (name);
+  END IF;
+EXCEPTION WHEN OTHERS THEN
+  NULL; -- Ignore if already unique
+END $$;
+
+-- ==============================================================================
+-- 6. ROW LEVEL SECURITY (RLS) POLICIES FOR WANDERAI (travel_*)
 -- ==============================================================================
 
 ALTER TABLE public.travel_profiles ENABLE ROW LEVEL SECURITY;
@@ -166,7 +186,7 @@ ALTER TABLE public.travel_marketplaces ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_feedback ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.travel_itineraries ENABLE ROW LEVEL SECURITY;
 
--- 5.1 Travel Profiles Policies
+-- 6.1 Travel Profiles Policies
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_profiles_select_all') THEN
     CREATE POLICY travel_profiles_select_all ON public.travel_profiles FOR SELECT USING (true);
@@ -176,14 +196,14 @@ DO $$ BEGIN
   END IF;
 END $$;
 
--- 5.2 Travel User Settings Policies
+-- 6.2 Travel User Settings Policies
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_settings_manage_own') THEN
     CREATE POLICY travel_settings_manage_own ON public.travel_user_settings FOR ALL USING (auth.uid() = user_id);
   END IF;
 END $$;
 
--- 5.3 Travel Chats & Messages Policies
+-- 6.3 Travel Chats & Messages Policies
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_chats_manage_own') THEN
     CREATE POLICY travel_chats_manage_own ON public.travel_chats FOR ALL USING (auth.uid() = user_id);
@@ -193,7 +213,7 @@ DO $$ BEGIN
   END IF;
 END $$;
 
--- 5.4 Public Read Catalogues (Destinations, Events, Marketplaces)
+-- 6.4 Public Read Catalogues (Destinations, Events, Marketplaces)
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_destinations_read_public') THEN
     CREATE POLICY travel_destinations_read_public ON public.travel_destinations FOR SELECT USING (true);
@@ -217,7 +237,7 @@ DO $$ BEGIN
   END IF;
 END $$;
 
--- 5.5 Travel Feedback & Saved Itineraries
+-- 6.5 Travel Feedback & Saved Itineraries
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'travel_feedback_insert_any') THEN
     CREATE POLICY travel_feedback_insert_any ON public.travel_feedback FOR INSERT WITH CHECK (true);
@@ -231,8 +251,7 @@ DO $$ BEGIN
 END $$;
 
 -- ==============================================================================
--- 6. SEED INITIAL 27 DESTINATIONS, FESTIVALS & BAZAARS
--- (ON CONFLICT DO NOTHING guarantees zero overwrites)
+-- 7. SEED INITIAL 27 DESTINATIONS, FESTIVALS & BAZAARS
 -- ==============================================================================
 
 INSERT INTO public.travel_destinations (name, emoji, tag, "desc", location, image, is_featured)
