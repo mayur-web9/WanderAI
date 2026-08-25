@@ -202,6 +202,29 @@ const Home = () => {
     { label: 'AI Satisfaction Rate', value: '99.8%', icon: TrendingUp, color: 'from-amber-500 to-saffron-600' },
   ];
 
+  const getFeatureTarget = (title: string) => {
+    switch (title) {
+      case "Multilingual Chat":
+        return "/itinerary?tab=chat&prompt=Namaste!%20Can%20you%20guide%20me%20in%20Hindi%20and%20English%3F";
+      case "Smart Planner":
+        return "/itinerary?tab=plan";
+      case "Culture & Bazaars":
+        return "/events";
+      case "Safety Guide":
+        return "/itinerary?tab=chat&prompt=What%20are%20the%20essential%20safety%2C%20health%2C%20and%20emergency%20guidelines%20for%20traveling%20in%20India%3F";
+      case "Eco-Tourism":
+        return "/itinerary?tab=destinations&tag=Nature";
+      case "Food Finder":
+        return "/itinerary?tab=chat&prompt=Recommend%20the%20most%20authentic%20regional%20food%20dishes%20and%20hidden%20culinary%20gems%20in%20India";
+      case "Transit & Route Guide":
+        return "/itinerary?tab=chat&prompt=How%20do%20I%20navigate%20Indian%20Railways%20trains%20and%20scenic%20road%20routes%3F";
+      case "Destination Explorer":
+        return "/itinerary?tab=destinations";
+      default:
+        return "/itinerary";
+    }
+  };
+
   return (
     <div className="w-full min-h-screen bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       
@@ -602,7 +625,7 @@ const Home = () => {
               return (
                 <Link
                   key={feature.title}
-                  to="/itinerary?tab=chat"
+                  to={getFeatureTarget(feature.title)}
                   className="group relative flex flex-col p-6 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 hover:border-forest-500/60 dark:hover:border-forest-500/60 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5"
                 >
                   <div className="w-13 h-13 rounded-2xl bg-forest-50 dark:bg-forest-950/60 border border-forest-100 dark:border-forest-900/60 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">

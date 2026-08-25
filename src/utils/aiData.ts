@@ -156,14 +156,14 @@ export const DESTINATIONS: AiDestination[] = [
 ];
 
 export const FEATURES = [
-  { icon: "💬", title: "Multilingual Chat", desc: "Get travel advice in 10+ Indian languages including Hindi, Marathi, and Tamil." },
-  { icon: "🗺️", title: "Smart Planner", desc: "Generate custom day-by-day itineraries based on your interests and budget." },
-  { icon: "🏛️", title: "AR Exploration", desc: "Preview historical sites in 3D before you even pack your bags." },
-  { icon: "🛡️", title: "Safety Guide", desc: "Real-time updates on weather, safety protocols, and local emergency contacts." },
-  { icon: "🌿", title: "Eco-Tourism", desc: "Discover sustainable travel options that support local communities and nature." },
-  { icon: "🍽️", title: "Food Finder", desc: "Find the most authentic local eateries and hidden culinary gems in any city." },
-  { icon: "🚌", title: "Transit & Route Guide", desc: "Smart transport advice for trains, cabs, scenic road trips, and state bus routes." },
-  { icon: "📊", title: "Live Insights", desc: "Real-time data for tourism boards to improve visitor experiences and safety." },
+  { icon: "💬", title: "Multilingual Chat", desc: "Get travel advice in 10+ Indian languages including Hindi, Marathi, Bengali, and Tamil." },
+  { icon: "🗺️", title: "Smart Planner", desc: "Generate custom day-by-day itineraries based on your interests, pace, and budget." },
+  { icon: "🛍️", title: "Culture & Bazaars", desc: "Discover historic artisan craft haats, handloom markets, and living tribal harvest festivals." },
+  { icon: "🛡️", title: "Safety Guide", desc: "Real-time updates on weather, safety protocols, and 24x7 tourist emergency contacts." },
+  { icon: "🌿", title: "Eco-Tourism", desc: "Discover sustainable travel options that support local communities and pristine nature." },
+  { icon: "🍽️", title: "Food Finder", desc: "Find the most authentic local eateries and hidden culinary specialties in any city." },
+  { icon: "🚌", title: "Transit & Route Guide", desc: "Smart transport advice for Indian Railways trains, cabs, scenic road trips, and bus routes." },
+  { icon: "📍", title: "Destination Explorer", desc: "Browse 150+ handpicked Indian heritage and nature spots with instant Google Maps links." },
 ];
 
 export const QUICK_PROMPTS = [
