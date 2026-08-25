@@ -1,50 +1,58 @@
-import { handleImageError, FALLBACK_DESTINATION_IMAGE } from './utils/imageFallback';
-import { useState, useRef, useEffect, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Sparkles, 
   Send, 
+  Compass, 
   MapPin, 
   Calendar, 
-  Compass, 
+  DollarSign, 
+  User as UserIcon, 
+  Clock, 
+  ExternalLink, 
+  Bookmark, 
+  BookmarkCheck, 
   RotateCcw, 
   Copy, 
   Check, 
-  ExternalLink, 
-  Sliders, 
-  Clock, 
-  DollarSign, 
-  Bot, 
-  User as UserIcon,
-  Search,
-  BookOpen,
-  ArrowRight
-} from "lucide-react";
-import { useAuth } from './contexts/AuthContext';
+  Search, 
+  Volume2, 
+  VolumeX, 
+  Printer, 
+  Dices, 
+  ArrowRight,
+  CheckCircle2
+} from 'lucide-react';
+import { DESTINATIONS, AiDestination, SYSTEM_PROMPT } from './utils/aiData';
+import { handleImageError, FALLBACK_DESTINATION_IMAGE } from './utils/imageFallback';
 import { 
-  AiDestination, 
-  DESTINATIONS, 
-  QUICK_PROMPTS, 
-  SYSTEM_PROMPT,
-} from "./utils/aiData";
-import { 
-  getDbDestinations, 
   getOrCreateActiveChat, 
-  fetchChatMessages, 
   saveMessageToSupabase, 
-  saveDbItinerary 
+  fetchChatMessages, 
+  saveDbItinerary,
+  getDbDestinations,
+  getDbItineraries
 } from './services/supabaseService';
+import type { Message, ItineraryRecord } from './types';
+import { useAuth } from './contexts/AuthContext';
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+// Multi-key load-balanced pool parser (19 Active Keys)
+function getGeminiApiKeys(): string[] {
+  const raw = import.meta.env.VITE_GEMINI_API_KEYS || '';
+  return raw
+    .split(',')
+    .map((k: string) => k.trim())
+    .filter((k: string) => k && !k.includes('your_gemini_api_key'));
+}
 
-// Multi-model fallback caller
+// Multi-model fallback caller with random load balancing across 19 keys
 async function callGemini(messages: { role: string; content: string }[], systemPrompt: string) {
+  const keys = getGeminiApiKeys();
   const modelsToTry = [
     'gemini-3.6-flash',
-    'gemini-flash-latest',
     'gemini-3.7-flash',
     'gemini-2.5-flash-lite',
-    'gemini-3-flash-preview',
+    'gemini-flash-latest',
   ];
 
   const contents = messages.map((m) => ({
@@ -52,55 +60,46 @@ async function callGemini(messages: { role: string; content: string }[], systemP
     parts: [{ text: m.content }],
   }));
 
-  for (const model of modelsToTry) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`;
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: systemPrompt }],
-          },
-          contents,
-          generationConfig: {
-            maxOutputTokens: 1500,
-            temperature: 0.7,
-          },
-        }),
-      });
+  const startIndex = Math.floor(Math.random() * keys.length);
 
-      const data = await response.json();
-      if (data.error) {
-        continue;
+  for (let k = 0; k < keys.length; k++) {
+    const activeKey = keys[(startIndex + k) % keys.length];
+
+    for (const model of modelsToTry) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemPrompt }],
+            },
+            contents,
+            generationConfig: {
+              maxOutputTokens: 1600,
+              temperature: 0.7,
+            },
+          }),
+        });
+
+        const data = await response.json();
+        if (data.error) {
+          continue;
+        }
+
+        const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (replyText) {
+          return replyText;
+        }
+      } catch {
+        // Try next model / key
       }
-      
-      const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (replyText) {
-        return replyText;
-      }
-    } catch {
-      // Try next model
     }
   }
 
-  // If external API request failed, provide rich contextual response
-  const lastUserMsg = messages.filter(m => m.role === 'user').pop()?.content.toLowerCase() || '';
-  if (lastUserMsg.includes('eco') || lastUserMsg.includes('nature') || lastUserMsg.includes('kerala')) {
-    return `🌿 **Top Recommended Eco & Nature Experiences across India:**\n\n1. **Kerala Backwaters & Munnar Hills:** Cruise along Alleppey's serene palm-lined canals on traditional solar houseboats, followed by high-altitude mist and organic tea gardens in Munnar.\n2. **Betla National Park & Netarhat (Jharkhand):** Explore dense sal forests, Hundru & Jonha waterfalls, and indigenous eco-resorts serving authentic tribal cuisine.\n3. **Mawlynnong & Living Root Bridges (Meghalaya):** Bio-engineered living rubber-tree root bridges, clean crystal waterfalls, and scenic Khasi village stays.\n\n💡 **Traveler Tip:** Winter (October to March) is the ideal season for comfortable temperatures and lush landscapes!`;
-  }
-
-  if (lastUserMsg.includes('beach') || lastUserMsg.includes('south')) {
-    return `🏖️ **Top Beaches & Coastal Escapes in South India:**\n\n1. **Varkala & Marari Beach (Kerala):** Dramatic red laterite cliffs overlooking Arabian Sea waves, quiet coconut groves, and authentic Ayurvedic wellness retreats.\n2. **Gokarna & Om Beach (Karnataka):** Serene coves surrounded by Western Ghat hills, perfect for trekking between Kudle and Half-Moon beaches.\n3. **Dhanushkodi & Rameswaram (Tamil Nadu):** Turquoise blue waters where the Bay of Bengal meets the Indian Ocean at India's mystical southern tip.\n\n🍤 **Food Recommendation:** Try fresh banana-leaf fish curry meals and tender coconut payasam at local beachside shacks!`;
-  }
-
-  if (lastUserMsg.includes('himalaya') || lastUserMsg.includes('adventure') || lastUserMsg.includes('leh') || lastUserMsg.includes('ladakh')) {
-    return `⛰️ **Epic Himalayan Adventure Circuits:**\n\n1. **Leh-Ladakh Circuit:** Cross Khardung La (5,359m), camp beside cobalt-blue Pangong Tso, and experience Tibetan monastery chants at Thiksey.\n2. **Spiti Valley & Chandra Taal:** High-altitude desert monasteries of Key and Tabo, surrounded by snow-dusted peaks and star-studded skies.\n3. **Rishikesh & Garhwal Treks (Uttarakhand):** White-water rafting on the Ganga, followed by alpine meadow treks like Dayara Bugyal and Valley of Flowers.\n\n🛡️ **Altitude Tip:** Spend at least 48 hours acclimatizing in Leh or Manali before crossing passes above 4,000m!`;
-  }
-
-  return `Namaste! 🙏 Here is customized travel guidance for India:\n\n✨ **Key Travel Highlights:**\n- **Heritage & Architecture:** Explore Agra's Taj Mahal, Jaipur's Amer Fort, Hampi's Vijayanagara ruins, and Konark Sun Temple.\n- **Spiritual Essence:** Evening Ganga Aarti in Varanasi & Haridwar, Golden Temple Langar in Amritsar, and Baidyanath Jyotirlinga in Deoghar.\n- **Authentic Bazaars:** Dilli Haat, Jaipur Johari Bazaar, and Hyderabad Laad Bazaar for handlooms, spices, and lacquer crafts.\n\nLet me know your starting city or preferred dates, and I will draft a day-by-day plan for you!`;
+  throw new Error("Unable to connect to travel intelligence engine. Please try again.");
 }
-
 
 // Lightweight inline markdown formatter that converts **bold**, *italic*, `code`, # headers, and bullet points to clean JSX
 function renderInlineFormatted(text: string): React.ReactNode[] {
@@ -144,21 +143,21 @@ function FormattedMarkdown({ content }: { content: string }) {
         // Header 3 / 4
         if (trimmed.startsWith('### ')) {
           return (
-            <h4 key={idx} className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white pt-1.5 pb-0.5 border-b border-gray-100 dark:border-gray-800/80 flex items-center gap-1.5">
+            <h4 key={idx} className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white pt-2 pb-0.5 border-b border-gray-100 dark:border-gray-800/80 flex items-center gap-1.5">
               {renderInlineFormatted(trimmed.slice(4))}
             </h4>
           );
         }
         if (trimmed.startsWith('## ')) {
           return (
-            <h3 key={idx} className="font-bold text-sm sm:text-base text-gray-900 dark:text-white pt-2 pb-0.5 flex items-center gap-1.5">
+            <h3 key={idx} className="font-bold text-sm sm:text-base text-gray-900 dark:text-white pt-2.5 pb-0.5 flex items-center gap-1.5">
               {renderInlineFormatted(trimmed.slice(3))}
             </h3>
           );
         }
         if (trimmed.startsWith('# ')) {
           return (
-            <h2 key={idx} className="font-extrabold text-base text-gray-900 dark:text-white pt-2 pb-0.5">
+            <h2 key={idx} className="font-extrabold text-base text-gray-900 dark:text-white pt-3 pb-0.5">
               {renderInlineFormatted(trimmed.slice(2))}
             </h2>
           );
@@ -202,412 +201,543 @@ function FormattedMarkdown({ content }: { content: string }) {
   );
 }
 
+// Categorized Prompt Chips
+const PROMPT_CATEGORIES = [
+  { id: 'all', label: '🌟 All Prompts' },
+  { id: 'itinerary', label: '🗺️ Itineraries' },
+  { id: 'food', label: '🍲 Food & Bazaars' },
+  { id: 'budget', label: '🎒 Budget & Transit' },
+  { id: 'culture', label: '🛕 Temples & Culture' },
+];
+
+const CURATED_PROMPTS = [
+  { category: 'itinerary', text: 'Plan a 3-day Golden Triangle (Delhi, Agra, Jaipur) express circuit' },
+  { category: 'itinerary', text: '5-day tranquil Kerala backwaters, tea gardens & houseboat trip' },
+  { category: 'food', text: 'Must-try street food walking tour in Varanasi & Old Delhi' },
+  { category: 'food', text: 'Best handicraft bazaars and jewelry haats in Jaipur and Hyderabad' },
+  { category: 'budget', text: 'How to travel across Himachal & Ladakh on a ₹15,000 budget' },
+  { category: 'budget', text: 'Guide to luxury & Vande Bharat express train routes in India' },
+  { category: 'culture', text: 'Ancient rock-cut temple wonders of Ajanta, Ellora, and Hampi' },
+  { category: 'culture', text: 'Sacred river ghats, evening Ganga Aarti rituals, and dress etiquette' },
+];
+
+const POPULAR_STARTING_CITIES = [
+  'New Delhi', 'Mumbai', 'Jaipur', 'Varanasi', 'Kochi', 'Bengaluru', 'Ranchi', 'Kolkata', 'Goa'
+];
+
 export default function Ai() {
   const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<"chat" | "plan" | "destinations">("chat");
-  const destinationsRef = useRef<HTMLDivElement>(null);
-  const [displayDestinations, setDisplayDestinations] = useState<AiDestination[]>(DESTINATIONS);
-  const [destinationSearch, setDestinationSearch] = useState("");
-  const [selectedTag, setSelectedTag] = useState<string>("All");
-
   const { user } = useAuth();
-  const [activeChatId, setActiveChatId] = useState<string | null>(null);
-  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string; time?: string }>>([
-    { 
-      role: "assistant", 
-      content: "Namaste! 🙏 I'm **WanderAI**, your intelligent travel guide for Incredible India.\n\nAsk me for custom multi-day travel plans, hidden cultural gems, best local food hotspots, or transport tips across any Indian state!",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [chatLoading, setChatLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
-  // Planner state
-  const [form, setForm] = useState({ 
-    days: "3", 
-    interest: "eco", 
-    budget: "medium", 
-    city: "New Delhi", 
-    destination: "Himachal Pradesh & Spiti" 
+  // Tab state: 'chat' | 'plan' | 'destinations' | 'saved'
+  const [activeTab, setActiveTab] = useState<'chat' | 'plan' | 'destinations' | 'saved'>(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'plan' || tab === 'planner') return 'plan';
+    if (tab === 'destinations') return 'destinations';
+    if (tab === 'saved') return 'saved';
+    return 'chat';
   });
-  const [itinerary, setItinerary] = useState("");
-  const [placeDetails, setPlaceDetails] = useState("");
-  const [itiLoading, setItiLoading] = useState(false);
-  const [copiedItinerary, setCopiedItinerary] = useState(false);
-  const processedPromptRef = useRef<string | null>(null);
 
-  // Load destinations from Supabase
+  // Chat State
+  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([
+    {
+      role: 'assistant',
+      content: 'Namaste! 🙏 I am your **WanderAI Travel Companion**. How can I help plan your journey across India today? You can ask for custom day-by-day itineraries, regional delicacies, budget tips, train routes, or cultural festival dates!'
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
+  const [activePromptCategory, setActivePromptCategory] = useState('all');
+  const [savedSuccessMsg, setSavedSuccessMsg] = useState<string | null>(null);
+
+  // Planner State
+  const [plannerCity, setPlannerCity] = useState('');
+  const [plannerDays, setPlannerDays] = useState('3');
+  const [plannerStyle, setPlannerStyle] = useState('Heritage & Palaces');
+  const [plannerBudget, setPlannerBudget] = useState('Mid-Range (₹₹)');
+  const [plannerPace, setPlannerPace] = useState('Balanced');
+  const [itinerary, setItinerary] = useState('');
+  const [plannerLoading, setPlannerLoading] = useState(false);
+  const [plannerSaved, setPlannerSaved] = useState(false);
+
+  // Destinations & Saved Itineraries State
+  const [destinationsList, setDestinationsList] = useState<AiDestination[]>(DESTINATIONS);
+  const [destSearch, setDestSearch] = useState('');
+  const [destTagFilter, setDestTagFilter] = useState('All');
+  const [savedItinerariesList, setSavedItinerariesList] = useState<ItineraryRecord[]>([]);
+  const [savedLoading, setSavedLoading] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll chat to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
-    getDbDestinations().then((dests) => {
-      if (dests && dests.length > 0) {
-        setDisplayDestinations(dests);
-      }
-    });
-  }, []);
+    scrollToBottom();
+  }, [messages, loading]);
 
-  // Sync Supabase Chat Thread when user logs in
+  // Load URL prompt if provided
+  useEffect(() => {
+    const urlPrompt = searchParams.get('prompt');
+    if (urlPrompt && urlPrompt.trim()) {
+      handleSend(urlPrompt.trim());
+    }
+  }, [searchParams]);
+
+  // Fetch Destinations & Saved Itineraries
+  useEffect(() => {
+    getDbDestinations().then(data => {
+      if (data && data.length > 0) setDestinationsList(data);
+    });
+
+    if (user?.id) {
+      setSavedLoading(true);
+      getDbItineraries(user.id).then(data => {
+        if (data) setSavedItinerariesList(data);
+        setSavedLoading(false);
+      });
+    }
+  }, [user]);
+
+  // Load chat session if logged in
   useEffect(() => {
     if (user?.id) {
-      getOrCreateActiveChat(user.id, 'WanderAI Exploration').then(async (chat) => {
+      getOrCreateActiveChat(user.id).then(chat => {
         if (chat) {
-          setActiveChatId(chat.id);
-          const history = await fetchChatMessages(chat.id);
-          if (history && history.length > 0) {
-            setMessages(history.map(m => ({
-              role: m.role as 'user' | 'assistant',
-              content: m.content,
-              time: new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            })));
-          }
+          fetchChatMessages(chat.id).then((dbMsgs: Message[]) => {
+            if (dbMsgs && dbMsgs.length > 0) {
+              setMessages(dbMsgs.map((m: Message) => ({ role: m.role as 'user' | 'assistant', content: m.content })));
+            }
+          });
         }
       });
     }
-  }, [user?.id]);
+  }, [user]);
 
-  const sendMessage = useCallback(async (text?: string) => {
-    const msg = (text || input).trim();
-    if (!msg || chatLoading) return;
-    setInput("");
-    
-    const userMsg = { 
-      role: "user" as const, 
-      content: msg,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    setMessages((prev) => [...prev, userMsg]);
-    setChatLoading(true);
+  // Handle Chat Submit
+  const handleSend = async (messageText?: string) => {
+    const textToSend = (messageText || input).trim();
+    if (!textToSend || loading) return;
+
+    const newMsgs = [...messages, { role: 'user' as const, content: textToSend }];
+    setMessages(newMsgs);
+    if (!messageText) setInput('');
+    setLoading(true);
 
     try {
-      if (user?.id && activeChatId) {
-        saveMessageToSupabase(activeChatId, user.id, 'user', msg).catch(() => null);
+      if (user?.id) {
+        const chat = await getOrCreateActiveChat(user.id);
+        if (chat) {
+          await saveMessageToSupabase(chat.id, user.id, 'user', textToSend);
+        }
       }
 
-      const reply = await callGemini([...messages, userMsg], SYSTEM_PROMPT);
-      const assistantMessage = { 
-        role: "assistant" as const, 
-        content: reply,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
+      const reply = await callGemini(newMsgs, SYSTEM_PROMPT);
+      setMessages([...newMsgs, { role: 'assistant' as const, content: reply }]);
 
-      if (user?.id && activeChatId) {
-        saveMessageToSupabase(activeChatId, user.id, 'assistant', reply).catch(() => null);
+      if (user?.id) {
+        const chat = await getOrCreateActiveChat(user.id);
+        if (chat) {
+          await saveMessageToSupabase(chat.id, user.id, 'assistant', reply);
+        }
       }
     } catch {
-      setMessages((prev) => [
-        ...prev, 
-        { 
-          role: "assistant" as const, 
-          content: "Namaste! I encountered a temporary network delay. Here are top recommendations based on your query:\n\n• For custom multi-day plans, try our **Trip Planner** tab above!\n• Check out iconic heritage sites, local bazaar specialties, and cultural fairs listed across our platform.",
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      setMessages([
+        ...newMsgs,
+        {
+          role: 'assistant' as const,
+          content: 'I apologize, but I encountered a momentary connection delay. Please retry or pick one of the quick suggestions above!'
         }
       ]);
-    }
-    setChatLoading(false);
-  }, [input, chatLoading, user?.id, activeChatId, messages]);
-
-  // Handle URL Query Params (Deep feature navigation)
-  useEffect(() => {
-    const tabParam = searchParams.get('tab');
-    if (tabParam === 'plan' || tabParam === 'destinations' || tabParam === 'chat') {
-      setActiveTab(tabParam);
-    }
-
-    const destinationParam = searchParams.get('destination');
-    if (destinationParam) {
-      setForm(prev => ({ ...prev, destination: destinationParam }));
-      setActiveTab('plan');
-    }
-
-    const interestParam = searchParams.get('interest');
-    if (interestParam) {
-      setForm(prev => ({ ...prev, interest: interestParam }));
-      setActiveTab('plan');
-    }
-
-    const tagParam = searchParams.get('tag');
-    if (tagParam) {
-      setSelectedTag(tagParam);
-      setActiveTab('destinations');
-    }
-
-    const promptParam = searchParams.get('prompt');
-    if (promptParam && promptParam !== processedPromptRef.current) {
-      processedPromptRef.current = promptParam;
-      setActiveTab('chat');
-      setTimeout(() => {
-        sendMessage(promptParam);
-      }, 200);
-    }
-
-    if (window.location.hash === '#destinations') {
-      setActiveTab("destinations");
-      setTimeout(() => {
-        destinationsRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
-    }
-  }, [searchParams, sendMessage]);
-
-  useEffect(() => {
-    if (activeTab === "chat") {
-      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, chatLoading, activeTab]);
-
-  const handleCopy = (text: string, index?: number) => {
-    navigator.clipboard.writeText(text);
-    if (index !== undefined) {
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 2000);
-    } else {
-      setCopiedItinerary(true);
-      setTimeout(() => setCopiedItinerary(false), 2000);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Text to Speech
+  const toggleSpeech = (text: string, index: number) => {
+    if ('speechSynthesis' in window) {
+      if (speakingIndex === index) {
+        window.speechSynthesis.cancel();
+        setSpeakingIndex(null);
+      } else {
+        window.speechSynthesis.cancel();
+        const cleanText = text.replace(/[*#`_]/g, '');
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.onend = () => setSpeakingIndex(null);
+        utterance.onerror = () => setSpeakingIndex(null);
+        window.speechSynthesis.speak(utterance);
+        setSpeakingIndex(index);
+      }
+    }
+  };
+
+  // Copy text handler
+  const handleCopy = (text: string, index: number) => {
+    navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2500);
+  };
+
+  // Save itinerary to database
+  const handleSaveToItineraries = async (content: string, title: string) => {
+    if (!user?.id) {
+      setSavedSuccessMsg('Please sign in to save itineraries to your account.');
+      setTimeout(() => setSavedSuccessMsg(null), 4000);
+      return;
+    }
+
+    const saved = await saveDbItinerary({
+      user_id: user.id,
+      days: plannerDays || 'Custom',
+      interest: plannerStyle || 'General Tourism',
+      budget: plannerBudget || 'Standard',
+      city: plannerCity || 'India',
+      destination: title || 'Curated Indian Circuit',
+      itinerary_text: content,
+      place_notes: 'Saved via WanderAI Intelligence'
+    });
+
+    if (saved) {
+      setPlannerSaved(true);
+      setSavedSuccessMsg('✨ Plan saved to your Saved Itineraries!');
+      getDbItineraries(user.id).then(data => {
+        if (data) setSavedItinerariesList(data);
+      });
+      setTimeout(() => {
+        setPlannerSaved(false);
+        setSavedSuccessMsg(null);
+      }, 4000);
+    }
+  };
+
+  // Reset Chat
   const clearChat = () => {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
     setMessages([
-      { 
-        role: "assistant", 
-        content: "Chat cleared! Where in India are you thinking of traveling next?",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      },
+      {
+        role: 'assistant',
+        content: 'Chat refreshed! Where in India are we traveling next? Ask me anything!'
+      }
     ]);
   };
 
-  const generateItinerary = async () => {
-    setItiLoading(true);
-    setItinerary("");
-    setPlaceDetails("");
-
-    const interestLabels: Record<string, string> = {
-      eco: "Eco, Wildlife & Nature Exploration",
-      cultural: "Tribal & Indigenous Heritage",
-      spiritual: "Sacred Pilgrimages & Spiritual Peace",
-      adventure: "Trekking, Mountaineering & Adventure Sports",
-      rare: "Unseen Hidden Gems & Offbeat Escapes",
-      mixed: "Grand Mixed Highlights (Culture, Nature & Heritage)",
-    };
-
-    const prompt = `Create a comprehensive, beautifully structured ${form.days}-day India travel itinerary for someone interested in ${interestLabels[form.interest] || form.interest} with a ${form.budget} budget.
-Starting point: ${form.city}
-Destination focus: ${form.destination || 'India Highlights'}
-
-Please format the response with:
-1. A brief 2-sentence trip overview with best season & transport vibe.
-2. Day-by-Day breakdown with emojis:
-   - Day 1: [Theme/City] -> Morning, Afternoon, Evening, Must-Try Local Food, Pro Tip
-   - Day 2: ... (continue for each day)
-3. Budget Breakdown & Transportation suggestions.
-4. Separate section titled "Detailed Place Notes" with exact visiting hours, entry tips, and culture etiquette for each main spot.`;
-
-    try {
-      const result = await callGemini([{ role: "user", content: prompt }], SYSTEM_PROMPT);
-      const parts = result.split(/\n?Detailed Place Notes\s*[:-]?/i);
-      let mainItinerary = result;
-      let notes = "All detailed guidelines, local food suggestions, and logistics are included in the itinerary above.";
-
-      if (parts.length > 1) {
-        mainItinerary = parts[0].trim();
-        notes = parts[1].trim();
-      }
-
-      setItinerary(mainItinerary);
-      setPlaceDetails(notes);
-
-      // Save to Supabase itineraries table
-      saveDbItinerary({
-        user_id: user?.id,
-        days: form.days,
-        interest: form.interest,
-        budget: form.budget,
-        city: form.city,
-        destination: form.destination,
-        itinerary_text: mainItinerary,
-        place_notes: notes,
-      }).catch(() => null);
-
-    } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : 'Please check your network and try again.';
-      setItinerary("⚠️ Error generating plan: " + errorMsg);
-      setPlaceDetails("");
-    }
-    setItiLoading(false);
+  // Random Prompt Generator
+  const handleSurpriseMe = () => {
+    const random = CURATED_PROMPTS[Math.floor(Math.random() * CURATED_PROMPTS.length)];
+    handleSend(random.text);
   };
 
-  // Filter destinations
-  const tags = ["All", ...Array.from(new Set(displayDestinations.map(d => d.tag)))];
-  const filteredDestinations = displayDestinations.filter(d => {
-    const matchesTag = selectedTag === "All" || d.tag.toLowerCase() === selectedTag.toLowerCase();
-    const matchesSearch = destinationSearch === "" || 
-      d.name.toLowerCase().includes(destinationSearch.toLowerCase()) || 
-      d.location.toLowerCase().includes(destinationSearch.toLowerCase()) ||
-      d.desc.toLowerCase().includes(destinationSearch.toLowerCase());
-    return matchesTag && matchesSearch;
-  });
+  // Generate Smart Itinerary
+  const handleGeneratePlanner = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!plannerCity.trim()) return;
+
+    setPlannerLoading(true);
+    setPlannerSaved(false);
+
+    const prompt = `Create a comprehensive, highly detailed ${plannerDays}-day itinerary for ${plannerCity}, India.
+- Travel Style: ${plannerStyle}
+- Budget Tier: ${plannerBudget}
+- Pace: ${plannerPace}
+
+Format with:
+1. Day-by-Day schedule (Morning, Afternoon, Evening) with exact highlights and travel timings.
+2. Estimated daily budget breakdown in INR (₹) including food, entry fees, and local transit.
+3. Authentic regional foods & best local eateries to try.
+4. Essential local packing, weather, and cultural guidelines.`;
+
+    try {
+      const reply = await callGemini([{ role: 'user', content: prompt }], SYSTEM_PROMPT);
+      setItinerary(reply);
+    } catch {
+      setItinerary("Unable to generate the itinerary right now. Please try again.");
+    } finally {
+      setPlannerLoading(false);
+    }
+  };
+
+  // Filtered Prompt Chips
+  const filteredPrompts = useMemo(() => {
+    if (activePromptCategory === 'all') return CURATED_PROMPTS;
+    return CURATED_PROMPTS.filter(p => p.category === activePromptCategory);
+  }, [activePromptCategory]);
+
+  // Destination Categories
+  const destinationTags = useMemo(() => {
+    const set = new Set(destinationsList.map(d => d.tag));
+    return ['All', ...Array.from(set)];
+  }, [destinationsList]);
+
+  // Filtered Destinations
+  const filteredDestinations = useMemo(() => {
+    return destinationsList.filter(d => {
+      const matchTag = destTagFilter === 'All' || d.tag.toLowerCase() === destTagFilter.toLowerCase();
+      const matchSearch = !destSearch.trim() || 
+        d.name.toLowerCase().includes(destSearch.toLowerCase()) || 
+        d.location.toLowerCase().includes(destSearch.toLowerCase()) || 
+        d.desc.toLowerCase().includes(destSearch.toLowerCase());
+      return matchTag && matchSearch;
+    });
+  }, [destinationsList, destTagFilter, destSearch]);
 
   return (
-    <div className="w-full min-h-[calc(100vh-4rem)] flex flex-col bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div className="w-full min-h-[calc(100vh-64px)] bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 flex flex-col transition-colors duration-200">
       
-      {/* Top Banner / Tab Switcher */}
-      <div className="w-full border-b border-gray-200/80 dark:border-gray-800 bg-white/80 dark:bg-obsidian-900/90 backdrop-blur-md sticky top-16 sm:top-18 z-30 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3.5 gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-forest-700 via-forest-600 to-saffron-500 flex items-center justify-center text-white shadow-md">
-                <Sparkles className="w-4 h-4" />
+      {/* ========================================================================= */}
+      {/* TOP COMMAND BAR */}
+      {/* ========================================================================= */}
+      <div className="sticky top-16 z-30 bg-white/90 dark:bg-obsidian-900/90 backdrop-blur-xl border-b border-gray-200/80 dark:border-gray-800 shadow-xs">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          
+          {/* Engine Title & Health Status */}
+          <div className="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-start">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-forest-700 to-forest-500 text-white flex items-center justify-center shadow-sm">
+                <Sparkles className="w-4 h-4 text-saffron-400" />
               </div>
               <div>
-                <h1 className="text-base sm:text-lg font-bold font-display text-gray-900 dark:text-white flex items-center gap-2">
-                  WanderAI Travel Intelligence
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-forest-100 dark:bg-forest-900/60 text-forest-700 dark:text-forest-300">
-                    Active
+                <h1 className="text-xs sm:text-sm font-bold font-display text-gray-900 dark:text-white flex items-center gap-1.5">
+                  <span>WanderAI Engine</span>
+                  <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> 19-Key Pool
                   </span>
                 </h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Real-time Indian tourism guidance, custom routes & itineraries (Database Synced)
+                <p className="text-[10px] text-gray-500 dark:text-gray-400 hidden sm:block">
+                  Live AI Travel Planner, Cultural Guide & Indian Routes
                 </p>
               </div>
             </div>
 
-            {/* Navigation Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-gray-100/90 dark:bg-gray-800/90 rounded-2xl border border-gray-200/80 dark:border-gray-700/60">
-              <button
-                onClick={() => setActiveTab("chat")}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "chat"
-                    ? "bg-white dark:bg-gray-900 text-forest-700 dark:text-forest-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                <Bot className="w-4 h-4 text-forest-600 dark:text-forest-400" />
-                <span>AI Chat Guide</span>
-              </button>
-              <button
-                onClick={() => setActiveTab("plan")}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "plan"
-                    ? "bg-white dark:bg-gray-900 text-saffron-600 dark:text-saffron-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                <Sliders className="w-4 h-4 text-saffron-500" />
-                <span>Trip Planner</span>
-              </button>
-              <button
-                onClick={() => setActiveTab("destinations")}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "destinations"
-                    ? "bg-white dark:bg-gray-900 text-emerald-600 dark:text-emerald-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                <Compass className="w-4 h-4 text-emerald-500" />
-                <span>Destinations ({displayDestinations.length})</span>
-              </button>
-            </div>
+            {/* Quick Surprise Me button on mobile header */}
+            <button
+              onClick={handleSurpriseMe}
+              className="sm:hidden px-2.5 py-1 rounded-xl bg-saffron-50 dark:bg-saffron-950/60 text-saffron-700 dark:text-saffron-300 border border-saffron-200 dark:border-saffron-800 text-[11px] font-bold flex items-center gap-1"
+            >
+              <Dices className="w-3 h-3" />
+              <span>Surprise</span>
+            </button>
           </div>
+
+          {/* Interactive Mode Switcher Tabs */}
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-gray-100 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/60 w-full sm:w-auto justify-center">
+            <button
+              onClick={() => setActiveTab('chat')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeTab === 'chat'
+                  ? 'bg-white dark:bg-gray-900 text-forest-800 dark:text-forest-300 shadow-xs'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-saffron-500" />
+              <span>AI Chat</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('plan')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeTab === 'plan'
+                  ? 'bg-white dark:bg-gray-900 text-forest-800 dark:text-forest-300 shadow-xs'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <Calendar className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
+              <span>Trip Planner</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('destinations')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeTab === 'destinations'
+                  ? 'bg-white dark:bg-gray-900 text-forest-800 dark:text-forest-300 shadow-xs'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5 text-emerald-500" />
+              <span>Explore ({destinationsList.length})</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('saved')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeTab === 'saved'
+                  ? 'bg-white dark:bg-gray-900 text-forest-800 dark:text-forest-300 shadow-xs'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <Bookmark className="w-3.5 h-3.5 text-amber-500" />
+              <span>Saved</span>
+            </button>
+          </div>
+
         </div>
       </div>
 
-      {/* TAB CONTENT: 1. CHAT WITH WANDERAI */}
-      {activeTab === "chat" && (
-        <div className="w-full flex-1 max-w-5xl mx-auto px-3 sm:px-6 py-3 sm:py-4 flex flex-col">
-          {/* Quick Prompts Carousel */}
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-saffron-500" />
-                Popular Questions
-              </span>
-              <button
-                onClick={clearChat}
-                className="text-xs font-semibold text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 flex items-center gap-1 transition-colors"
-                title="Reset conversation"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                Clear Chat
-              </button>
-            </div>
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-              {QUICK_PROMPTS.map((prompt) => (
+      {/* Global Notification Toast */}
+      {savedSuccessMsg && (
+        <div className="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="px-4 py-2.5 rounded-2xl bg-forest-900 text-white text-xs font-bold shadow-2xl border border-forest-700 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span>{savedSuccessMsg}</span>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* TAB 1: AI CHAT COMPANION */}
+      {/* ========================================================================= */}
+      {activeTab === 'chat' && (
+        <div className="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-3 flex flex-col">
+          
+          {/* Topic Pills Toolbar */}
+          <div className="mb-3 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1 overflow-x-auto scrollbar-none py-0.5">
+                {PROMPT_CATEGORIES.map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActivePromptCategory(cat.id)}
+                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all whitespace-nowrap ${
+                      activePromptCategory === cat.id
+                        ? 'bg-forest-700 text-white shadow-xs'
+                        : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200/80 dark:border-gray-800'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0 pl-2">
                 <button
-                  key={prompt}
-                  onClick={() => sendMessage(prompt)}
-                  className="whitespace-nowrap px-4 py-2 rounded-full text-xs font-semibold bg-white dark:bg-gray-900 border border-gray-200/90 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:border-forest-500 dark:hover:border-forest-500 hover:text-forest-700 dark:hover:text-forest-400 transition-all shadow-xs shrink-0 flex items-center gap-1.5"
+                  onClick={handleSurpriseMe}
+                  className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-saffron-50 dark:bg-saffron-950/60 text-saffron-700 dark:text-saffron-300 border border-saffron-200 dark:border-saffron-800 text-[11px] font-bold hover:bg-saffron-100 transition"
+                  title="Generate a random travel prompt"
                 >
-                  <span>{prompt}</span>
-                  <ArrowRight className="w-3 h-3 text-saffron-500" />
+                  <Dices className="w-3.5 h-3.5" />
+                  <span>Surprise Me</span>
+                </button>
+
+                <button
+                  onClick={clearChat}
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition"
+                  title="Clear conversation"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span className="hidden sm:inline">Clear</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Prompts Carousel */}
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+              {filteredPrompts.map((p, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSend(p.text)}
+                  className="whitespace-nowrap px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:border-forest-500 hover:text-forest-700 dark:hover:text-forest-300 transition-all shadow-2xs shrink-0 flex items-center gap-1.5"
+                >
+                  <span>{p.text}</span>
+                  <ArrowRight className="w-3 h-3 text-saffron-500 opacity-60" />
                 </button>
               ))}
             </div>
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 bg-white/70 dark:bg-obsidian-900/70 backdrop-blur-md rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-md flex flex-col overflow-hidden h-[calc(100vh-210px)] min-h-[380px] max-h-[700px]">
-            <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4">
+          <div className="flex-1 flex flex-col bg-white dark:bg-gray-900 rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-sm overflow-hidden h-[calc(100vh-230px)] min-h-[380px] max-h-[700px]">
+            
+            {/* Scrollable Message History */}
+            <div className="flex-1 overflow-y-auto p-3.5 sm:p-5 space-y-4">
               {messages.map((msg, index) => {
-                const isBot = msg.role === "assistant";
+                const isBot = msg.role === 'assistant';
                 return (
                   <div
                     key={index}
-                    className={`flex items-start gap-3 sm:gap-4 max-w-4xl ${
-                      isBot ? "mr-auto" : "ml-auto flex-row-reverse"
+                    className={`flex items-start gap-2.5 sm:gap-3.5 max-w-3xl ${
+                      isBot ? 'mr-auto' : 'ml-auto flex-row-reverse'
                     }`}
                   >
                     {/* Avatar */}
                     <div
-                      className={`w-7 h-7 sm:w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-sm ${
+                      className={`w-7 h-7 sm:w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
                         isBot
-                          ? "bg-gradient-to-tr from-forest-700 to-forest-500 text-white"
-                          : "bg-gradient-to-tr from-saffron-500 to-saffron-600 text-white"
+                          ? 'bg-gradient-to-tr from-forest-700 to-forest-500 text-white'
+                          : 'bg-gradient-to-tr from-saffron-500 to-saffron-600 text-white'
                       }`}
                     >
-                      {isBot ? <Sparkles className="w-3.5 h-3.5" /> : <UserIcon className="w-3.5 h-3.5" />}
+                      {isBot ? <Sparkles className="w-3.5 h-3.5 text-saffron-300" /> : <UserIcon className="w-3.5 h-3.5" />}
                     </div>
 
-                    {/* Bubble */}
-                    <div className="flex flex-col space-y-1">
-                      <div className="flex items-center gap-2 px-1">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                          {isBot ? "WanderAI Guide" : (user?.full_name || "You")}
-                        </span>
-                        {msg.time && (
-                          <span className="text-[10px] text-gray-400 dark:text-gray-500">
-                            {msg.time}
-                          </span>
-                        )}
+                    {/* Chat Bubble */}
+                    <div className="flex-1 space-y-1.5">
+                      <div className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider ${isBot ? 'text-forest-700 dark:text-forest-400' : 'text-saffron-700 dark:text-saffron-400 justify-end'}`}>
+                        <span>{isBot ? 'WanderAI Guide' : 'You'}</span>
                       </div>
 
                       <div
-                        className={`rounded-3xl px-5 py-4 text-sm sm:text-base leading-relaxed relative group ${
+                        className={`p-3 sm:p-4 rounded-2xl transition-all ${
                           isBot
-                            ? "bg-white dark:bg-gray-900/95 text-gray-800 dark:text-gray-100 border border-gray-200/90 dark:border-gray-800 shadow-sm"
-                            : "bg-gradient-to-r from-forest-700 to-forest-800 text-white shadow-lg shadow-forest-900/15"
+                            ? 'bg-gray-50 dark:bg-gray-800/80 text-gray-900 dark:text-gray-100 border border-gray-200/80 dark:border-gray-700/60 shadow-xs'
+                            : 'bg-forest-700 text-white shadow-sm'
                         }`}
                       >
                         <FormattedMarkdown content={msg.content} />
 
-                        {/* Copy button for bot response */}
-                        {isBot && (
-                          <div className="mt-3 pt-2.5 border-t border-gray-100 dark:border-gray-800/80 flex justify-end">
+                        {/* Actions Toolbar for Bot Responses */}
+                        {isBot && index > 0 && (
+                          <div className="mt-2.5 pt-2 border-t border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between text-[11px]">
+                            <div className="flex items-center gap-3">
+                              <button
+                                onClick={() => handleCopy(msg.content, index)}
+                                className="inline-flex items-center gap-1 font-semibold text-gray-500 dark:text-gray-400 hover:text-forest-600 dark:hover:text-forest-400 transition"
+                                title="Copy to clipboard"
+                              >
+                                {copiedIndex === index ? (
+                                  <>
+                                    <Check className="w-3 h-3 text-emerald-500" />
+                                    <span className="text-emerald-500 font-bold">Copied</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="w-3 h-3" />
+                                    <span>Copy</span>
+                                  </>
+                                )}
+                              </button>
+
+                              <button
+                                onClick={() => toggleSpeech(msg.content, index)}
+                                className="inline-flex items-center gap-1 font-semibold text-gray-500 dark:text-gray-400 hover:text-saffron-600 dark:hover:text-saffron-400 transition"
+                                title="Listen with speech synthesis"
+                              >
+                                {speakingIndex === index ? (
+                                  <>
+                                    <VolumeX className="w-3 h-3 text-red-500" />
+                                    <span className="text-red-500">Stop</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Volume2 className="w-3 h-3" />
+                                    <span>Listen</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+
                             <button
-                              onClick={() => handleCopy(msg.content, index)}
-                              className="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-forest-600 dark:hover:text-forest-400 transition-colors"
+                              onClick={() => handleSaveToItineraries(msg.content, 'AI Travel Recommendation')}
+                              className="inline-flex items-center gap-1 font-bold text-forest-700 dark:text-forest-400 hover:underline"
+                              title="Save to My Saved Itineraries"
                             >
-                              {copiedIndex === index ? (
-                                <>
-                                  <Check className="w-3.5 h-3.5 text-emerald-500" />
-                                  <span className="text-emerald-500 font-bold">Copied</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Copy className="w-3.5 h-3.5" />
-                                  <span>Copy</span>
-                                </>
-                              )}
+                              <Bookmark className="w-3 h-3" />
+                              <span>Save Plan</span>
                             </button>
                           </div>
                         )}
@@ -617,342 +747,322 @@ Please format the response with:
                 );
               })}
 
-              {/* Typing indicator */}
-              {chatLoading && (
-                <div className="flex items-start gap-3 mr-auto animate-in fade-in duration-200">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-forest-700 to-forest-500 text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Sparkles className="w-5 h-5 animate-spin" />
+              {/* Typing / Streaming Indicator */}
+              {loading && (
+                <div className="flex items-start gap-2.5 sm:gap-3.5 max-w-3xl mr-auto animate-in fade-in">
+                  <div className="w-7 h-7 sm:w-8 h-8 rounded-xl bg-forest-700 text-white flex items-center justify-center shrink-0">
+                    <Sparkles className="w-3.5 h-3.5 animate-spin" />
                   </div>
-                  <div className="rounded-3xl px-5 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 text-sm flex items-center gap-3 shadow-sm">
-                    <div className="flex space-x-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-forest-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-saffron-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-forest-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                    </div>
-                    <span className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400">
-                      WanderAI is curating your personalized guide…
-                    </span>
+                  <div className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/60 flex items-center gap-2 text-xs font-semibold text-gray-600 dark:text-gray-400">
+                    <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
+                    <span>WanderAI is researching destinations & routes…</span>
                   </div>
                 </div>
               )}
-
-              <div ref={chatEndRef} />
+              <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Bar */}
-            <div className="p-3 sm:p-4 bg-white/95 dark:bg-gray-900/95 border-t border-gray-200/80 dark:border-gray-800">
+            {/* Chat Input Bar */}
+            <div className="p-2.5 sm:p-3 bg-white dark:bg-gray-900 border-t border-gray-200/80 dark:border-gray-800">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  sendMessage();
+                  handleSend();
                 }}
                 className="flex items-center gap-2"
               >
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask WanderAI about destinations, food, temples, heritage, or budget tips across India..."
-                    disabled={chatLoading}
-                    className="w-full px-5 py-4 rounded-2xl bg-gray-100/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 text-sm sm:text-base text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-forest-500/50 focus:border-forest-500 transition"
-                  />
-                </div>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ask about destinations, budget, trains, heritage, food..."
+                  disabled={loading}
+                  className="flex-1 px-4 py-2.5 text-xs sm:text-sm rounded-2xl bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-forest-500 dark:focus:border-forest-500 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none transition"
+                />
                 <button
                   type="submit"
-                  disabled={!input.trim() || chatLoading}
-                  className="px-6 py-4 rounded-2xl bg-gradient-to-r from-forest-600 via-forest-700 to-forest-800 hover:from-forest-700 hover:to-forest-900 disabled:opacity-50 text-white font-bold text-sm shadow-md shadow-forest-900/20 flex items-center justify-center gap-2 transition-all transform active:scale-95 shrink-0"
+                  disabled={!input.trim() || loading}
+                  className="px-4 py-2.5 rounded-2xl bg-forest-700 hover:bg-forest-800 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition"
                 >
-                  <Send className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ask AI</span>
+                  <span>Send</span>
+                  <Send className="w-3.5 h-3.5" />
                 </button>
               </form>
             </div>
+
           </div>
         </div>
       )}
 
-      {/* TAB CONTENT: 2. AI TRIP PLANNER */}
-      {activeTab === "plan" && (
-        <div className="w-full flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-saffron-100 dark:bg-saffron-900/30 text-saffron-700 dark:text-saffron-400 border border-saffron-200 dark:border-saffron-800 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-saffron-500" />
-              Tailored Day-by-Day Itineraries
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 dark:text-white">
-              Plan Your Dream Indian Journey
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-              Select your travel pace, budget, and destination to instantly generate a custom schedule packed with timings, food gems, and logistics.
-            </p>
-          </div>
+      {/* ========================================================================= */}
+      {/* TAB 2: SMART DAY-BY-DAY TRIP PLANNER */}
+      {/* ========================================================================= */}
+      {activeTab === 'plan' && (
+        <div className="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-6 py-4 space-y-6">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            {/* Left Column: Visual Configurator Form */}
+            <div className="lg:col-span-5 bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-sm space-y-5">
+              <div>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-forest-100 dark:bg-forest-950 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-800 mb-2">
+                  <Calendar className="w-3 h-3 text-forest-600" /> Interactive Generator
+                </span>
+                <h2 className="text-lg sm:text-xl font-bold font-display text-gray-900 dark:text-white">
+                  Craft Your Custom Itinerary
+                </h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Select your destination, rhythm, budget, and travel days.
+                </p>
+              </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Form Column */}
-            <div className="lg:col-span-5 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
-              <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white mb-6 flex items-center gap-2 pb-3 border-b border-gray-100 dark:border-gray-800">
-                <Sliders className="w-5 h-5 text-forest-600 dark:text-forest-400" />
-                Customize Travel Parameters
-              </h3>
-
-              <div className="space-y-5">
-                {/* Duration Chips */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
-                    Trip Duration
+              <form onSubmit={handleGeneratePlanner} className="space-y-4">
+                
+                {/* 1. Destination / Starting City */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-saffron-500" /> Destination or Region:
                   </label>
-                  <div className="grid grid-cols-5 gap-2">
-                    {["2", "3", "5", "7", "10"].map((d) => (
+                  <input
+                    type="text"
+                    value={plannerCity}
+                    onChange={(e) => setPlannerCity(e.target.value)}
+                    placeholder="e.g. Jaipur & Udaipur, Kerala Backwaters, Ladakh..."
+                    required
+                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500"
+                  />
+                  {/* Quick City Chips */}
+                  <div className="flex flex-wrap gap-1 pt-1">
+                    {POPULAR_STARTING_CITIES.map(city => (
                       <button
-                        key={d}
                         type="button"
-                        onClick={() => setForm({ ...form, days: d })}
-                        className={`py-2.5 rounded-xl text-xs font-bold transition-all ${
-                          form.days === d
-                            ? "bg-forest-600 text-white shadow-sm"
-                            : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                        }`}
+                        key={city}
+                        onClick={() => setPlannerCity(city)}
+                        className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-forest-100 hover:text-forest-700 transition"
                       >
-                        {d} Days
+                        {city}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* Primary Theme/Interest */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
-                    <Compass className="w-3.5 h-3.5 text-saffron-500" />
-                    Travel Theme & Focus
+                {/* 2. Duration Selector */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-forest-600" /> Trip Duration:
+                  </label>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {[
+                      { days: '2', label: '2 Days' },
+                      { days: '3', label: '3 Days' },
+                      { days: '5', label: '5 Days' },
+                      { days: '7', label: '7 Days' },
+                    ].map(d => (
+                      <button
+                        type="button"
+                        key={d.days}
+                        onClick={() => setPlannerDays(d.days)}
+                        className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                          plannerDays === d.days
+                            ? 'bg-forest-700 text-white shadow-xs'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200'
+                        }`}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. Travel Vibe & Rhythm */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5 text-saffron-500" /> Travel Vibe:
                   </label>
                   <select
-                    value={form.interest}
-                    onChange={(e) => setForm({ ...form, interest: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-forest-500"
+                    value={plannerStyle}
+                    onChange={(e) => setPlannerStyle(e.target.value)}
+                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-forest-500"
                   >
-                    <option value="eco">🌿 Eco-Tourism & Wildlife Sanctuaries</option>
-                    <option value="cultural">🎭 Tribal & Folk Heritage</option>
-                    <option value="spiritual">🛕 Ancient Shrines & Spiritual Peace</option>
-                    <option value="adventure">⛰️ Mountain Treks & Outdoor Thrills</option>
-                    <option value="rare">🔍 Hidden Gems & Untouched Wonders</option>
-                    <option value="mixed">🌈 Complete Mixed Highlights</option>
+                    <option>🏰 Heritage & Royal Palaces</option>
+                    <option>🌿 Nature, Waterfalls & Eco-Trails</option>
+                    <option>🕉️ Spiritual Ghats & Ancient Temples</option>
+                    <option>⛰️ High Altitude Adventure & Treks</option>
+                    <option>🍲 Authentic Food, Spices & Bazaars</option>
+                    <option>🏖️ Coastal Beaches & Relaxation</option>
                   </select>
                 </div>
 
-                {/* Budget */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
-                    <DollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    Budget Preference
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "budget", label: "💚 Budget", sub: "Hostels & Trains" },
-                      { id: "medium", label: "💛 Moderate", sub: "Mid Hotels & Cabs" },
-                      { id: "premium", label: "🌟 Luxury", sub: "Resorts & Flights" },
-                    ].map((b) => (
+                {/* 4. Pace & Budget */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-gray-700 dark:text-gray-300">Travel Pace:</label>
+                    <select
+                      value={plannerPace}
+                      onChange={(e) => setPlannerPace(e.target.value)}
+                      className="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+                    >
+                      <option>Relaxed</option>
+                      <option>Balanced</option>
+                      <option>Fast-Paced</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                      <DollarSign className="w-3 h-3 text-emerald-600" /> Budget:
+                    </label>
+                    <select
+                      value={plannerBudget}
+                      onChange={(e) => setPlannerBudget(e.target.value)}
+                      className="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+                    >
+                      <option>Budget (₹)</option>
+                      <option>Mid-Range (₹₹)</option>
+                      <option>Luxury (₹₹₹)</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Submit Action */}
+                <button
+                  type="submit"
+                  disabled={plannerLoading || !plannerCity.trim()}
+                  className="w-full py-3 rounded-2xl bg-gradient-to-r from-forest-700 to-forest-800 hover:from-forest-800 hover:to-forest-900 disabled:opacity-50 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition transform active:scale-98"
+                >
+                  {plannerLoading ? (
+                    <>
+                      <Sparkles className="w-4 h-4 animate-spin text-saffron-300" />
+                      <span>Generating Detailed Itinerary…</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-4 h-4 text-saffron-400" />
+                      <span>Generate Day-by-Day Itinerary</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+
+            {/* Right Column: Generated Itinerary View */}
+            <div className="lg:col-span-7 bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+              
+              {itinerary ? (
+                <div className="space-y-4">
+                  {/* Result Header & Actions */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+                    <div>
+                      <h3 className="text-base font-bold font-display text-gray-900 dark:text-white">
+                        {plannerCity} — {plannerDays}-Day Trip Plan
+                      </h3>
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                        {plannerStyle} • {plannerBudget} • {plannerPace}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
                       <button
-                        key={b.id}
-                        type="button"
-                        onClick={() => setForm({ ...form, budget: b.id })}
-                        className={`p-2.5 rounded-xl text-left transition-all ${
-                          form.budget === b.id
-                            ? "bg-forest-50 dark:bg-forest-950/60 border-2 border-forest-600 text-forest-900 dark:text-forest-200"
-                            : "bg-gray-100 dark:bg-gray-800 border border-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                        onClick={() => window.print()}
+                        className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 transition text-xs font-bold flex items-center gap-1"
+                        title="Print or save as PDF"
+                      >
+                        <Printer className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Print</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleCopy(itinerary, 999)}
+                        className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 transition text-xs font-bold flex items-center gap-1"
+                        title="Copy full itinerary"
+                      >
+                        {copiedIndex === 999 ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="text-emerald-500">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Copy</span>
+                          </>
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => handleSaveToItineraries(itinerary, `${plannerCity} ${plannerDays}-Day Plan`)}
+                        className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
+                          plannerSaved
+                            ? 'bg-emerald-600 text-white'
+                            : 'bg-forest-700 hover:bg-forest-800 text-white'
                         }`}
                       >
-                        <div className="text-xs font-bold">{b.label}</div>
-                        <div className="text-[10px] text-gray-500 dark:text-gray-400">{b.sub}</div>
+                        {plannerSaved ? <BookmarkCheck className="w-3.5 h-3.5" /> : <Bookmark className="w-3.5 h-3.5" />}
+                        <span>{plannerSaved ? 'Saved' : 'Save Plan'}</span>
                       </button>
-                    ))}
+                    </div>
+                  </div>
+
+                  {/* Formatted Content */}
+                  <div className="overflow-y-auto max-h-[520px] pr-2">
+                    <FormattedMarkdown content={itinerary} />
                   </div>
                 </div>
-
-                {/* Starting City */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
-                    Starting Point / City
-                  </label>
-                  <input
-                    type="text"
-                    value={form.city}
-                    onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    placeholder="e.g. New Delhi, Mumbai, Bengaluru, Ranchi, Kolkata..."
-                    className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-forest-500"
-                  />
-                </div>
-
-                {/* Destination */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-saffron-500" />
-                    Target Region / State
-                  </label>
-                  <input
-                    type="text"
-                    value={form.destination}
-                    onChange={(e) => setForm({ ...form, destination: e.target.value })}
-                    placeholder="e.g. Kerala Backwaters, Spiti Valley, Rajasthan Heritage, Meghalaya..."
-                    className="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-forest-500"
-                  />
-                </div>
-
-                {/* Action Button */}
-                <button
-                  onClick={generateItinerary}
-                  disabled={itiLoading}
-                  className="w-full mt-4 py-4 rounded-2xl bg-gradient-to-r from-saffron-500 via-saffron-600 to-forest-700 hover:from-saffron-600 hover:to-forest-800 text-white font-bold text-sm sm:text-base shadow-lg shadow-saffron-500/20 flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50"
-                >
-                  <Sparkles className="w-5 h-5" />
-                  {itiLoading ? "Generating Detailed Itinerary…" : "✨ Generate AI Trip Itinerary"}
-                </button>
-              </div>
-            </div>
-
-            {/* Results Column */}
-            <div className="lg:col-span-7 space-y-6">
-              {/* Itinerary Overview */}
-              <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
-                <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-100 dark:border-gray-800">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-xl bg-forest-100 dark:bg-forest-900/40 text-forest-700 dark:text-forest-300">
-                      <Calendar className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">
-                        Generated Itinerary
-                      </h3>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {form.days}-Day {form.destination || 'India'} Plan
-                      </p>
-                    </div>
+              ) : (
+                <div className="py-16 text-center space-y-3 my-auto">
+                  <div className="w-12 h-12 rounded-2xl bg-forest-50 dark:bg-forest-950 text-forest-700 dark:text-forest-400 flex items-center justify-center mx-auto text-xl shadow-xs">
+                    🗺️
                   </div>
-
-                  {itinerary && (
-                    <button
-                      onClick={() => handleCopy(itinerary + "\n\n" + placeDetails)}
-                      className="px-3 py-1.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 transition-colors flex items-center gap-1.5"
-                    >
-                      {copiedItinerary ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-500" />
-                          <span className="text-emerald-500">Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" />
-                          <span>Copy All</span>
-                        </>
-                      )}
-                    </button>
-                  )}
-                </div>
-
-                {itiLoading ? (
-                  <div className="py-16 text-center space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-saffron-100 dark:bg-saffron-900/40 text-saffron-600 dark:text-saffron-400 flex items-center justify-center mx-auto animate-spin">
-                      <Sparkles className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="text-base font-bold text-gray-800 dark:text-gray-200">
-                        Crafting your personalized trip itinerary…
-                      </h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mt-1">
-                        Computing optimal travel routes, heritage timings, regional food hotspots, and seasonal tips.
-                      </p>
-                    </div>
-                  </div>
-                ) : itinerary ? (
-                  <div className="prose prose-sm dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
-                    {itinerary}
-                  </div>
-                ) : (
-                  <div className="py-12 text-center text-gray-400 dark:text-gray-500">
-                    <div className="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3 text-2xl">
-                      🗺️
-                    </div>
-                    <p className="text-sm font-medium">
-                      Configure your travel preferences on the left and click <b>Generate AI Trip Itinerary</b>.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Detailed Place Notes & Cultural Etiquette */}
-              {(placeDetails || itiLoading) && (
-                <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
-                  <div className="flex items-center gap-2 pb-4 mb-4 border-b border-gray-100 dark:border-gray-800">
-                    <div className="p-2 rounded-xl bg-saffron-100 dark:bg-saffron-900/40 text-saffron-700 dark:text-saffron-300">
-                      <BookOpen className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">
-                        Place Notes & Practical Logistics
-                      </h3>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Visiting hours, entry protocols, local foods & etiquette
-                      </p>
-                    </div>
-                  </div>
-
-                  {itiLoading ? (
-                    <div className="py-8 text-center text-xs text-gray-400">
-                      Analyzing local site guidelines…
-                    </div>
-                  ) : (
-                    <div className="prose prose-sm dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {placeDetails}
-                    </div>
-                  )}
+                  <h3 className="text-base font-bold text-gray-800 dark:text-gray-200">
+                    Ready to Generate Your Indian Adventure
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto leading-relaxed">
+                    Pick a starting city and your preferred rhythm on the left, then click <b>Generate Day-by-Day Itinerary</b> to view complete routes, costs, and local cuisine.
+                  </p>
                 </div>
               )}
+
             </div>
+
           </div>
         </div>
       )}
 
-      {/* TAB CONTENT: 3. EXPLORE DESTINATIONS DIRECTLY */}
-      {activeTab === "destinations" && (
-        <div ref={destinationsRef} className="w-full flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-800 mb-3">
-              <Compass className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
-              Handpicked Indian Wonders
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 dark:text-white">
-              Discover Iconic & Unseen Destinations
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-              Browse heritage forts, serene backwaters, sacred ghats, and hidden hill escapes. Click any destination to consult WanderAI.
-            </p>
-          </div>
+      {/* ========================================================================= */}
+      {/* TAB 3: DESTINATIONS CATALOGUE EXPLORER */}
+      {/* ========================================================================= */}
+      {activeTab === 'destinations' && (
+        <div className="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-6 py-4 space-y-5">
+          
+          {/* Header & Filter Toolbar */}
+          <div className="bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-5 border border-gray-200/80 dark:border-gray-800 shadow-sm space-y-3">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="relative w-full sm:w-80">
+                <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={destSearch}
+                  onChange={(e) => setDestSearch(e.target.value)}
+                  placeholder="Search destinations by name, state, or vibe..."
+                  className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500"
+                />
+              </div>
 
-          {/* Search & Filter Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-white dark:bg-gray-900 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={destinationSearch}
-                onChange={(e) => setDestinationSearch(e.target.value)}
-                placeholder="Search by city, name, or vibe..."
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-forest-500 text-sm focus:outline-none"
-              />
+              <div className="text-xs font-semibold text-gray-500 dark:text-gray-400">
+                Showing <b>{filteredDestinations.length}</b> handpicked Indian wonders
+              </div>
             </div>
 
-            {/* Tag Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
-              {tags.map((tag) => (
+            {/* Category Tags */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none border-t border-gray-100 dark:border-gray-800 pt-2">
+              {destinationTags.map(tag => (
                 <button
                   key={tag}
-                  onClick={() => setSelectedTag(tag)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                    selectedTag === tag
-                      ? "bg-forest-600 text-white shadow-xs"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  onClick={() => setDestTagFilter(tag)}
+                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                    destTagFilter === tag
+                      ? 'bg-forest-700 text-white shadow-xs'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200'
                   }`}
                 >
                   {tag}
@@ -961,64 +1071,67 @@ Please format the response with:
             </div>
           </div>
 
-          {/* Grid of destinations */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredDestinations.map((d) => (
+          {/* Destinations Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {filteredDestinations.map((dest) => (
               <div
-                key={d.name}
-                className="group relative flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-forest-500/40 dark:hover:border-forest-500/40 transition-all duration-300 transform hover:-translate-y-1"
+                key={dest.id || dest.name}
+                className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
               >
-                {/* Image & Badges */}
-                <div className="relative h-44 sm:h-48 overflow-hidden">
+                {/* Image */}
+                <div className="relative h-40 sm:h-44 overflow-hidden">
                   <img
-                    src={d.image || '/assets/destinations/taj_mahal.jpg'}
-                    alt={d.name}
+                    src={dest.image || '/assets/destinations/taj_mahal.jpg'}
+                    alt={dest.name}
                     onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                  <div className="absolute top-3 right-3">
-                    <span className="px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-white text-[11px] font-bold border border-white/20">
-                      {d.tag}
+                  
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className="px-2.5 py-0.5 rounded-full bg-saffron-500 text-white text-[10px] font-bold uppercase tracking-wider">
+                      {dest.tag}
                     </span>
                   </div>
 
-                  <div className="absolute bottom-3 left-4 flex items-center gap-2">
-                    <span className="text-2xl">{d.emoji}</span>
-                    <h3 className="text-lg font-bold text-white font-display">
-                      {d.name}
+                  <div className="absolute bottom-2.5 left-3 right-3">
+                    <h3 className="text-base font-bold font-display text-white drop-shadow-sm flex items-center gap-1.5">
+                      <span>{dest.name}</span>
                     </h3>
+                    <div className="flex items-center text-[11px] text-gray-200 mt-0.5">
+                      <MapPin className="w-3 h-3 text-saffron-400 mr-1 shrink-0" />
+                      <span>{dest.location}</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 flex flex-col flex-1">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3 mb-4 flex-1">
-                    {d.desc}
+                {/* Body */}
+                <div className="p-4 flex flex-col flex-1 justify-between space-y-3">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-3 leading-relaxed">
+                    {dest.desc}
                   </p>
 
-                  <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between mt-auto">
+                  <div className="pt-2.5 border-t border-gray-100 dark:border-gray-800 flex items-center gap-2">
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}`}
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(dest.name + ' ' + dest.location)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-forest-700 dark:text-forest-400 hover:underline"
+                      className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 transition text-xs font-bold flex items-center gap-1"
+                      title="View on Google Maps"
                     >
-                      <MapPin className="w-3.5 h-3.5" />
-                      {d.location}
-                      <ExternalLink className="w-3 h-3 ml-0.5 opacity-60" />
+                      <ExternalLink className="w-3 h-3 text-forest-600 dark:text-forest-400" />
+                      <span>Map</span>
                     </a>
 
                     <button
                       onClick={() => {
-                        setActiveTab("chat");
-                        sendMessage(`Tell me everything I should know about visiting ${d.name} in ${d.location}, including best travel months, famous local foods, and nearby hidden gems.`);
+                        setPlannerCity(dest.location.split(',')[0]);
+                        setActiveTab('plan');
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-saffron-50 dark:bg-saffron-950/40 text-saffron-700 dark:text-saffron-400 hover:bg-saffron-100 font-bold text-xs flex items-center gap-1 transition-colors border border-saffron-200 dark:border-saffron-800/60"
+                      className="flex-1 px-3 py-2 rounded-xl bg-forest-700 hover:bg-forest-800 text-white text-xs font-bold flex items-center justify-center gap-1 shadow-xs transition"
                     >
-                      <Sparkles className="w-3 h-3" />
-                      Ask WanderAI
+                      <Sparkles className="w-3 h-3 text-saffron-400" />
+                      <span>Plan Trip Here</span>
                     </button>
                   </div>
                 </div>
@@ -1026,19 +1139,90 @@ Please format the response with:
             ))}
           </div>
 
-          {filteredDestinations.length === 0 && (
-            <div className="py-16 text-center text-gray-500 dark:text-gray-400">
-              <p className="text-base font-semibold">No destinations matched your filter.</p>
-              <button
-                onClick={() => { setSelectedTag("All"); setDestinationSearch(""); }}
-                className="mt-3 text-xs font-bold text-forest-600 dark:text-forest-400 underline"
-              >
-                Reset filters
-              </button>
-            </div>
-          )}
         </div>
       )}
+
+      {/* ========================================================================= */}
+      {/* TAB 4: SAVED ITINERARIES & TRIPS */}
+      {/* ========================================================================= */}
+      {activeTab === 'saved' && (
+        <div className="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-4 space-y-5">
+          
+          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3">
+            <div>
+              <h2 className="text-lg sm:text-xl font-bold font-display text-gray-900 dark:text-white flex items-center gap-2">
+                <Bookmark className="w-5 h-5 text-saffron-500" />
+                <span>My Saved Itineraries</span>
+              </h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Access your custom travel plans saved from WanderAI Chat & Planner.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setActiveTab('plan')}
+              className="px-3.5 py-1.5 rounded-xl bg-forest-700 text-white text-xs font-bold flex items-center gap-1"
+            >
+              <Sparkles className="w-3 h-3 text-saffron-400" />
+              <span>Create New</span>
+            </button>
+          </div>
+
+          {savedLoading ? (
+            <div className="py-12 text-center text-xs text-gray-400">
+              Loading your saved itineraries…
+            </div>
+          ) : savedItinerariesList.length === 0 ? (
+            <div className="py-16 text-center rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-8 space-y-3">
+              <Bookmark className="w-8 h-8 text-gray-400 mx-auto" />
+              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300">
+                No saved itineraries yet
+              </h3>
+              <p className="text-xs text-gray-500 max-w-sm mx-auto">
+                Generate an itinerary in <b>Trip Planner</b> or chat with <b>WanderAI</b> and click <b>Save Plan</b> to store it here.
+              </p>
+              <button
+                onClick={() => setActiveTab('plan')}
+                className="px-4 py-2 rounded-xl bg-forest-700 text-white text-xs font-bold"
+              >
+                Launch Trip Planner
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {savedItinerariesList.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 p-5 shadow-sm space-y-3"
+                >
+                  <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-2.5">
+                    <div>
+                      <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                        {String(item.destination || item.city || 'Saved Indian Itinerary')}
+                      </h4>
+                      <p className="text-[11px] text-gray-500">
+                        {String(item.days || '')} Days • {String(item.interest || '')} • {String(item.budget || '')}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => handleCopy(String(item.itinerary_text || ''), idx + 1000)}
+                      className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-xs font-semibold flex items-center gap-1"
+                    >
+                      {copiedIndex === idx + 1000 ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                      <span>Copy</span>
+                    </button>
+                  </div>
+                  <div className="max-h-60 overflow-y-auto pr-2 text-xs">
+                    <FormattedMarkdown content={String(item.itinerary_text || '')} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+        </div>
+      )}
+
     </div>
   );
 }
