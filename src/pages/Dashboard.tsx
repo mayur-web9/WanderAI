@@ -1,4 +1,6 @@
 ﻿import { handleImageError, FALLBACK_EVENT_IMAGE, FALLBACK_MARKETPLACE_IMAGE } from '../utils/imageFallback';
+import { UnsplashImage } from '../components/UnsplashImage';
+import { EVENT_QUERIES, MARKETPLACE_QUERIES } from '../services/unsplashService';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -284,7 +286,7 @@ const Dashboard = () => {
                 <div key={event.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700/60 flex items-start justify-between gap-3 group">
                   <div className="flex gap-3">
                     {event.image_url && (
-                      <img src={event.image_url || 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop'} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                      <UnsplashImage query={EVENT_QUERIES[event.name] ?? event.name + ' India festival'} staticSrc={event.image_url || 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop'} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
                     )}
                     <div>
                       <h3 className="font-bold text-sm text-gray-900 dark:text-white">{event.name}</h3>
@@ -337,7 +339,7 @@ const Dashboard = () => {
               {marketplaces.map((market) => (
                 <div key={market.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700/60 flex items-start justify-between gap-3 group">
                   <div className="flex gap-3">
-                    <img src={market.image || 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80&auto=format&fit=crop'} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                    <UnsplashImage query={MARKETPLACE_QUERIES[market.name] ?? market.name + ' market India'} staticSrc={market.image || 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80&auto=format&fit=crop'} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
                     <div>
                       <h3 className="font-bold text-sm text-gray-900 dark:text-white">{market.name}</h3>
                       <p className="text-[11px] text-forest-600 dark:text-forest-400 font-semibold">{market.location}</p>
@@ -497,5 +499,6 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
 
 
