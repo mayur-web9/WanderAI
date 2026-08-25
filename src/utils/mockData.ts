@@ -239,7 +239,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 19.8876,
     "longitude": 86.0945,
     "images": [
-      "https://images.unsplash.com/photo-1600100397608-f010f443b221?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1631166686956-56a0a0c75f80?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "November to February",
     "entry_fee": 40,
@@ -290,7 +290,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 20.0268,
     "longitude": 75.178,
     "images": [
-      "https://images.unsplash.com/photo-1600100397608-f010f443b221?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 40,
@@ -307,7 +307,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 9.9195,
     "longitude": 78.1193,
     "images": [
-      "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
@@ -324,7 +324,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 28.5244,
     "longitude": 77.1855,
     "images": [
-      "https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 50,
@@ -341,7 +341,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 21.9497,
     "longitude": 89.1833,
     "images": [
-      "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "November to March",
     "entry_fee": 100,
@@ -358,7 +358,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 30.0869,
     "longitude": 78.2676,
     "images": [
-      "https://images.unsplash.com/photo-1598890777032-bde13fbe34c9?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1598890777032-bde13fbe34c9?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "September to November & March to May",
     "entry_fee": 0,
@@ -375,7 +375,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 25.2702,
     "longitude": 91.7323,
     "images": [
-      "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
     "entry_fee": 30,
@@ -392,7 +392,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 26.9124,
     "longitude": 70.9126,
     "images": [
-      "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1578735427-9773f2469da8?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 50,
@@ -409,7 +409,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 26.5775,
     "longitude": 93.1711,
     "images": [
-      "https://images.unsplash.com/photo-1564349683136-77e08dba1ef6?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1564349683136-77e08dba1ef6?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "November to April",
     "entry_fee": 100,
@@ -426,7 +426,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 15.6062,
     "longitude": 73.738,
     "images": [
-      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "November to March",
     "entry_fee": 0,
@@ -443,7 +443,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 30.728,
     "longitude": 79.6053,
     "images": [
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "July to September",
     "entry_fee": 150,
@@ -477,7 +477,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 23.8667,
     "longitude": 84.1833,
     "images": [
-      "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
     "entry_fee": 100,
@@ -494,7 +494,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 24.4844,
     "longitude": 86.6993,
     "images": [
-      "https://images.unsplash.com/photo-1627894006066-b45786537123?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1592389946522-a81c9d8ecad7?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
@@ -511,7 +511,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 23.4795,
     "longitude": 84.269,
     "images": [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1506744038136-46273834b3ad?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
     "entry_fee": 0,
@@ -746,4 +746,6 @@ export const mockReviews: (Review & { user_name: string; location: string })[] =
     created_at: new Date().toISOString()
   }
 ];
+
+
 

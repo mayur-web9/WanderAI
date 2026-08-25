@@ -124,7 +124,7 @@ export const DESTINATIONS: AiDestination[] = [
     "tag": "Heritage",
     "desc": "Rock-cut cave temples spanning ancient Buddhist, Hindu, and Jain heritage, featuring the monolithic Kailash Temple carved from a single cliff.",
     "location": "Aurangabad, Maharashtra",
-    "image": "https://images.unsplash.com/photo-1600100397608-f010f443b221?q=80&w=1000&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80&auto=format&fit=crop"
   },
   {
     "id": "meenakshi-temple",
