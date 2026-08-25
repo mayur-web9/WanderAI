@@ -1,7 +1,6 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import BackToHome from './components/BackToHome';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -13,6 +12,8 @@ import NotFound from './pages/NotFound';
 import Ai from './Ai';
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen flex flex-col bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <ScrollToTop />
@@ -37,8 +38,9 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <BackToHome />
-      <Footer />
+      
+      {/* Footer is only displayed on the Home page */}
+      {location.pathname === '/' && <Footer />}
     </div>
   );
 }
