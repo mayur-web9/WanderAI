@@ -5,10 +5,8 @@ import {
   Star, 
   MapPin, 
   Calendar, 
-  Users, 
   Sparkles, 
   ExternalLink, 
-  TrendingUp, 
   Zap,
   Bot,
   Send,
@@ -194,13 +192,6 @@ const Home = () => {
       return matchesCategory && matchesSearch;
     });
   }, [featuredDestinations, destCategoryFilter, destinationSearch]);
-
-  const stats = [
-    { label: 'Curated Destinations', value: '150+', icon: MapPin, color: 'from-emerald-600 to-teal-700' },
-    { label: 'Happy Explorers', value: '25K+', icon: Users, color: 'from-saffron-500 to-orange-600' },
-    { label: 'Cultural Festivals', value: '50+', icon: Calendar, color: 'from-forest-700 to-emerald-800' },
-    { label: 'AI Satisfaction Rate', value: '99.8%', icon: TrendingUp, color: 'from-amber-500 to-saffron-600' },
-  ];
 
   const getFeatureTarget = (title: string) => {
     switch (title) {
@@ -427,33 +418,6 @@ const Home = () => {
 
         {/* Transition gradient to body */}
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-sand-50 dark:from-obsidian-950 pointer-events-none" />
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 2. STATS SECTION */}
-      {/* ========================================================================= */}
-      <section className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <div 
-                key={index} 
-                className="bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1 group"
-              >
-                <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white mb-3 shadow-md group-hover:scale-110 transition-transform`}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 dark:text-white">
-                  {stat.value}
-                </div>
-                <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">
-                  {stat.label}
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </section>
 
       {/* ========================================================================= */}
@@ -1035,4 +999,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
 
