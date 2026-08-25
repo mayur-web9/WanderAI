@@ -77,106 +77,463 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
 
 export const mockDestinations: Destination[] = [
   {
-    id: '1',
-    name: 'Hundru Falls',
-    district: 'Ranchi',
-    category: 'waterfall',
-    description: 'A spectacular waterfall formed by Subarnarekha River, cascading from a height of 98 meters. Surrounded by dense forests, it offers a mesmerizing view especially during monsoon.',
-    short_description: 'Spectacular 98m waterfall on the Subarnarekha River',
-    latitude: 23.4415,
-    longitude: 85.5936,
-    images: [
-      '/assets/destinations/download3.jpg',
+    "id": "taj-mahal",
+    "name": "Taj Mahal",
+    "district": "Agra",
+    "category": "historical",
+    "description": "Agra's iconic ivory-white marble mausoleum, a symbol of eternal love and a UNESCO World Heritage site standing gracefully beside the Yamuna River.",
+    "short_description": "UNESCO World Heritage white marble monument and symbol of eternal love.",
+    "latitude": 27.1751,
+    "longitude": 78.0421,
+    "images": [
+      "/assets/destinations/taj_mahal.jpg"
     ],
-    best_time: 'July to October',
-    entry_fee: 30,
-    is_featured: true,
-    created_at: new Date().toISOString()
+    "best_time": "October to March",
+    "entry_fee": 50,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.668Z"
   },
   {
-    id: '2',
-    name: 'Betla National Park',
-    district: 'Latehar',
-    category: 'wildlife',
-    description: 'One of the first national parks in India to become a tiger reserve. Home to tigers, elephants, leopards, and various species of flora and fauna.',
-    short_description: 'Premier tiger reserve with rich biodiversity',
-    latitude: 23.8667,
-    longitude: 84.1833,
-    images: [
-       '/assets/destinations/download2.jpg',
+    "id": "varanasi-ghats",
+    "name": "Varanasi Ghats",
+    "district": "Varanasi",
+    "category": "temple",
+    "description": "Experience the spiritual soul of India along the sacred riverfront steps of the Ganges, famous for ancient temples and evening Maha Ganga Aarti.",
+    "short_description": "Sacred riverfront ghats and evening Ganga Aarti along the holy Ganges.",
+    "latitude": 25.3176,
+    "longitude": 82.9739,
+    "images": [
+      "/assets/destinations/varanasi_ghats.jpg"
     ],
-    best_time: 'November to June',
-    entry_fee: 200,
-    is_featured: true,
-    created_at: new Date().toISOString()
+    "best_time": "October to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
   },
   {
-    id: '3',
-    name: 'Baidyanath Temple',
-    district: 'Deoghar',
-    category: 'temple',
-    description: 'One of the twelve Jyotirlingas, this ancient temple is a major pilgrimage site. The temple complex is known for its spiritual significance and architectural beauty.',
-    short_description: 'Sacred Jyotirlinga shrine and pilgrimage center',
-    latitude: 24.4844,
-    longitude: 86.6993,
-    images: [
-      '/assets/destinations/download.jpg',
+    "id": "kerala-backwaters",
+    "name": "Kerala Backwaters",
+    "district": "Alleppey",
+    "category": "park",
+    "description": "A serene labyrinth of interconnected palm-fringed canals, lagoons, and lakes, best explored on a traditional luxury Kettuvallam houseboat.",
+    "short_description": "Tranquil network of canals, lagoons, and luxury houseboats.",
+    "latitude": 9.4981,
+    "longitude": 76.3388,
+    "images": [
+      "/assets/destinations/kerala_backwaters.jpg"
     ],
-    best_time: 'October to March',
-    entry_fee: 0,
-    is_featured: true,
-    created_at: new Date().toISOString()
+    "best_time": "September to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
   },
   {
-    id: '4',
-    name: 'Jonha Falls',
-    district: 'Ranchi',
-    category: 'waterfall',
-    description: 'Also known as Gautamdhara, this beautiful waterfall drops from a height of 43 meters. The surrounding area is perfect for trekking and picnics.',
-    short_description: 'Serene waterfall ideal for trekking and picnics',
-    latitude: 23.3058,
-    longitude: 85.4425,
-    images: [
-      '/assets/destinations/jonha_falls.jpg',
+    "id": "hampi-ruins",
+    "name": "Hampi Ruins",
+    "district": "Vijayanagara",
+    "category": "historical",
+    "description": "The monumental boulder-strewn landscape of Hampi, home to the UNESCO-listed stone chariot, grand monolithic temples, and Vijayanagara ruins.",
+    "short_description": "UNESCO World Heritage stone chariot and ancient Vijayanagara ruins.",
+    "latitude": 15.335,
+    "longitude": 76.46,
+    "images": [
+      "/assets/destinations/hampi_ruins.jpg"
     ],
-    best_time: 'June to December',
-    entry_fee: 20,
-    is_featured: false,
-    created_at: new Date().toISOString()
+    "best_time": "October to February",
+    "entry_fee": 40,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
   },
   {
-    id: '5',
-    name: 'Ranchi Lake',
-    district: 'Ranchi',
-    category: 'park',
-    description: 'An artificial lake built in 1842, surrounded by lush green hills. Popular spot for boating and evening walks.',
-    short_description: 'Historic artificial lake perfect for boating',
-    latitude: 23.3643,
-    longitude: 85.3365,
-    images: [
-      '/assets/destinations/lake.jpg',
+    "id": "leh-ladakh",
+    "name": "Leh Ladakh & Pangong Tso",
+    "district": "Leh",
+    "category": "historical",
+    "description": "A high-altitude desert known for breathtaking Himalayan mountain passes, Tibetan Buddhist gompas, and the azure Pangong Tso lake.",
+    "short_description": "High-altitude mountain passes, ancient monasteries, and turquoise lakes.",
+    "latitude": 34.1526,
+    "longitude": 77.5771,
+    "images": [
+      "/assets/destinations/leh_ladakh.jpg"
     ],
-    best_time: 'Year-round',
-    entry_fee: 10,
-    is_featured: false,
-    created_at: new Date().toISOString()
+    "best_time": "May to September",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
   },
   {
-    id: '6',
-    name: 'Tagore Hill',
-    district: 'Ranchi',
-    category: 'historical',
-    description: 'A historical site where Rabindranath Tagore stayed and wrote several literary works. Offers panoramic views of Ranchi city.',
-    short_description: 'Historic hill associated with Rabindranath Tagore',
-    latitude: 23.3975,
-    longitude: 85.3234,
-    images: [
-      '/assets/destinations/hill.jpg',
+    "id": "golden-temple",
+    "name": "Golden Temple (Harmandir Sahib)",
+    "district": "Amritsar",
+    "category": "temple",
+    "description": "The spiritual heart of Sikhism, adorned with gold leaf and surrounded by the sacred Amrit Sarovar lake, hosting the world's largest community kitchen.",
+    "short_description": "Gilded spiritual sanctum of Sikhism with sacred Amrit Sarovar.",
+    "latitude": 31.62,
+    "longitude": 74.8765,
+    "images": [
+      "/assets/destinations/golden_temple.jpg"
     ],
-    best_time: 'October to March',
-    entry_fee: 0,
-    is_featured: false,
-    created_at: new Date().toISOString()
+    "best_time": "October to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "munnar-tea-gardens",
+    "name": "Munnar Tea Gardens",
+    "district": "Idukki",
+    "category": "park",
+    "description": "Endless rolling green hills blanketed with manicured tea plantations, misty mountain trails, and the endangered Nilgiri Tahr sanctuary.",
+    "short_description": "Misty rolling green hills, spice estates, and sprawling tea plantations.",
+    "latitude": 10.0889,
+    "longitude": 77.0595,
+    "images": [
+      "/assets/destinations/munnar_tea_gardens.jpg"
+    ],
+    "best_time": "September to April",
+    "entry_fee": 25,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "mysore-palace",
+    "name": "Mysore Palace",
+    "district": "Mysuru",
+    "category": "historical",
+    "description": "A grand Indo-Saracenic royal palace of the Wadiyar dynasty, renowned worldwide for its ornate durbar halls and 100,000 glowing evening lights.",
+    "short_description": "Ornate Indo-Saracenic royal palace illuminated with 100,000 bulbs.",
+    "latitude": 12.3051,
+    "longitude": 76.6551,
+    "images": [
+      "/assets/destinations/mysore_palace.jpg"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 100,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "amer-fort",
+    "name": "Amer Fort & Palace",
+    "district": "Jaipur",
+    "category": "historical",
+    "description": "A magnificent hilltop Rajput citadel overlooking Maota Lake, famous for its dazzling Sheesh Mahal (Mirror Palace) and royal courtyards.",
+    "short_description": "Hilltop Rajput fortress famous for the Sheesh Mahal mirror palace.",
+    "latitude": 26.9855,
+    "longitude": 75.8513,
+    "images": [
+      "/assets/destinations/amer_fort.jpg"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 100,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "konark-sun-temple",
+    "name": "Konark Sun Temple",
+    "district": "Puri",
+    "category": "temple",
+    "description": "A 13th-century UNESCO marvel sculpted as a colossal 24-wheeled chariot of Surya Dev, celebrated for monumental stone carvings and sundials.",
+    "short_description": "13th-century UNESCO monumental stone chariot temple of the Sun God.",
+    "latitude": 19.8876,
+    "longitude": 86.0945,
+    "images": [
+      "/assets/destinations/konark_sun_temple.jpg"
+    ],
+    "best_time": "November to February",
+    "entry_fee": 40,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "ranthambore",
+    "name": "Ranthambore Tiger Reserve",
+    "district": "Sawai Madhopur",
+    "category": "wildlife",
+    "description": "One of India's premier tiger reserves where Royal Bengal tigers roam freely amidst 1,000-year-old fort ruins, lakes, and deciduous forests.",
+    "short_description": "Premier Royal Bengal tiger habitat set against 10th-century fort ruins.",
+    "latitude": 26.0173,
+    "longitude": 76.5026,
+    "images": [
+      "/assets/destinations/ranthambore.jpg"
+    ],
+    "best_time": "October to April",
+    "entry_fee": 600,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "victoria-memorial",
+    "name": "Victoria Memorial Hall",
+    "district": "Kolkata",
+    "category": "historical",
+    "description": "An imposing British-era white Makrana marble monument set in 64 acres of landscaped gardens, housing rare national art galleries and archives.",
+    "short_description": "White Makrana marble monument and national museum in Kolkata.",
+    "latitude": 22.5448,
+    "longitude": 88.3426,
+    "images": [
+      "/assets/destinations/victoria_memorial.jpg"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 50,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "ajanta-ellora",
+    "name": "Ajanta & Ellora Caves",
+    "district": "Aurangabad",
+    "category": "historical",
+    "description": "Rock-cut cave temples spanning ancient Buddhist, Hindu, and Jain heritage, featuring the monolithic Kailash Temple carved from a single cliff.",
+    "short_description": "Ancient rock-cut cave monuments and the monolithic Kailash Temple.",
+    "latitude": 20.0268,
+    "longitude": 75.178,
+    "images": [
+      "https://images.unsplash.com/photo-1600100397608-f010f443b221?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 40,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "meenakshi-temple",
+    "name": "Meenakshi Amman Temple",
+    "district": "Madurai",
+    "category": "temple",
+    "description": "Historic Dravidian temple complex on the Vaigai River with 14 towering gopurams decorated with thousands of colorful mythological sculptures.",
+    "short_description": "Towering Dravidian temple complex with 14 sculpted gopuram gateways.",
+    "latitude": 9.9195,
+    "longitude": 78.1193,
+    "images": [
+      "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "qutub-minar",
+    "name": "Qutub Minar & Mehrauli Complex",
+    "district": "New Delhi",
+    "category": "historical",
+    "description": "A 73-meter red sandstone minaret built in 1192, surrounded by ancient monuments including the rust-resistant 4th-century Iron Pillar of Chandragupta II.",
+    "short_description": "World's tallest brick minaret and ancient Delhi Sultanate monuments.",
+    "latitude": 28.5244,
+    "longitude": 77.1855,
+    "images": [
+      "https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 50,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "sundarbans",
+    "name": "Sundarbans Biosphere Reserve",
+    "district": "South 24 Parganas",
+    "category": "wildlife",
+    "description": "The world's largest mangrove forest, home to swimming Royal Bengal tigers, estuarine crocodiles, and rare Gangetic dolphins across tidal waterways.",
+    "short_description": "World's largest mangrove delta and swimming Bengal tiger sanctuary.",
+    "latitude": 21.9497,
+    "longitude": 89.1833,
+    "images": [
+      "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "November to March",
+    "entry_fee": 100,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "rishikesh-ganga",
+    "name": "Rishikesh & Laxman Jhula",
+    "district": "Dehradun",
+    "category": "temple",
+    "description": "The world capital of Yoga situated along the pristine emerald waters of the Ganges, offering white-water rafting, ashrams, and Triveni Ghat aarti.",
+    "short_description": "Yoga capital, white-water rafting hub, and Himalayan river ashrams.",
+    "latitude": 30.0869,
+    "longitude": 78.2676,
+    "images": [
+      "https://images.unsplash.com/photo-1598890777032-bde13fbe34c9?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "September to November & March to May",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "cherrapunji-bridges",
+    "name": "Living Root Bridges",
+    "district": "East Khasi Hills",
+    "category": "park",
+    "description": "Bio-engineered botanical wonders hand-woven by the indigenous Khasi tribe across centuries from the aerial roots of Ficus elastica trees.",
+    "short_description": "Living bio-engineered double-decker root bridges in Khasi hills.",
+    "latitude": 25.2702,
+    "longitude": 91.7323,
+    "images": [
+      "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to April",
+    "entry_fee": 30,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "jaisalmer-fort",
+    "name": "Jaisalmer Golden Fort & Thar Desert",
+    "district": "Jaisalmer",
+    "category": "historical",
+    "description": "The majestic golden sandstone living fort rising from the Thar Desert dunes, known for havelis, Jain temples, and sunset camel safaris at Sam Dunes.",
+    "short_description": "Living golden sandstone desert fort and Thar dune camel safaris.",
+    "latitude": 26.9124,
+    "longitude": 70.9126,
+    "images": [
+      "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 50,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "kaziranga-park",
+    "name": "Kaziranga National Park",
+    "district": "Golaghat",
+    "category": "wildlife",
+    "description": "UNESCO World Heritage sanctuary harboring two-thirds of the planet's great one-horned rhinoceros population in the fertile Brahmaputra floodplains.",
+    "short_description": "World's premier habitat for the great Indian one-horned rhinoceros.",
+    "latitude": 26.5775,
+    "longitude": 93.1711,
+    "images": [
+      "https://images.unsplash.com/photo-1564349683136-77e08dba1ef6?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "November to April",
+    "entry_fee": 100,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "goa-coastal",
+    "name": "Goa Coast & Chapora Fort",
+    "district": "North Goa",
+    "category": "park",
+    "description": "Golden sandy palm-fringed coastlines, Portuguese baroque heritage churches, seafood shacks, and historic hilltop forts overlooking the Arabian Sea.",
+    "short_description": "Golden palm beaches, oceanfront forts, and Portuguese colonial churches.",
+    "latitude": 15.6062,
+    "longitude": 73.738,
+    "images": [
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "November to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "valley-of-flowers",
+    "name": "Valley of Flowers National Park",
+    "district": "Chamoli",
+    "category": "park",
+    "description": "A UNESCO high-altitude alpine meadow nestled in West Himalaya, blooming with hundreds of rare wild alpine flowers and medicinal herbs each monsoon.",
+    "short_description": "UNESCO high-altitude Himalayan valley carpeted in endemic alpine blooms.",
+    "latitude": 30.728,
+    "longitude": 79.6053,
+    "images": [
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "July to September",
+    "entry_fee": 150,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "jonha-falls",
+    "name": "Jonha & Hundru Waterfalls",
+    "district": "Ranchi",
+    "category": "waterfall",
+    "description": "Scenic multi-tiered waterfalls cascading from heights over 98 meters amidst rocky plateaus and verdant Sal tree forests in Chotanagpur.",
+    "short_description": "Spectacular rocky cascades and green Sal forests in the Chotanagpur plateau.",
+    "latitude": 23.3058,
+    "longitude": 85.4425,
+    "images": [
+      "/assets/destinations/jonha_falls.jpg"
+    ],
+    "best_time": "July to December",
+    "entry_fee": 30,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "betla-national-park",
+    "name": "Betla National Park",
+    "district": "Latehar",
+    "category": "wildlife",
+    "description": "One of India's earliest tiger sanctuaries, featuring dense Sal canopy, wild elephant herds, sloth bears, and 16th-century Chero dynasty fort ruins.",
+    "short_description": "Historic tiger reserve with wild elephants and 16th-century fort ruins.",
+    "latitude": 23.8667,
+    "longitude": 84.1833,
+    "images": [
+      "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to April",
+    "entry_fee": 100,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "baidyanath-dham",
+    "name": "Baidyanath Dham Temple",
+    "district": "Deoghar",
+    "category": "temple",
+    "description": "One of the twelve revered Jyotirlinga shrines in India, a celebrated pilgrimage destination attracting devotees worldwide during the holy Shravani Mela.",
+    "short_description": "One of the 12 sacred Jyotirlinga temples and major pilgrimage center.",
+    "latitude": 24.4844,
+    "longitude": 86.6993,
+    "images": [
+      "https://images.unsplash.com/photo-1627894006066-b45786537123?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "netarhat-hills",
+    "name": "Netarhat — Queen of Chotanagpur",
+    "district": "Latehar",
+    "category": "park",
+    "description": "A tranquil hill station at 3,700 ft known for cool pine forests, pear orchards, Magnolia Sunset Point, and Lower Ghaghri waterfall trails.",
+    "short_description": "Serene pine-forested hill station famous for Magnolia Sunset Point.",
+    "latitude": 23.4795,
+    "longitude": 84.269,
+    "images": [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop"
+    ],
+    "best_time": "October to April",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.675Z"
+  },
+  {
+    "id": "ranchi-lake",
+    "name": "Ranchi Lake & Tagore Hill",
+    "district": "Ranchi",
+    "category": "park",
+    "description": "An 1842 historic lake nestled beneath Ranchi Hill alongside Tagore Hill, where Nobel laureate Rabindranath Tagore composed celebrated literary works.",
+    "short_description": "Scenic boating lake and historic hill associated with Rabindranath Tagore.",
+    "latitude": 23.3643,
+    "longitude": 85.3365,
+    "images": [
+      "/assets/destinations/lake.jpg"
+    ],
+    "best_time": "Year-round",
+    "entry_fee": 10,
+    "is_featured": false,
+    "created_at": "2026-08-25T16:49:23.675Z"
   }
 ];
 

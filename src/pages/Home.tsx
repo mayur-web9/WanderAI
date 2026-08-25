@@ -114,7 +114,7 @@ const Home = () => {
 
   // Destinations & Events from Supabase / Mock
   const [featuredDestinations, setFeaturedDestinations] = useState<Destination[]>(
-    mockDestinations.filter(d => d.is_featured).slice(0, 6)
+    mockDestinations.filter(d => d.is_featured).slice(0, 9)
   );
   const [destinationSearch, setDestinationSearch] = useState('');
   const [destCategoryFilter, setDestCategoryFilter] = useState('All');
@@ -706,7 +706,7 @@ const Home = () => {
 
         {/* Destinations Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredDestinationsList.slice(0, 6).map((destination) => (
+          {filteredDestinationsList.slice(0, 9).map((destination) => (
             <div
               key={destination.id}
               className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5"
