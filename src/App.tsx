@@ -7,8 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Marketplaces from './pages/Marketplaces';
-import Events from './pages/Events';
+import CultureEvents from './pages/CultureEvents';
 import Feedback from './pages/Feedback';
 import NotFound from './pages/NotFound';
 import Ai from './Ai';
@@ -29,9 +28,11 @@ function App() {
           <Route path="/chat" element={<Navigate to="/itinerary?tab=chat" replace />} />
           <Route path="/plan" element={<Navigate to="/itinerary?tab=plan" replace />} />
           <Route path="/planner" element={<Navigate to="/itinerary?tab=plan" replace />} />
-          <Route path="/marketplaces" element={<Marketplaces />} />
-          <Route path="/Marketplaces" element={<Marketplaces />} />
-          <Route path="/events" element={<Events />} />
+          <Route path="/marketplaces" element={<CultureEvents defaultTab="bazaars" />} />
+          <Route path="/Marketplaces" element={<CultureEvents defaultTab="bazaars" />} />
+          <Route path="/culture" element={<CultureEvents defaultTab="all" />} />
+          <Route path="/bazaars" element={<CultureEvents defaultTab="bazaars" />} />
+          <Route path="/events" element={<CultureEvents defaultTab="events" />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
