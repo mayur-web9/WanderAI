@@ -244,7 +244,7 @@ const Home = () => {
       case "Smart Planner":
         return "/itinerary?tab=plan";
       case "Culture & Marketplaces":
-        return "/events";
+        return "/itinerary?tab=events";
       case "Safety Guide":
         return "/itinerary?tab=chat&prompt=What%20are%20the%20essential%20safety%2C%20health%2C%20and%20emergency%20guidelines%20for%20traveling%20in%20India%3F";
       case "Eco-Tourism":
@@ -313,7 +313,7 @@ const Home = () => {
                 </Link>
 
                 <Link
-                  to="/events"
+                  to="/itinerary?tab=events"
                   className="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold text-sm sm:text-base border border-white/20 backdrop-blur-md transition-all flex items-center gap-2"
                 >
                   <Calendar className="w-4 h-4 text-saffron-300" />
@@ -912,7 +912,7 @@ const Home = () => {
 
           <div className="text-center mt-10">
             <Link
-              to="/events"
+              to="/itinerary?tab=events"
               className="inline-flex items-center px-8 py-3.5 bg-saffron-500 hover:bg-saffron-600 text-forest-950 font-extrabold rounded-2xl shadow-lg transition-all transform hover:-translate-y-0.5"
             >
               <Calendar className="mr-2 h-4 w-4" />
