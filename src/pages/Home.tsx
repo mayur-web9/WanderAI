@@ -245,7 +245,7 @@ const Home = () => {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION WITH INTERACTIVE AI HUB */}
       {/* ========================================================================= */}
-      <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white pt-20 pb-12 sm:pt-24 sm:pb-16">
+      <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white pt-6 pb-12 sm:pt-8 sm:pb-16">
         
         {/* Ambient background glowing circles */}
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-saffron-500/15 rounded-full blur-3xl pointer-events-none animate-pulse"></div>

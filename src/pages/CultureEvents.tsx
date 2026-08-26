@@ -98,7 +98,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
     <div className="w-full min-h-screen bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       
       {/* Header Banner */}
-      <section className="relative pt-20 pb-8 sm:pt-24 sm:pb-10 bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white overflow-hidden">
+      <section className="relative pt-6 pb-8 sm:pt-8 sm:pb-10 bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white overflow-hidden">
         {/* Subtle glow circles */}
         <div className="absolute top-10 -left-10 w-80 h-80 bg-saffron-500/15 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 -right-10 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -452,6 +452,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
     </div>
   );
 }
+
 
 
 
