@@ -361,9 +361,9 @@ export default function Ai() {
       setActiveTab('saved');
       setSidebarTab('saved');
     } else if (tabParam === 'destinations' || tabParam === 'explore') {
-      setActiveTab('explore');
+      setActiveTab('destinations');
     } else if (tabParam === 'planner' || tabParam === 'plan') {
-      setActiveTab('planner');
+      setActiveTab('plan');
     } else if (tabParam === 'chat') {
       setActiveTab('chat');
     }
@@ -657,7 +657,10 @@ Format with:
   // Filtered destinations catalogue
   const filteredDestinations = useMemo(() => {
     const q = destSearch.trim().toLowerCase();
+    const tag = selectedTag.toLowerCase();
+
     return destinationsList.filter(d => {
+      // 1. Search Query Match (Name, Desc, State, District, Location, Tag, Category)
       const matchSearch = !q ||
         d.name.toLowerCase().includes(q) ||
         d.desc.toLowerCase().includes(q) ||
@@ -666,13 +669,39 @@ Format with:
         (d.tag && d.tag.toLowerCase().includes(q)) ||
         (d.category && d.category.toLowerCase().includes(q));
 
-      const matchTag = selectedTag === 'All' ||
-        (d.tag && d.tag.toLowerCase().includes(selectedTag.toLowerCase())) ||
-        (d.category && d.category.toLowerCase().includes(selectedTag.toLowerCase())) ||
-        (selectedTag === 'Forts & Palaces' && (d.tag?.toLowerCase().includes('fort') || d.category === 'fort')) ||
-        (selectedTag === 'Spiritual' && (d.tag?.toLowerCase().includes('spirit') || d.tag?.toLowerCase().includes('temple') || d.category === 'temple')) ||
-        (selectedTag === 'Hidden Gems' && (d.tag?.toLowerCase().includes('hidden') || d.category === 'hidden')) ||
-        (selectedTag === 'Tribal & Craft' && (d.tag?.toLowerCase().includes('tribal') || d.category === 'tribal'));
+      // 2. Tag Filter Match
+      if (selectedTag === 'All') return matchSearch;
+
+      let matchTag = false;
+      const dTag = (d.tag || '').toLowerCase();
+      const dCat = (d.category || '').toLowerCase();
+      const dName = (d.name || '').toLowerCase();
+
+      if (tag === 'forts' || tag === 'fort' || tag === 'forts & palaces') {
+        matchTag = dCat === 'fort' || dTag.includes('fort') || dName.includes('fort') || dName.includes('gad') || dName.includes('killa');
+      } else if (tag === 'spiritual' || tag === 'temple') {
+        matchTag = dCat === 'temple' || dTag.includes('spirit') || dTag.includes('temple') || dName.includes('temple') || dName.includes('dham') || dName.includes('mandir');
+      } else if (tag === 'hidden gems' || tag === 'hidden') {
+        matchTag = dCat === 'hidden' || dTag.includes('hidden') || dName.includes('hidden');
+      } else if (tag === 'heritage' || tag === 'historical') {
+        matchTag = dCat === 'heritage' || dTag.includes('heritage') || dTag.includes('historic');
+      } else if (tag === 'nature') {
+        matchTag = dCat === 'nature' || dTag.includes('nature') || dTag.includes('forest') || dTag.includes('valley');
+      } else if (tag === 'wildlife') {
+        matchTag = dCat === 'wildlife' || dTag.includes('wildlife') || dTag.includes('sanctuary') || dTag.includes('park') || dTag.includes('tiger');
+      } else if (tag === 'waterfall' || tag === 'falls') {
+        matchTag = dCat === 'waterfall' || dTag.includes('waterfall') || dTag.includes('falls') || dName.includes('falls');
+      } else if (tag === 'hill station' || tag === 'hill') {
+        matchTag = dCat === 'hill' || dTag.includes('hill') || dName.includes('peak') || dName.includes('pass') || dName.includes('viewpoint');
+      } else if (tag === 'beach' || tag === 'coastal') {
+        matchTag = dCat === 'beach' || dTag.includes('beach') || dTag.includes('coast') || dName.includes('beach') || dName.includes('island');
+      } else if (tag === 'caves' || tag === 'cave') {
+        matchTag = dCat === 'cave' || dTag.includes('cave') || dName.includes('cave');
+      } else if (tag === 'tribal & craft' || tag === 'tribal') {
+        matchTag = dCat === 'tribal' || dTag.includes('tribal') || dTag.includes('craft');
+      } else {
+        matchTag = dTag === tag || dCat === tag;
+      }
 
       return matchSearch && matchTag;
     });
@@ -1448,7 +1477,7 @@ Format with:
                 <input
                   type="text"
                   value={destSearch}
-                  onChange={(e) => setDestSearch(e.target.value)}
+                  onChange={(e) => { setDestSearch(e.target.value); setDisplayCount(36); }}
                   placeholder="Search destination, state, or vibe..."
                   className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-[13px] rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500"
                 />
@@ -1461,10 +1490,23 @@ Format with:
 
             {/* Tag filter pills */}
             <div className="flex items-center gap-1 overflow-x-auto scrollbar-none pb-0.5">
-              {['All', 'Historical', 'Nature', 'Wildlife', 'Waterfall', 'Temple', 'Beach'].map(tag => (
+              {[
+                'All',
+                'Forts',
+                'Spiritual',
+                'Hidden Gems',
+                'Heritage',
+                'Nature',
+                'Wildlife',
+                'Waterfall',
+                'Hill Station',
+                'Beach',
+                'Caves',
+                'Tribal & Craft'
+              ].map(tag => (
                 <button
                   key={tag}
-                  onClick={() => setSelectedTag(tag)}
+                  onClick={() => { setSelectedTag(tag); setDisplayCount(36); }}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 ${selectedTag === tag
                     ? 'bg-forest-700 text-white shadow-xs'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'
