@@ -167,26 +167,26 @@ async function callOpenRouter(messages: { role: string; content: string }[], sys
   throw new Error("OpenRouter fallback unavailable");
 }
 
-// Unified Hybrid AI Engine (Primary Multi-Key Pool -> Automatic OpenRouter Fallback)
+// Unified Hybrid AI Engine (OpenRouter 1st Priority -> Gemini Multi-Key Pool Fallback)
 async function callAiEngine(messages: { role: string; content: string }[], systemPrompt: string): Promise<string> {
-  // 1. Try Primary Multi-Key Pool
+  // 1. Primary (1st Priority): OpenRouter API Engine
   try {
-    const primaryReply = await callGemini(messages, systemPrompt);
-    if (primaryReply && primaryReply.trim().length > 0) {
-      return primaryReply;
+    const openRouterReply = await callOpenRouter(messages, systemPrompt);
+    if (openRouterReply && openRouterReply.trim().length > 0) {
+      return openRouterReply;
     }
-  } catch (primaryErr) {
-    console.warn("Primary engine busy, initiating OpenRouter fallback...", primaryErr);
+  } catch (openRouterErr) {
+    console.warn("OpenRouter busy or unconfigured, falling back to Gemini pool...", openRouterErr);
   }
 
-  // 2. Seamless Fallback to OpenRouter
+  // 2. Secondary (2nd Priority Fallback): Gemini Multi-Key Load-Balanced Pool
   try {
-    const fallbackReply = await callOpenRouter(messages, systemPrompt);
-    if (fallbackReply && fallbackReply.trim().length > 0) {
-      return fallbackReply;
+    const geminiReply = await callGemini(messages, systemPrompt);
+    if (geminiReply && geminiReply.trim().length > 0) {
+      return geminiReply;
     }
-  } catch (fallbackErr) {
-    console.warn("OpenRouter fallback error:", fallbackErr);
+  } catch (geminiErr) {
+    console.warn("Gemini pool fallback error:", geminiErr);
   }
 
   throw new Error("AI server is currently busy. Please try again.");
