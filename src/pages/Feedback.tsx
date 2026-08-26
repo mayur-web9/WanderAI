@@ -14,7 +14,8 @@ import {
   Mail,
   ShieldCheck,
   Phone,
-  UserCheck
+  UserCheck,
+  User
 } from 'lucide-react';
 import { submitDbFeedback } from '../services/supabaseService';
 import { useAuth } from '../contexts/AuthContext';
@@ -47,32 +48,38 @@ const Feedback: React.FC = () => {
     setSubmitting(true);
     setEmailStatus(null);
 
-    const senderEmail = user.email || 'traveler@wanderai.com';
-    const senderName = user.full_name || user.email?.split('@')[0] || 'Traveler';
+    const profileName = user.full_name || 'Traveler';
+    const profileEmail = user.email || 'traveler@wanderai.com';
+    const profileUsername = user.username || user.email?.split('@')[0] || 'traveler';
 
-    // Format full feedback message containing sender identity details
-    const fullMessageWithSender = `From: ${senderName} (${senderEmail})
-User ID: ${user.id}
-Category: ${formData.category.toUpperCase()}
-Rating: ${rating} / 5 Stars
+    // Structured message containing exact profile credentials & identity
+    const fullMessageWithProfile = `PROFILE DETAILS:
+- Full Name (as on profile): ${profileName}
+- Username: @${profileUsername}
+- Account Email: ${profileEmail}
+- Tourist ID: ${user.id}
 
-Message:
+FEEDBACK CLASSIFICATION:
+- Category: ${formData.category.toUpperCase()}
+- Rating: ${rating} / 5 Stars
+
+TRAVELER MESSAGE:
 ${formData.message.trim()}`;
 
     const feedbackPayload = {
       user_id: user.id,
-      user_name: senderName,
-      user_email: senderEmail,
+      user_name: profileName,
+      user_email: profileEmail,
       category: formData.category,
       rating: rating,
-      message: fullMessageWithSender,
+      message: fullMessageWithProfile,
     };
 
     try {
       // 1. Save to Supabase travel_feedback table
       await submitDbFeedback(feedbackPayload);
 
-      // 2. Dispatch email to mayur.patil.ac@gmail.com with reply-to and sender email
+      // 2. Dispatch email to mayur.patil.ac@gmail.com with profile identity
       try {
         await fetch('https://formsubmit.co/ajax/mayur.patil.ac@gmail.com', {
           method: 'POST',
@@ -81,19 +88,20 @@ ${formData.message.trim()}`;
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            _subject: `WanderAI Feedback from ${senderName} <${senderEmail}> [${rating}★ ${formData.category.toUpperCase()}]`,
-            _replyto: senderEmail,
+            _subject: `WanderAI Feedback from ${profileName} <${profileEmail}> [${rating}★ ${formData.category.toUpperCase()}]`,
+            _replyto: profileEmail,
             _template: 'table',
-            sender_name: senderName,
-            sender_email: senderEmail,
-            user_id: user.id,
+            profile_full_name: profileName,
+            profile_username: `@${profileUsername}`,
+            profile_email: profileEmail,
+            tourist_user_id: user.id,
             star_rating: `${rating} / 5 Stars`,
             feedback_category: formData.category.toUpperCase(),
-            feedback_content: formData.message.trim(),
-            submission_time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            feedback_text: formData.message.trim(),
+            submission_timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
           })
         });
-        setEmailStatus(`Dispatched to mayur.patil.ac@gmail.com with reply-to ${senderEmail}`);
+        setEmailStatus(`Dispatched to mayur.patil.ac@gmail.com with profile "${profileName}" <${profileEmail}>`);
       } catch (mailErr) {
         console.warn('Email dispatch note:', mailErr);
       }
@@ -145,7 +153,7 @@ ${formData.message.trim()}`;
                 </h3>
                 
                 <p className="text-xs sm:text-sm text-forest-100 leading-relaxed">
-                  Your feedback is sent directly to the core developer along with your verified sender email for direct responses.
+                  Your feedback is sent directly to the core developer along with your profile name and email address for direct follow-up.
                 </p>
 
                 <div className="p-3.5 rounded-2xl bg-forest-950/60 border border-forest-700/60 flex items-center gap-3">
@@ -159,7 +167,7 @@ ${formData.message.trim()}`;
                 <div className="pt-2 border-t border-forest-700/60 space-y-2 text-xs text-forest-200">
                   <div className="flex items-center gap-2">
                     <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Includes your logged-in sender email ID</span>
+                    <span>Includes Profile Name & Account Email</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -211,7 +219,7 @@ ${formData.message.trim()}`;
                     Tourist Sign In Required
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    To ensure all feedback is authentic and directly tied to your sender email address, submitting feedback is reserved for signed-in travelers.
+                    To ensure all feedback is authentic and directly tied to your profile name and email address, submitting feedback is reserved for signed-in travelers.
                   </p>
                 </div>
 
@@ -240,7 +248,7 @@ ${formData.message.trim()}`;
                   Dhanyavaad! Feedback Dispatched 🙏
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
-                  Thank you, <b>{user.full_name || user.email}</b>. Your feedback was sent to <b>mayur.patil.ac@gmail.com</b> including your registered email <b>({user.email})</b> as sender.
+                  Thank you, <b>{user.full_name || user.email}</b>. Your feedback was sent to <b>mayur.patil.ac@gmail.com</b> including your profile name <b>({user.full_name || 'Traveler'})</b> and email <b>({user.email})</b>.
                 </p>
                 {emailStatus && (
                   <p className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 py-1.5 px-3 rounded-lg inline-block border border-emerald-200 dark:border-emerald-800">
@@ -260,29 +268,28 @@ ${formData.message.trim()}`;
               /* Authenticated Feedback Form */
               <form onSubmit={handleSubmit} className="space-y-5">
                 
-                {/* Verified Sender Info Banner */}
+                {/* Verified Profile Identity Banner */}
                 <div className="p-3.5 rounded-2xl bg-forest-50/80 dark:bg-forest-950/40 border border-forest-200/80 dark:border-forest-800/80 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-forest-700 text-white flex items-center justify-center text-xs font-bold shadow-xs">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-forest-700 to-forest-600 text-white flex items-center justify-center text-sm font-bold shadow-xs">
                       {user.full_name?.charAt(0) || user.email?.charAt(0) || 'T'}
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
                         <span className="text-xs font-bold text-gray-900 dark:text-white">
-                          {user.full_name || user.email?.split('@')[0]}
+                          {user.full_name || 'Verified Traveler'}
                         </span>
                         <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                          Sender Verified
+                          Profile Verified
                         </span>
                       </div>
-                      <span className="text-[11px] text-forest-700 dark:text-forest-300 font-semibold block">
-                        Email: {user.email}
-                      </span>
+                      <div className="text-[11px] text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                        <span>@{user.username || user.email?.split('@')[0]}</span>
+                        <span>•</span>
+                        <span className="text-forest-700 dark:text-forest-400 font-semibold">{user.email}</span>
+                      </div>
                     </div>
                   </div>
-                  <span className="text-[10px] text-gray-400 font-medium hidden sm:inline">
-                    Automatic Sender Tagging
-                  </span>
                 </div>
 
                 {/* Rating selector */}
@@ -365,7 +372,7 @@ ${formData.message.trim()}`;
                   className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-forest-700 via-forest-800 to-forest-900 hover:from-forest-800 hover:to-forest-950 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
-                  {submitting ? `Dispatching from ${user.email}…` : `Submit Feedback as ${user.email}`}
+                  {submitting ? `Dispatching as ${user.full_name || 'Traveler'}…` : `Submit Feedback as ${user.full_name || 'Traveler'}`}
                 </button>
               </form>
             )}
