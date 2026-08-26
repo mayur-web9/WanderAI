@@ -30,7 +30,8 @@ import {
   Plus,
   MessageCircle,
   FolderBookmark,
-  Layers
+  Layers,
+  X
 } from 'lucide-react';
 import { DESTINATIONS, AiDestination, SYSTEM_PROMPT } from './utils/aiData';
 import {
@@ -352,6 +353,7 @@ export default function Ai() {
 
   // Sidebar Internal Tab: 'chats' | 'saved'
   const [sidebarTab, setSidebarTab] = useState<'chats' | 'saved'>('chats');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Chat State
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([DEFAULT_GREETING_MESSAGE]);
@@ -484,6 +486,7 @@ export default function Ai() {
 
   // Switch to a specific chat session
   const handleSelectChat = async (chat: Chat) => {
+    setIsMobileSidebarOpen(false);
     if (chat.id === activeChatId) return;
     setActiveChatId(chat.id);
     setLoading(true);
@@ -501,6 +504,7 @@ export default function Ai() {
 
   // Create a brand new chat session
   const handleCreateNewChat = async () => {
+    setIsMobileSidebarOpen(false);
     if (!user?.id) {
       // For guests, reset in-memory conversation
       setMessages([DEFAULT_GREETING_MESSAGE]);
@@ -888,7 +892,18 @@ Format with:
             {/* ------------------------------------------------------------- */}
             {/* STATIC DEDICATED SIDEBAR (CHATS & SAVED PLANS) */}
             {/* ------------------------------------------------------------- */}
-            <div className="w-64 sm:w-72 lg:w-80 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs flex flex-col overflow-hidden shrink-0 h-full">
+            {/* Mobile Backdrop Overlay */}
+            {isMobileSidebarOpen && (
+              <div
+                onClick={() => setIsMobileSidebarOpen(false)}
+                className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-40 animate-in fade-in duration-200"
+              />
+            )}
+
+            {/* ------------------------------------------------------------- */}
+            {/* DEDICATED SIDEBAR (STATIC ON DESKTOP, DRAWER ON MOBILE) */}
+            {/* ------------------------------------------------------------- */}
+            <div className={`fixed md:static inset-y-0 left-0 z-50 md:z-auto w-[82vw] max-w-xs sm:w-72 lg:w-80 bg-white dark:bg-gray-900 border-r md:border border-gray-200/80 dark:border-gray-800 rounded-r-2xl md:rounded-2xl shadow-2xl md:shadow-xs flex flex-col overflow-hidden shrink-0 h-full transition-transform duration-300 ease-in-out ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} ${!isMobileSidebarOpen ? 'hidden md:flex' : 'flex'}`}>
 
               {/* Sidebar Header & New Chat Action */}
               <div className="p-3 border-b border-gray-100 dark:border-gray-800 space-y-2 shrink-0">
@@ -899,11 +914,21 @@ Format with:
                       Travel Workspace
                     </span>
                   </div>
-                  {user && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-forest-50 dark:bg-forest-950 text-forest-700 dark:text-forest-400 font-bold border border-forest-200/60 dark:border-forest-800/60">
-                      {sidebarTab === 'chats' ? `${userChats.length} Chats` : `${savedItinerariesList.length} Plans`}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    {user && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-forest-50 dark:bg-forest-950 text-forest-700 dark:text-forest-400 font-bold border border-forest-200/60 dark:border-forest-800/60">
+                        {sidebarTab === 'chats' ? `${userChats.length} Chats` : `${savedItinerariesList.length} Plans`}
+                      </span>
+                    )}
+                    {/* Mobile Close Button */}
+                    <button
+                      onClick={() => setIsMobileSidebarOpen(false)}
+                      className="md:hidden p-1 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                      title="Close Sidebar"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Primary New Chat Button */}
@@ -1095,6 +1120,21 @@ Format with:
               {/* Integrated Interactive Prompt Carousel Strip */}
               <div className="mb-2 bg-white dark:bg-gray-900 rounded-2xl p-2 sm:p-2.5 border border-gray-200/80 dark:border-gray-800 shadow-xs space-y-1.5 shrink-0">
                 <div className="flex items-center justify-between gap-2">
+
+                  {/* Mobile Workspace / History Button */}
+                  <button
+                    onClick={() => setIsMobileSidebarOpen(true)}
+                    className="md:hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-forest-50 dark:bg-forest-950 text-forest-700 dark:text-forest-400 border border-forest-200/80 dark:border-forest-800 text-xs font-bold shrink-0 hover:bg-forest-100 dark:hover:bg-forest-900/60 transition shadow-2xs"
+                    title="Open Chat History & Saved Plans"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>Chats</span>
+                    {user && userChats.length > 0 && (
+                      <span className="w-4 h-4 rounded-full bg-forest-700 text-white text-[9px] flex items-center justify-center font-extrabold">
+                        {userChats.length}
+                      </span>
+                    )}
+                  </button>
 
                   {/* Category Chips */}
                   <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
