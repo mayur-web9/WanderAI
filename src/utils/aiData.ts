@@ -1,4 +1,4 @@
-import { mockDestinations } from './mockData';
+import { ALL_1111_DESTINATIONS } from './destinations1111';
 
 export interface AiDestination {
   id: string;
@@ -19,27 +19,10 @@ export interface AiDestination {
   image?: string;
 }
 
-export const AI_DESTINATIONS: AiDestination[] = mockDestinations.map(d => ({
-  id: d.id,
-  name: d.name,
-  emoji: d.category === 'temple' ? '🛕' : d.category === 'hill' ? '⛰️' : d.category === 'waterfall' ? '🌊' : d.category === 'wildlife' ? '🐅' : d.category === 'beach' ? '🏖️' : '🏛️',
-  tag: d.category.charAt(0).toUpperCase() + d.category.slice(1),
-  desc: d.description,
-  location: `${d.district}, ${d.state || 'India'}`,
-  category: d.category,
-  state: d.state,
-  best_time: d.best_time,
-  entry_fee: d.entry_fee,
-  rating: d.rating,
-  famous_things: d.famous_things,
-  nearby_markets: d.nearby_markets,
-  local_festivals: d.local_festivals,
-  transit_info: d.transit_info
-}));
+export const AI_DESTINATIONS: AiDestination[] = ALL_1111_DESTINATIONS;
+export const DESTINATIONS = ALL_1111_DESTINATIONS;
 
-export const DESTINATIONS = AI_DESTINATIONS;
-
-export const SYSTEM_PROMPT = "You are WanderAI (formerly Velox), an expert AI travel planner and local cultural guide for India.\nYou specialize in Indian destinations, heritage circuits, local marketplaces, seasonal festivals, food culture, train routes, safety tips, and customized day-by-day itineraries.\nRespond warmly, concisely, and accurately in markdown with emoji headings and bullet points.";
+export const SYSTEM_PROMPT = "You are WanderAI, an expert AI travel planner and local cultural guide for India.\nYou specialize in Indian destinations, heritage circuits, local marketplaces, seasonal festivals, food culture, train routes, safety tips, and customized day-by-day itineraries.\nRespond warmly, concisely, and accurately in markdown with emoji headings and bullet points.";
 
 export const QUICK_PROMPTS = [
   "Plan a 3-day heritage trip to Jaipur including Amer Fort and Johari Market",

@@ -644,20 +644,29 @@ Format with:
 
   // Filtered destinations catalogue
   const filteredDestinations = useMemo(() => {
+    const q = destSearch.trim().toLowerCase();
     return destinationsList.filter(d => {
-      const matchSearch = !destSearch.trim() ||
-        d.name.toLowerCase().includes(destSearch.toLowerCase()) ||
-        d.desc.toLowerCase().includes(destSearch.toLowerCase()) ||
-        (d.state && d.state.toLowerCase().includes(destSearch.toLowerCase())) ||
-        (d.location && d.location.toLowerCase().includes(destSearch.toLowerCase()));
+      const matchSearch = !q ||
+        d.name.toLowerCase().includes(q) ||
+        d.desc.toLowerCase().includes(q) ||
+        (d.state && d.state.toLowerCase().includes(q)) ||
+        (d.location && d.location.toLowerCase().includes(q)) ||
+        (d.tag && d.tag.toLowerCase().includes(q)) ||
+        (d.category && d.category.toLowerCase().includes(q));
 
       const matchTag = selectedTag === 'All' ||
-        (d.tag && d.tag.toLowerCase() === selectedTag.toLowerCase()) ||
-        (d.category && d.category.toLowerCase() === selectedTag.toLowerCase());
+        (d.tag && d.tag.toLowerCase().includes(selectedTag.toLowerCase())) ||
+        (d.category && d.category.toLowerCase().includes(selectedTag.toLowerCase())) ||
+        (selectedTag === 'Forts & Palaces' && (d.tag?.toLowerCase().includes('fort') || d.category === 'fort')) ||
+        (selectedTag === 'Spiritual' && (d.tag?.toLowerCase().includes('spirit') || d.tag?.toLowerCase().includes('temple') || d.category === 'temple')) ||
+        (selectedTag === 'Hidden Gems' && (d.tag?.toLowerCase().includes('hidden') || d.category === 'hidden')) ||
+        (selectedTag === 'Tribal & Craft' && (d.tag?.toLowerCase().includes('tribal') || d.category === 'tribal'));
 
       return matchSearch && matchTag;
     });
   }, [destinationsList, destSearch, selectedTag]);
+
+  const visibleDestinations = filteredDestinations.slice(0, displayCount);
 
   // Active chat metadata
   const activeChat = userChats.find(c => c.id === activeChatId);
