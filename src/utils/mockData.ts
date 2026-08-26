@@ -2,237 +2,3343 @@ import { Destination, Event, Review, Marketplace } from '../types';
 
 export const DEFAULT_MARKETPLACES: Marketplace[] = [
   {
-    id: "1",
-    name: "Dilli Haat, Delhi",
-    description: "An iconic open-air craft marketplace and food plaza organized like a traditional rural village. Master artisans from across all 28 Indian states set up rotational stalls selling authentic handlooms, tribal pottery, rosewood carvings, and regional cuisine.",
-    location: "INA, New Delhi",
-    state: "Delhi",
-    tags: ["Crafts", "Food", "Culture", "Handlooms"],
-    famous_items: [
-      "Kashmiri Pashmina shawls & walnut wood carvings",
-      "Madhubani folk art paintings from Bihar",
-      "Rajasthani camel leather footwear & mojris",
-      "Assam bamboo basketry and cane lamps"
+    "id": "1",
+    "name": "Dilli Haat",
+    "description": "A vibrant and bustling market in INA, New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "INA, New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
     ],
-    best_time_to_visit: "October to March (Evenings 4:00 PM – 9:00 PM)",
-    timings: "10:30 AM – 10:00 PM (Open 7 days a week)",
-    nearby_eateries: [
-      "Momo stalls from Sikkim & Nagaland stall",
-      "Bengali fish fry at West Bengal counter",
-      "Rajasthani Thali & Pyaaz Kachori"
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
     ],
-    shopping_tips: [
-      "Stalls rotate every 15 days, ensuring fresh handicraft collections",
-      "Govt-fixed entry ticket ensures clean, hassle-free pedestrian shopping",
-      "UPI & digital payments accepted at almost all craft stalls"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "2",
-    name: "Colaba Causeway, Mumbai",
-    description: "The vibrant shopping soul of South Mumbai connecting historic colonial heritage with high-energy street shopping. Famous for antique brass compasses, boho jewelry, designer surplus fashion, and heritage cafe culture.",
-    location: "Colaba, Mumbai",
-    state: "Maharashtra",
-    tags: ["Antiques", "Fashion", "Street Food", "Bohemian"],
-    famous_items: [
-      "Vintage brass pocket compasses & nautical clocks",
-      "Handcrafted junk jewelry, oxidised silver rings & ear cuffs",
-      "Boho cotton shirts, kurti dresses, and graphic tees",
-      "Kolhapuri chappals and leather satchels"
+    "id": "2",
+    "name": "Colaba Causeway",
+    "description": "A vibrant and bustling market in Colaba, Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Colaba, Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
     ],
-    best_time_to_visit: "November to February (Late afternoon 3:00 PM – 8:00 PM)",
-    timings: "11:00 AM – 10:00 PM (Daily)",
-    nearby_eateries: [
-      "Cafe Mondegar (Iconic murals & draught beer)",
-      "Cafe Leopold (Historic 1871 bistro)",
-      "Bademiya (Legendary midnight Seekh Kebabs behind Taj)"
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
     ],
-    shopping_tips: [
-      "Polite bargaining is customary for roadside street stalls",
-      "Walk up to Gateway of India (just 5 mins walk away) for sunset",
-      "Check condition of antique items before finalizing purchase"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "3",
-    name: "Johari Market, Jaipur",
-    description: "Centuries-old gemstone and traditional jewelry epicenter of the Pink City. Lined with terracotta-pink facades, this historic marketplace is world-renowned for Kundan, Meenakari, Polki diamonds, and authentic Bandhani tie-dye sarees.",
-    location: "Pink City, Jaipur",
-    state: "Rajasthan",
-    tags: ["Jewelry", "Gemstones", "Textiles", "Heritage"],
-    famous_items: [
-      "Authentic Kundan and Meenakari enamel jewelry",
-      "Semi-precious emeralds, rubies, and birthstone rings",
-      "Handmade Rajasthani Bandhani, Leheriya & Gota Patti sarees",
-      "Jaipuri cotton quilts (Razai) & block-print bedsheets"
+    "id": "3",
+    "name": "Johari Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
     ],
-    best_time_to_visit: "October to March (11:00 AM – 7:00 PM)",
-    timings: "10:00 AM – 8:00 PM (Sunday partially open)",
-    nearby_eateries: [
-      "LMB (Laxmi Mishthan Bhandar) for Ghewar & Doodh Jalebi",
-      "Pandit Kulfi at Sirah Deori Marketplace",
-      "Samrat Restaurant for Crispy Pyaaz Kachori"
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
     ],
-    shopping_tips: [
-      "Ask for hallmarked jewelry and authenticity certificates for precious gems",
-      "Combine with visits to nearby Hawa Mahal and City Palace",
-      "Gopalji ka Rasta lane inside the marketplace is the core wholesale jewel hub"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "4",
-    name: "Anjuna Flea Market, Goa",
-    description: "The legendary weekly coastal open-air market founded by hippies in the 1960s. Set right against the swaying coconut palms of Anjuna Beach, offering eclectic global clothing, dreamcatchers, organic spices, live acoustic music, and handmade crafts.",
-    location: "Anjuna, Goa",
-    state: "Goa",
-    tags: ["Bohemian", "Music", "Beachwear", "Spices"],
-    famous_items: [
-      "Handmade macrame dreamcatchers and bohemian wall hangings",
-      "Flowy tie-dye kaftans, beach kimonos, and linen trousers",
-      "Fresh Malabar cinnamon, cardamom, vanilla pods, and Goan cashews",
-      "Tibetan singing bowls and handmade brass incense burners"
+    "id": "4",
+    "name": "Chor Bazaar",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic antique shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Antiques",
+      "Vintage",
+      "Decor"
     ],
-    best_time_to_visit: "November to March (Wednesdays 9:00 AM – 6:00 PM)",
-    timings: "Wednesdays only (9:00 AM – Sunset)",
-    nearby_eateries: [
-      "Curlies Beach Shack for Goan Prawn Curry",
-      "German Bakery Anjuna for artisan coffee and apple strudel",
-      "Artjuna Garden Cafe for Mediterranean mezze platters"
+    "famous_items": [
+      "Vintage artifacts",
+      "Old coins",
+      "Gramophones",
+      "Retro decor"
     ],
-    shopping_tips: [
-      "This market operates exclusively on Wednesdays during the tourist season",
-      "Arrive early morning around 9:30 AM to beat the coastal afternoon heat",
-      "Bring cash as coastal mobile network can occasionally be spotty"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "5",
-    name: "Laad Market, Hyderabad",
-    description: "Centuries-old marketplace radiating from the base of the iconic Charminar. Renowned worldwide for glistening lacquer bangles encrusted with colorful stones, Hyderabadi pearl sets, Zardozi embroidered bridal dupattas, and traditional attar (natural perfume).",
-    location: "Charminar, Hyderabad",
-    state: "Telangana",
-    tags: ["Bangles", "Pearls", "Historic", "Zardozi"],
-    famous_items: [
-      "Hand-crafted lacquer bangles with studded stones (Kangan)",
-      "Certified Hyderabadi Basra and freshwater pearls",
-      "Pure floral Attar (Jasmine, Oudh, Sandalwood essence)",
-      "Hand-embroidered Zardozi bridal fabrics and velvet sherwanis"
+    "id": "5",
+    "name": "Sarojini Nagar",
+    "description": "A vibrant and bustling market in New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
     ],
-    best_time_to_visit: "September to March (Evenings 5:00 PM – 9:30 PM)",
-    timings: "11:00 AM – 10:30 PM (Daily)",
-    nearby_eateries: [
-      "Shadab Hotel for Authentic Hyderabadi Dum Biryani",
-      "Nimrah Cafe & Bakery for Irani Chai & Osmania Biscuits with Charminar view",
-      "Pista House for Haleem (during festive season)"
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
     ],
-    shopping_tips: [
-      "Artisans can custom-size bangles to your wrist right in front of you",
-      "The illuminated view of Charminar at dusk from the marketplace is breathtaking",
-      "Vehicle traffic is restricted inside the lane — best explored on foot"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "6",
-    name: "Floating Vegetable Market, Srinagar",
-    description: "A surreal, centuries-old floating marketplace on the tranquil waters of Dal Lake. Local Kashmiri farmers gather at dawn on their slender wooden Shikara boats to trade freshly harvested lake vegetables, Nadru (lotus stem), and exotic saffron.",
-    location: "Dal Lake, Srinagar",
-    state: "Jammu & Kashmir",
-    tags: ["Nature", "Unique", "Kashmir", "Shikara"],
-    famous_items: [
-      "Fresh Nadru (crisp Kashmiri lotus root stem)",
-      "Organic saffron threads (Kesar) from Pampore fields",
-      "Dried Kashmiri morels (Gucchi mushrooms) and walnuts",
-      "Fresh Kashmiri Kahwa green tea blend with saffron & crushed almonds"
+    "id": "6",
+    "name": "Commercial Street",
+    "description": "A vibrant and bustling market in Bengaluru, Karnataka. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Bengaluru",
+    "state": "Karnataka",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
     ],
-    best_time_to_visit: "April to October (At the crack of dawn 5:00 AM – 7:00 AM)",
-    timings: "5:00 AM – 7:30 AM (Early morning only)",
-    nearby_eateries: [
-      "Floating Shikara Kahwa vendors serving hot saffron tea with honey",
-      "Ahdoos Restaurant (Srinagar city) for authentic Wazwan Rogan Josh",
-      "Krishna Dhaba for hot vegetarian Kashmiri meals"
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
     ],
-    shopping_tips: [
-      "Hire a Shikara the night before from Boulevard Road Ghats for 5:00 AM departure",
-      "Barter trading is still practiced among local farmers between boats",
-      "Carry warm layers as early morning lake mist can be chilly"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "7",
-    name: "Police Bazar, Shillong",
-    description: "The bustling cultural and commercial heartbeat of Meghalaya's hill capital. A pedestrian plaza offering authentic Khasi bamboo artifacts, warm hand-woven sheep wool shawls, traditional Khasi orange blossom honey, and buzzing rock music culture.",
-    location: "Khyndailad, Shillong",
-    state: "Meghalaya",
-    tags: ["Handlooms", "Bamboo", "Street Food", "Northeast"],
-    famous_items: [
-      "Handcrafted Meghalayan cane chairs, hats & bamboo baskets",
-      "Endi (Eri) silk stoles & hand-knitted Naga wool sweaters",
-      "Pure Khasi hill wild honey & Sohiong berry jams",
-      "Organic Lakadong turmeric powder with highest curcumin content"
+    "id": "7",
+    "name": "Janpath Market",
+    "description": "A vibrant and bustling market in New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
     ],
-    best_time_to_visit: "September to May (Cool mountain weather)",
-    timings: "10:00 AM – 8:00 PM (Shops close early by 8 PM in the hills)",
-    nearby_eateries: [
-      "Delhi Mistan Bhandar for Jalebis and Puri Sabzi",
-      "City Hut Family Dhaba for Khasi pork curry and rice",
-      "Dylan's Cafe for gourmet burgers and retro music tribute"
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
     ],
-    shopping_tips: [
-      "Central roundabout is completely pedestrianized for safe strolling",
-      "Pick up regional spices like Raja Mircha (Ghost Pepper) and wild cinnamon",
-      "Bargaining is polite but prices are generally very fair and budget-friendly"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "8",
-    name: "Janpath Market, Delhi",
-    description: "A beloved boutique avenue in the heart of Connaught Place. Famous for Tibetan antique markets, Rajasthani embroidered wall tapestries, brass Buddha statues, vintage silver jewelry, and the latest affordable street fashion.",
-    location: "Connaught Place, New Delhi",
-    state: "Delhi",
-    tags: ["Ethnic", "Kiosks", "Antiques", "Budget"],
-    famous_items: [
-      "Tibetan prayer wheels, thangka paintings, and brass singing bowls",
-      "Boho mirror-work jackets, harem pants, and Pashmina stoles",
-      "Antique brass door handles, tribal masks, and vintage coin necklaces",
-      "Hand-bound leather travel journals and incense boxes"
+    "id": "8",
+    "name": "New Market",
+    "description": "A vibrant and bustling market in Kolkata, West Bengal. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Kolkata",
+    "state": "West Bengal",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
     ],
-    best_time_to_visit: "October to March (12:00 PM – 6:00 PM)",
-    timings: "11:00 AM – 8:00 PM (Closed on Sundays)",
-    nearby_eateries: [
-      "Depaul's for legendary Hazelnut Cold Coffee & cheese balls",
-      "Saravana Bhavan (Janpath) for crispy South Indian Ghee Roast Dosa",
-      "Wenger's Deli for iconic Shami kebabs and chocolate waffles"
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
     ],
-    shopping_tips: [
-      "The Tibetan section at the start of the street has rare Himalayan artifacts",
-      "Explore the Gujrati lane behind for authentic mirror-work tablecloths",
-      "Janpath Metro Station (Violet Line) exits directly into the market"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   },
   {
-    id: "9",
-    name: "Pondy Market, Chennai",
-    description: "One of the most energetic and celebrated shopping boulevards in South India. Located in the bustling heart of T. Nagar, offering pure Kanchipuram silk sarees, traditional gold jewelry, bronze pooja lamps, and South Indian filter coffee.",
-    location: "T. Nagar, Chennai",
-    state: "Tamil Nadu",
-    tags: ["Silk Sarees", "Handlooms", "Tradition", "Gold"],
-    famous_items: [
-      "Pure Kanchipuram Mulberry Silk sarees with real Zari borders",
-      "Traditional Tanjore gold foil paintings of deities",
-      "Heavy brass Nachiarkoil temple lamps and bronze Nataraja idols",
-      "Handmade leather sandals, cotton dhotis, and temple jewelry"
+    "id": "9",
+    "name": "Pondy Bazaar",
+    "description": "A vibrant and bustling market in Chennai, Tamil Nadu. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Chennai",
+    "state": "Tamil Nadu",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
     ],
-    best_time_to_visit: "November to February (Evenings 4:00 PM – 9:00 PM)",
-    timings: "10:00 AM – 9:30 PM (Open 7 days a week)",
-    nearby_eateries: [
-      "Murugan Idli Shop for steaming Podi Idli and 4 varieties of chutneys",
-      "Geetha Cafe for authentic boiling hot Kumbakonam degree filter coffee",
-      "Hot Chips for fresh hot banana chips fried in pure coconut oil"
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
     ],
-    shopping_tips: [
-      "Visit multi-story silk emporiums like Nalli and Kumaran for heirloom sarees",
-      "The pedestrian plaza walkway makes evening street shopping very comfortable",
-      "Look for Silk Mark certification on silk saree purchases"
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "10",
+    "name": "Crawford Market",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "11",
+    "name": "Laad Bazaar",
+    "description": "A vibrant and bustling market in Hyderabad, Telangana. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Hyderabad",
+    "state": "Telangana",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "12",
+    "name": "Bapu Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "13",
+    "name": "Hazratganj",
+    "description": "A vibrant and bustling market in Lucknow, Uttar Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Lucknow",
+    "state": "Uttar Pradesh",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "14",
+    "name": "Chandni Chowk",
+    "description": "A vibrant and bustling market in Old Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Old Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "15",
+    "name": "FC Road",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "16",
+    "name": "Jew Town",
+    "description": "A vibrant and bustling market in Kochi, Kerala. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic antique shopping.",
+    "location": "Kochi",
+    "state": "Kerala",
+    "tags": [
+      "Antiques",
+      "Vintage",
+      "Decor"
+    ],
+    "famous_items": [
+      "Vintage artifacts",
+      "Old coins",
+      "Gramophones",
+      "Retro decor"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "17",
+    "name": "Anjuna Flea Market",
+    "description": "A vibrant and bustling market in Anjuna, Goa. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic flea shopping.",
+    "location": "Anjuna",
+    "state": "Goa",
+    "tags": [
+      "Flea Market",
+      "Bargains",
+      "Boho"
+    ],
+    "famous_items": [
+      "Bohemian clothing",
+      "Junk jewelry",
+      "Handicrafts",
+      "Spices"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "18",
+    "name": "Police Bazaar",
+    "description": "A vibrant and bustling market in Shillong, Meghalaya. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Shillong",
+    "state": "Meghalaya",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Gariahat Market",
+    "description": "A vibrant and bustling market in Kolkata, West Bengal. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Kolkata",
+    "state": "West Bengal",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "20",
+    "name": "Ima Keithel",
+    "description": "A vibrant and bustling market in Imphal, Manipur. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Imphal",
+    "state": "Manipur",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "21",
+    "name": "Aminabad",
+    "description": "A vibrant and bustling market in Lucknow, Uttar Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Lucknow",
+    "state": "Uttar Pradesh",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "22",
+    "name": "Sadar Bazaar",
+    "description": "A vibrant and bustling market in Agra, Uttar Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Agra",
+    "state": "Uttar Pradesh",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "23",
+    "name": "Brigade Road",
+    "description": "A vibrant and bustling market in Bengaluru, Karnataka. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Bengaluru",
+    "state": "Karnataka",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "24",
+    "name": "T. Nagar",
+    "description": "A vibrant and bustling market in Chennai, Tamil Nadu. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Chennai",
+    "state": "Tamil Nadu",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "25",
+    "name": "Mall Road",
+    "description": "A vibrant and bustling market in Shimla, Himachal Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Shimla",
+    "state": "Himachal Pradesh",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "26",
+    "name": "Lajpat Nagar",
+    "description": "A vibrant and bustling market in New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "27",
+    "name": "Mapusa Friday Market",
+    "description": "A vibrant and bustling market in Mapusa, Goa. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic flea shopping.",
+    "location": "Mapusa",
+    "state": "Goa",
+    "tags": [
+      "Flea Market",
+      "Bargains",
+      "Boho"
+    ],
+    "famous_items": [
+      "Bohemian clothing",
+      "Junk jewelry",
+      "Handicrafts",
+      "Spices"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "28",
+    "name": "Charminar Market",
+    "description": "A vibrant and bustling market in Hyderabad, Telangana. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Hyderabad",
+    "state": "Telangana",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "29",
+    "name": "MG Road",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "30",
+    "name": "Linking Road",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "31",
+    "name": "Devaraja Market",
+    "description": "A vibrant and bustling market in Mysuru, Karnataka. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Mysuru",
+    "state": "Karnataka",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "32",
+    "name": "Tibetan Market",
+    "description": "A vibrant and bustling market in Leh, Ladakh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Leh",
+    "state": "Ladakh",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "33",
+    "name": "Burrabazar",
+    "description": "A vibrant and bustling market in Kolkata, West Bengal. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Kolkata",
+    "state": "West Bengal",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "34",
+    "name": "Fancy Bazaar",
+    "description": "A vibrant and bustling market in Guwahati, Assam. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Guwahati",
+    "state": "Assam",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "35",
+    "name": "Palika Bazaar",
+    "description": "A vibrant and bustling market in New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic electronics shopping.",
+    "location": "New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Electronics",
+      "Gadgets",
+      "Tech"
+    ],
+    "famous_items": [
+      "Mobile phones",
+      "Laptops",
+      "Accessories",
+      "Repair services"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "36",
+    "name": "Gaffar Market",
+    "description": "A vibrant and bustling market in New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic electronics shopping.",
+    "location": "New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Electronics",
+      "Gadgets",
+      "Tech"
+    ],
+    "famous_items": [
+      "Mobile phones",
+      "Laptops",
+      "Accessories",
+      "Repair services"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "37",
+    "name": "Chikpet",
+    "description": "A vibrant and bustling market in Bengaluru, Karnataka. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Bengaluru",
+    "state": "Karnataka",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "38",
+    "name": "Sowcarpet",
+    "description": "A vibrant and bustling market in Chennai, Tamil Nadu. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Chennai",
+    "state": "Tamil Nadu",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "39",
+    "name": "Tulsi Baug",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "40",
+    "name": "Zaveri Bazaar",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "41",
+    "name": "Tripolia Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "42",
+    "name": "Kishanpole Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "43",
+    "name": "Sadar Bazaar",
+    "description": "A vibrant and bustling market in Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "44",
+    "name": "Phool Mandi",
+    "description": "A vibrant and bustling market in Ghazipur, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic flowers shopping.",
+    "location": "Ghazipur",
+    "state": "Delhi",
+    "tags": [
+      "Flowers",
+      "Wholesale",
+      "Aroma"
+    ],
+    "famous_items": [
+      "Marigolds",
+      "Jasmine",
+      "Roses",
+      "Exotic flora"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "45",
+    "name": "Dadar Flower Market",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic flowers shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Flowers",
+      "Wholesale",
+      "Aroma"
+    ],
+    "famous_items": [
+      "Marigolds",
+      "Jasmine",
+      "Roses",
+      "Exotic flora"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "46",
+    "name": "Mallik Ghat",
+    "description": "A vibrant and bustling market in Kolkata, West Bengal. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic flowers shopping.",
+    "location": "Kolkata",
+    "state": "West Bengal",
+    "tags": [
+      "Flowers",
+      "Wholesale",
+      "Aroma"
+    ],
+    "famous_items": [
+      "Marigolds",
+      "Jasmine",
+      "Roses",
+      "Exotic flora"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "47",
+    "name": "KR Market",
+    "description": "A vibrant and bustling market in Bengaluru, Karnataka. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic flowers shopping.",
+    "location": "Bengaluru",
+    "state": "Karnataka",
+    "tags": [
+      "Flowers",
+      "Wholesale",
+      "Aroma"
+    ],
+    "famous_items": [
+      "Marigolds",
+      "Jasmine",
+      "Roses",
+      "Exotic flora"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "48",
+    "name": "Gudari Market",
+    "description": "A vibrant and bustling market in Varanasi, Uttar Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Varanasi",
+    "state": "Uttar Pradesh",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "49",
+    "name": "Chowk",
+    "description": "A vibrant and bustling market in Lucknow, Uttar Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Lucknow",
+    "state": "Uttar Pradesh",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "50",
+    "name": "Bapu Market",
+    "description": "A vibrant and bustling market in Ahmedabad, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Ahmedabad",
+    "state": "Gujarat",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "51",
+    "name": "Law Garden",
+    "description": "A vibrant and bustling market in Ahmedabad, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Ahmedabad",
+    "state": "Gujarat",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "52",
+    "name": "Dhalgarwad",
+    "description": "A vibrant and bustling market in Ahmedabad, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Ahmedabad",
+    "state": "Gujarat",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "53",
+    "name": "Sindhi Market",
+    "description": "A vibrant and bustling market in Ahmedabad, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Ahmedabad",
+    "state": "Gujarat",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "54",
+    "name": "Manek Chowk",
+    "description": "A vibrant and bustling market in Ahmedabad, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Ahmedabad",
+    "state": "Gujarat",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "55",
+    "name": "Bapu Market",
+    "description": "A vibrant and bustling market in Surat, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Surat",
+    "state": "Gujarat",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "56",
+    "name": "Ring Road Market",
+    "description": "A vibrant and bustling market in Surat, Gujarat. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Surat",
+    "state": "Gujarat",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "57",
+    "name": "Johari Bazaar",
+    "description": "A vibrant and bustling market in Indore, Madhya Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Indore",
+    "state": "Madhya Pradesh",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "58",
+    "name": "Sarafa Bazaar",
+    "description": "A vibrant and bustling market in Indore, Madhya Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Indore",
+    "state": "Madhya Pradesh",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "59",
+    "name": "MT Cloth Market",
+    "description": "A vibrant and bustling market in Indore, Madhya Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Indore",
+    "state": "Madhya Pradesh",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "60",
+    "name": "Chowk Bazaar",
+    "description": "A vibrant and bustling market in Bhopal, Madhya Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Bhopal",
+    "state": "Madhya Pradesh",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "61",
+    "name": "New Market",
+    "description": "A vibrant and bustling market in Bhopal, Madhya Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Bhopal",
+    "state": "Madhya Pradesh",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "62",
+    "name": "Sadar Bazaar",
+    "description": "A vibrant and bustling market in Nagpur, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Nagpur",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "63",
+    "name": "Sitabuldi Main Road",
+    "description": "A vibrant and bustling market in Nagpur, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Nagpur",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "64",
+    "name": "Ganjamal",
+    "description": "A vibrant and bustling market in Nashik, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Nashik",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "65",
+    "name": "Saraf Bazaar",
+    "description": "A vibrant and bustling market in Nashik, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Nashik",
+    "state": "Maharashtra",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "66",
+    "name": "Laxmi Road",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "67",
+    "name": "Camp Market",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "68",
+    "name": "Hong Kong Lane",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "69",
+    "name": "Juna Bazaar",
+    "description": "A vibrant and bustling market in Pune, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic antique shopping.",
+    "location": "Pune",
+    "state": "Maharashtra",
+    "tags": [
+      "Antiques",
+      "Vintage",
+      "Decor"
+    ],
+    "famous_items": [
+      "Vintage artifacts",
+      "Old coins",
+      "Gramophones",
+      "Retro decor"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "70",
+    "name": "Fashion Street",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "71",
+    "name": "Hill Road",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "72",
+    "name": "Natraj Market",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "73",
+    "name": "Lamington Road",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic electronics shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Electronics",
+      "Gadgets",
+      "Tech"
+    ],
+    "famous_items": [
+      "Mobile phones",
+      "Laptops",
+      "Accessories",
+      "Repair services"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "74",
+    "name": "Mangaldas Market",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "75",
+    "name": "Mulji Jetha Market",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "76",
+    "name": "Bhuleshwar Market",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "77",
+    "name": "Dadabhai Naoroji Road",
+    "description": "A vibrant and bustling market in Mumbai, Maharashtra. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Mumbai",
+    "state": "Maharashtra",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "78",
+    "name": "Khari Baoli",
+    "description": "A vibrant and bustling market in New Delhi, Delhi. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic spices shopping.",
+    "location": "New Delhi",
+    "state": "Delhi",
+    "tags": [
+      "Spices",
+      "Dry Fruits",
+      "Tea"
+    ],
+    "famous_items": [
+      "Saffron",
+      "Cardamom",
+      "Cashews",
+      "Assam Tea"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "79",
+    "name": "Sadar Bazaar",
+    "description": "A vibrant and bustling market in Jodhpur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jodhpur",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "80",
+    "name": "Nai Sarak",
+    "description": "A vibrant and bustling market in Jodhpur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Jodhpur",
+    "state": "Rajasthan",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "81",
+    "name": "Kapoore Darwaza",
+    "description": "A vibrant and bustling market in Jodhpur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jodhpur",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "82",
+    "name": "Bada Bazaar",
+    "description": "A vibrant and bustling market in Udaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Udaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "83",
+    "name": "Hathi Pol Bazaar",
+    "description": "A vibrant and bustling market in Udaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Udaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "84",
+    "name": "Mochi Bazaar",
+    "description": "A vibrant and bustling market in Jodhpur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Jodhpur",
+    "state": "Rajasthan",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "85",
+    "name": "Clock Tower Market",
+    "description": "A vibrant and bustling market in Jodhpur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jodhpur",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "86",
+    "name": "Kote Gate",
+    "description": "A vibrant and bustling market in Bikaner, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Bikaner",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "87",
+    "name": "Station Road Market",
+    "description": "A vibrant and bustling market in Bikaner, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Bikaner",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "88",
+    "name": "Mahatma Gandhi Road",
+    "description": "A vibrant and bustling market in Bikaner, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Bikaner",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "89",
+    "name": "Pansari Bazaar",
+    "description": "A vibrant and bustling market in Jaisalmer, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jaisalmer",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "90",
+    "name": "Sadar Bazaar",
+    "description": "A vibrant and bustling market in Jaisalmer, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jaisalmer",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "91",
+    "name": "Sonaron Ka Baas",
+    "description": "A vibrant and bustling market in Jaisalmer, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic jewelry shopping.",
+    "location": "Jaisalmer",
+    "state": "Rajasthan",
+    "tags": [
+      "Jewelry",
+      "Gold",
+      "Silver",
+      "Precious"
+    ],
+    "famous_items": [
+      "Antique jewelry",
+      "Precious gems",
+      "Silver ornaments",
+      "Bridal sets"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "92",
+    "name": "Manihar Ka Rasta",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "93",
+    "name": "Sireh Deori Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "94",
+    "name": "Mirza Ismail Road",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "95",
+    "name": "Nehru Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "96",
+    "name": "Bapu Bazaar",
+    "description": "A vibrant and bustling market in Jaipur, Rajasthan. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Jaipur",
+    "state": "Rajasthan",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "97",
+    "name": "Goubert Market",
+    "description": "A vibrant and bustling market in Pondicherry, Puducherry. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Pondicherry",
+    "state": "Puducherry",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "98",
+    "name": "Mission Street",
+    "description": "A vibrant and bustling market in Pondicherry, Puducherry. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Pondicherry",
+    "state": "Puducherry",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "99",
+    "name": "Connemara Market",
+    "description": "A vibrant and bustling market in Trivandrum, Kerala. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Trivandrum",
+    "state": "Kerala",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "100",
+    "name": "Chalai Market",
+    "description": "A vibrant and bustling market in Trivandrum, Kerala. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Trivandrum",
+    "state": "Kerala",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "101",
+    "name": "Broadway",
+    "description": "A vibrant and bustling market in Ernakulam, Kerala. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Ernakulam",
+    "state": "Kerala",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "102",
+    "name": "SM Street",
+    "description": "A vibrant and bustling market in Kozhikode, Kerala. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Kozhikode",
+    "state": "Kerala",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "103",
+    "name": "Valiyangadi",
+    "description": "A vibrant and bustling market in Kozhikode, Kerala. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Kozhikode",
+    "state": "Kerala",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "104",
+    "name": "Panbazar",
+    "description": "A vibrant and bustling market in Guwahati, Assam. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Guwahati",
+    "state": "Assam",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "105",
+    "name": "Paltan Bazaar",
+    "description": "A vibrant and bustling market in Guwahati, Assam. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Guwahati",
+    "state": "Assam",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "106",
+    "name": "Bara Bazaar",
+    "description": "A vibrant and bustling market in Shillong, Meghalaya. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Shillong",
+    "state": "Meghalaya",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "107",
+    "name": "Hong Kong Market",
+    "description": "A vibrant and bustling market in Dimapur, Nagaland. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Dimapur",
+    "state": "Nagaland",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "108",
+    "name": "Bhutia Market",
+    "description": "A vibrant and bustling market in Nainital, Uttarakhand. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic fashion shopping.",
+    "location": "Nainital",
+    "state": "Uttarakhand",
+    "tags": [
+      "Fashion",
+      "Apparel",
+      "Trending"
+    ],
+    "famous_items": [
+      "Designer wear",
+      "Street fashion",
+      "Footwear",
+      "Accessories"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "109",
+    "name": "Mall Road",
+    "description": "A vibrant and bustling market in Mussoorie, Uttarakhand. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Mussoorie",
+    "state": "Uttarakhand",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "110",
+    "name": "Paltan Bazaar",
+    "description": "A vibrant and bustling market in Dehradun, Uttarakhand. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic mixed shopping.",
+    "location": "Dehradun",
+    "state": "Uttarakhand",
+    "tags": [
+      "Shopping",
+      "Local Market",
+      "Street Food"
+    ],
+    "famous_items": [
+      "Everyday essentials",
+      "Local apparel",
+      "Street food",
+      "Souvenirs"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
+    ]
+  },
+  {
+    "id": "111",
+    "name": "Lakkar Bazaar",
+    "description": "A vibrant and bustling market in Shimla, Himachal Pradesh. Known for its lively atmosphere, it is a prime destination for locals and tourists alike to experience authentic craft shopping.",
+    "location": "Shimla",
+    "state": "Himachal Pradesh",
+    "tags": [
+      "Crafts",
+      "Handlooms",
+      "Culture"
+    ],
+    "famous_items": [
+      "Handmade artifacts",
+      "Regional textiles",
+      "Pottery",
+      "Wood carvings"
+    ],
+    "best_time_to_visit": "Evening (4:00 PM - 8:00 PM)",
+    "timings": "10:00 AM - 9:00 PM",
+    "nearby_eateries": [
+      "Local street food stalls",
+      "Heritage cafes",
+      "Famous sweet shops"
+    ],
+    "shopping_tips": [
+      "Bargaining is essential",
+      "Carry cash as cards may not be accepted everywhere",
+      "Beware of pickpockets in crowded lanes"
     ]
   }
 ];
