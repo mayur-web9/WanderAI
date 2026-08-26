@@ -1,3 +1,4 @@
+import CultureEvents from './pages/CultureEvents';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import {
