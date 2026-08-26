@@ -31,7 +31,6 @@ import { mockDestinations, mockEvents, mockReviews } from '../utils/mockData';
 import { Destination, Event as AppEvent } from '../types';
 import { QUICK_PROMPTS } from '../utils/aiData';
 import { UnsplashImage } from '../components/UnsplashImage';
-import { getDestinationImageUrl, getEventImageUrl } from '../services/unsplashService';
 import { getDbDestinations, getDbEvents } from '../services/supabaseService';
 
 // Feature cards with Lucide icons (replaces corrupted emoji strings)
@@ -154,7 +153,7 @@ const Home = () => {
           short_description: d.desc || '',
           description: d.desc || '',
           entry_fee: 0,
-          images: [d.image || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'],
+          images: [d.image || 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop'],
           is_featured: true,
           created_at: new Date().toISOString(),
         }));
@@ -701,7 +700,7 @@ const Home = () => {
             >
               {/* Image Container */}
               <div className="relative h-48 sm:h-52 overflow-hidden">
-                <UnsplashImage src={getDestinationImageUrl(destination)} fallbackSrc={destination.images?.[0]} alt={destination.name} onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <UnsplashImage src={destination.images?.[0] || FALLBACK_DESTINATION_IMAGE} fallbackSrc={FALLBACK_DESTINATION_IMAGE} alt={destination.name} onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 
                 {/* Category Pill */}
@@ -873,7 +872,7 @@ const Home = () => {
               >
                 {/* Event Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <UnsplashImage src={getEventImageUrl(event)} fallbackSrc={event.image_url} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <UnsplashImage src={event.image_url || FALLBACK_EVENT_IMAGE} fallbackSrc={FALLBACK_EVENT_IMAGE} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   
                   <div className="absolute top-3 left-3">
@@ -1013,6 +1012,8 @@ const Home = () => {
 };
 
 export default Home;
+
+
 
 
 

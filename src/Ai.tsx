@@ -1081,7 +1081,7 @@ Format with:
                 {/* Image */}
                 <div className="relative h-40 sm:h-44 overflow-hidden">
                   <img
-                    src={dest.image || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'}
+                    src={dest.image || 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop'}
                     alt={dest.name}
                     onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -1226,4 +1226,5 @@ Format with:
     </div>
   );
 }
+
 

@@ -22,7 +22,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Johari Bazaar, Jaipur",
     description: "Famous for its stunning collection of precious and semi-precious gemstones, traditional jewelry, and authentic Rajasthani textiles.",
     location: "Pink City, Jaipur",
-    image: "https://images.unsplash.com/photo-1519058082350-fd9d1fe91489?w=800&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80&auto=format&fit=crop",
     tags: ["Jewelry", "Textiles", "Heritage"]
   },
   {
@@ -30,7 +30,7 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     name: "Anjuna Flea Market, Goa",
     description: "A vibrant Wednesday market that captures Goa's bohemian spirit. You can find everything from beachwear and hammocks to local spices and handmade jewelry.",
     location: "Anjuna, Goa",
-    image: "https://images.unsplash.com/photo-1533050228-dc88c74e91ca?w=800&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&q=80&auto=format&fit=crop",
     tags: ["Bohemian", "Music", "Spices"]
   },
   {
@@ -63,15 +63,210 @@ export const DEFAULT_MARKETPLACES: Marketplace[] = [
     description: "A popular boutique market known for its long line of small kiosks selling ethnic clothing, silver jewelry, and handicrafts from across India and Tibet.",
     location: "Connaught Place, New Delhi",
     image: "https://images.unsplash.com/photo-1575101600-7da29a27cb7b?w=800&q=80&auto=format&fit=crop",
-    tags: ["Jewelry", "Handicrafts", "Bargain"]
+    tags: ["Ethnic", "Kiosks", "Budget"]
   },
   {
     id: "9",
     name: "Pondy Bazaar, Chennai",
     description: "One of the busiest shopping areas in Chennai, offering everything from silk sarees and traditional footwear to modern electronics and local accessories.",
     location: "T. Nagar, Chennai",
-    image: "https://images.unsplash.com/photo-1583391265427-83c9d9250f37?w=800&q=80&auto=format&fit=crop",
-    tags: ["Sarees", "Footwear", "Busy"]
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80&auto=format&fit=crop",
+    tags: ["Silk Sarees", "Footwear", "Tradition"]
+  }
+];
+
+export const mockEvents: Event[] = [
+  {
+    id: '1',
+    name: 'Sarhul Festival',
+    description: 'A spring festival celebrated by the tribal communities of India, marking the worship of nature and the blossoming of Sal trees.',
+    category: 'festival',
+    date_start: '2026-03-25',
+    date_end: '2026-03-27',
+    location: 'Across India',
+    image_url: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '2',
+    name: 'Karma Festival',
+    description: 'A harvest festival celebrated with traditional dance, music, and rituals to worship the Karma deity for good harvest and prosperity.',
+    category: 'cultural',
+    date_start: '2026-09-15',
+    date_end: '2026-09-16',
+    location: 'Tribal Villages',
+    image_url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '3',
+    name: 'Tusu Parab',
+    description: 'A festival dedicated to Goddess Tusu, celebrated during Makar Sankranti with colorful processions and folk songs.',
+    category: 'festival',
+    date_start: '2026-01-14',
+    date_end: '2026-01-15',
+    location: 'Purulia, Dhanbad',
+    image_url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '4',
+    name: 'Chhath Puja',
+    description: 'An ancient Hindu festival dedicated to the Sun God, celebrated with devotion and rituals on the banks of rivers and ponds.',
+    category: 'festival',
+    date_start: '2026-11-06',
+    date_end: '2026-11-09',
+    location: 'River Banks across India',
+    image_url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '5',
+    name: 'Rohini Festival',
+    description: 'The first festival of Jharkhand, Rohini marks the commencement of sowing seeds in the fields. It is a symbolic celebration of the beginning of the agricultural cycle.',
+    category: 'festival',
+    date_start: '2026-05-25',
+    date_end: '2026-05-26',
+    location: 'Jharkhand Agricultural Belts',
+    image_url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '6',
+    name: 'Bandna Festival',
+    description: 'A vibrant festival celebrated during the black moon of Kartik month. It is dedicated to the well-being of animals, particularly cows and bulls, which are crucial for farming.',
+    category: 'cultural',
+    date_start: '2026-11-10',
+    date_end: '2026-11-12',
+    location: 'Rural Tribal Districts',
+    image_url: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '7',
+    name: 'Mysore Dussehra',
+    description: 'The state festival of Karnataka, celebrated with a grand procession of decorated elephants and the magnificent illumination of Mysore Palace.',
+    category: 'festival',
+    date_start: '2026-10-12',
+    date_end: '2026-10-22',
+    location: 'Mysore, Karnataka',
+    image_url: 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '8',
+    name: 'Pushkar Camel Fair',
+    description: "One of the world's largest camel fairs, where thousands of camels, horses, and cattle are traded amidst vibrant cultural performances and competitions.",
+    category: 'cultural',
+    date_start: '2026-11-18',
+    date_end: '2026-11-26',
+    location: 'Pushkar, Rajasthan',
+    image_url: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: '9',
+    name: 'Hornbill Festival',
+    description: 'Known as the Festival of Festivals, it showcases the rich traditional heritage and 16 tribes of Nagaland through music, dance, and food.',
+    category: 'cultural',
+    date_start: '2026-12-01',
+    date_end: '2026-12-10',
+    location: 'Kisama, Nagaland',
+    image_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80&auto=format&fit=crop',
+    created_at: new Date().toISOString()
+  }
+];
+
+export const mockReviews: (Review & { user_name: string; location: string })[] = [
+  {
+    id: '1',
+    user_id: 'u1',
+    target_id: 'taj-mahal',
+    rating: 5,
+    comment: 'WanderAI gave us the perfect sunrise photography timing for Taj Mahal and avoided all crowd rush! Truly unforgettable experience.',
+    created_at: '2026-08-20T10:00:00Z',
+    user_name: 'Amit Sharma',
+    location: 'Mumbai, Maharashtra'
+  },
+  {
+    id: '2',
+    user_id: 'u2',
+    target_id: 'kerala-backwaters',
+    rating: 5,
+    comment: 'The 4-day Alleppey & Munnar circuit recommendation was flawless. The local Toddy shop food tips were 10/10 delicious!',
+    created_at: '2026-08-21T14:30:00Z',
+    user_name: 'Priya Patel',
+    location: 'Ahmedabad, Gujarat'
+  },
+  {
+    id: '3',
+    user_id: 'u3',
+    target_id: 'varanasi-ghats',
+    rating: 5,
+    comment: 'Subah-e-Banaras sunrise boat ride and the evening Dashashwamedh Aarti guidance helped us navigate Varanasi with total peace of mind.',
+    created_at: '2026-08-22T08:15:00Z',
+    user_name: 'Rahul Verma',
+    location: 'New Delhi'
+  },
+  {
+    id: '4',
+    user_id: 'u4',
+    target_id: 'hampi-ruins',
+    rating: 5,
+    comment: 'The heritage notes for the stone chariot and boulder sunsets across Tungabhadra river made me feel like an ancient explorer.',
+    created_at: '2026-08-23T11:45:00Z',
+    user_name: 'Anjali Gupta',
+    location: 'Kolkata, West Bengal'
+  },
+  {
+    id: '5',
+    user_id: 'u5',
+    target_id: 'leh-ladakh',
+    rating: 5,
+    comment: 'The acclimatization advice and Pangong Tso homestay recommendations made our high-altitude bike ride super safe and magical.',
+    created_at: '2026-08-24T16:20:00Z',
+    user_name: 'Suresh Iyer',
+    location: 'Chennai, Tamil Nadu'
+  },
+  {
+    id: '6',
+    user_id: 'u6',
+    target_id: 'golden-temple',
+    rating: 5,
+    comment: 'Langhar timing and midnight Palki Sahib seva tips were incredibly accurate and deeply moving. Best Indian travel AI by far.',
+    created_at: '2026-08-24T19:10:00Z',
+    user_name: 'Meera Deshmukh',
+    location: 'Pune, Maharashtra'
+  },
+  {
+    id: '7',
+    user_id: 'u7',
+    target_id: 'amer-fort',
+    rating: 5,
+    comment: 'Explored Jaipur with the instant chat feature in Hindi! It recommended the best Pyaaz Kachori near Johari Bazaar.',
+    created_at: '2026-08-25T09:00:00Z',
+    user_name: 'Vikram Singh',
+    location: 'Jaipur, Rajasthan'
+  },
+  {
+    id: '8',
+    user_id: 'u8',
+    target_id: 'cherrapunji-bridges',
+    rating: 5,
+    comment: 'Nongriat double decker root bridge trek plan was spot on with exact step counts, guide contacts, and rain gear prep.',
+    created_at: '2026-08-25T12:00:00Z',
+    user_name: 'Kavita Nair',
+    location: 'Kochi, Kerala'
+  },
+  {
+    id: '9',
+    user_id: 'u9',
+    target_id: 'goa-coastal',
+    rating: 5,
+    comment: 'Showed us unexplored peaceful beaches in South Goa away from commercial party spots. Exactly the getaway we needed!',
+    created_at: '2026-08-25T15:30:00Z',
+    user_name: 'Arjun Reddy',
+    location: 'Hyderabad, Telangana'
   }
 ];
 
@@ -86,7 +281,7 @@ export const mockDestinations: Destination[] = [
     "latitude": 27.1751,
     "longitude": 78.0421,
     "images": [
-      "https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 50,
@@ -101,22 +296,22 @@ export const mockDestinations: Destination[] = [
     "description": "Experience the spiritual soul of India along the sacred riverfront steps of the Ganges, famous for ancient temples and evening Maha Ganga Aarti.",
     "short_description": "Sacred riverfront ghats and evening Ganga Aarti along the holy Ganges.",
     "latitude": 25.3176,
-    "longitude": 82.9739,
+    "longitude": 83.0062,
     "images": [
-      "https://images.unsplash.com/photo-1587922547015-8ae2b155d6d2?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.669Z"
   },
   {
     "id": "kerala-backwaters",
     "name": "Kerala Backwaters",
     "district": "Alleppey",
     "category": "park",
-    "description": "A serene labyrinth of interconnected palm-fringed canals, lagoons, and lakes, best explored on a traditional luxury Kettuvallam houseboat.",
-    "short_description": "Tranquil network of canals, lagoons, and luxury houseboats.",
+    "description": "A tranquil labyrinth of palm-fringed canals, lagoons, and lakes, best explored aboard a traditional luxury Kettuvallam wooden houseboat.",
+    "short_description": "Serene network of emerald lagoons and traditional luxury houseboats.",
     "latitude": 9.4981,
     "longitude": 76.3388,
     "images": [
@@ -125,41 +320,41 @@ export const mockDestinations: Destination[] = [
     "best_time": "September to March",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.670Z"
   },
   {
     "id": "hampi-ruins",
     "name": "Hampi Ruins",
-    "district": "Vijayanagara",
+    "district": "Hampi",
     "category": "historical",
-    "description": "The monumental boulder-strewn landscape of Hampi, home to the UNESCO-listed stone chariot, grand monolithic temples, and Vijayanagara ruins.",
-    "short_description": "UNESCO World Heritage stone chariot and ancient Vijayanagara ruins.",
+    "description": "UNESCO World Heritage Site with monumental stone chariot, ancient Vijayanagara temples, and dramatic boulder-strewn landscapes.",
+    "short_description": "Ancient Vijayanagara empire capital and iconic stone chariot ruins.",
     "latitude": 15.335,
     "longitude": 76.46,
     "images": [
-      "https://images.unsplash.com/photo-1564507592333-04cd2a2f359a?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "October to February",
+    "best_time": "November to February",
     "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.670Z"
   },
   {
     "id": "leh-ladakh",
     "name": "Leh Ladakh & Pangong Tso",
     "district": "Leh",
-    "category": "historical",
-    "description": "A high-altitude desert known for breathtaking Himalayan mountain passes, Tibetan Buddhist gompas, and the azure Pangong Tso lake.",
-    "short_description": "High-altitude mountain passes, ancient monasteries, and turquoise lakes.",
+    "category": "park",
+    "description": "High-altitude Himalayan desert renowned for dramatic mountain passes, Tibetan Buddhist monasteries, and the pristine cobalt-blue Pangong Tso lake.",
+    "short_description": "High-altitude Himalayan passes, Tibetan monasteries, and azure alpine lakes.",
     "latitude": 34.1526,
     "longitude": 77.5771,
     "images": [
-      "https://images.unsplash.com/photo-1621786030484-4b5f5de4a788?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "May to September",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.671Z"
   },
   {
     "id": "golden-temple",
@@ -167,109 +362,109 @@ export const mockDestinations: Destination[] = [
     "district": "Amritsar",
     "category": "temple",
     "description": "The spiritual heart of Sikhism, adorned with gold leaf and surrounded by the sacred Amrit Sarovar lake, hosting the world's largest community kitchen.",
-    "short_description": "Gilded spiritual sanctum of Sikhism with sacred Amrit Sarovar.",
+    "short_description": "Spiritual Sikh holy shrine with gleaming gold dome and sacred Amrit Sarovar.",
     "latitude": 31.62,
     "longitude": 74.8765,
     "images": [
-      "https://images.unsplash.com/photo-1585136917625-b29f83aa3174?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.671Z"
   },
   {
     "id": "munnar-tea-gardens",
     "name": "Munnar Tea Gardens",
-    "district": "Idukki",
+    "district": "Munnar",
     "category": "park",
-    "description": "Endless rolling green hills blanketed with manicured tea plantations, misty mountain trails, and the endangered Nilgiri Tahr sanctuary.",
-    "short_description": "Misty rolling green hills, spice estates, and sprawling tea plantations.",
+    "description": "Breathtaking rolling hills covered in manicured organic tea plantations, misty mountain viewpoints, and exotic flora in the Western Ghats.",
+    "short_description": "Rolling emerald hills, manicured tea estates, and misty mountain viewpoints.",
     "latitude": 10.0889,
     "longitude": 77.0595,
     "images": [
-      "https://images.unsplash.com/photo-1571068316344-75bc3048de5e?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "September to April",
-    "entry_fee": 25,
+    "best_time": "September to May",
+    "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.672Z"
   },
   {
     "id": "mysore-palace",
     "name": "Mysore Palace",
-    "district": "Mysuru",
+    "district": "Mysore",
     "category": "historical",
-    "description": "A grand Indo-Saracenic royal palace of the Wadiyar dynasty, renowned worldwide for its ornate durbar halls and 100,000 glowing evening lights.",
-    "short_description": "Ornate Indo-Saracenic royal palace illuminated with 100,000 bulbs.",
+    "description": "Grand Indo-Saracenic royal palace of the Wadiyar dynasty, renowned for opulent durbar halls, carved mahogany ceilings, and 100,000 festival lights.",
+    "short_description": "Opulent royal palace illuminated with over 100,000 festival lights.",
     "latitude": 12.3051,
     "longitude": 76.6551,
     "images": [
-      "https://images.unsplash.com/photo-1598091383021-15ddea64c8b0?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1580837119756-563d608dd119?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.672Z"
   },
   {
     "id": "amer-fort",
     "name": "Amer Fort & Palace",
     "district": "Jaipur",
     "category": "historical",
-    "description": "A magnificent hilltop Rajput citadel overlooking Maota Lake, famous for its dazzling Sheesh Mahal (Mirror Palace) and royal courtyards.",
-    "short_description": "Hilltop Rajput fortress famous for the Sheesh Mahal mirror palace.",
+    "description": "Magnificent hilltop fort showcasing Rajput architecture, mirror palace (Sheesh Mahal), and sweeping valley views.",
+    "short_description": "Hilltop fort showcasing Rajput architecture, courtyards, and mirror palaces.",
     "latitude": 26.9855,
     "longitude": 75.8513,
     "images": [
-      "https://images.unsplash.com/photo-1524492412435-32cd049bde7d?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.673Z"
   },
   {
     "id": "konark-sun-temple",
     "name": "Konark Sun Temple",
-    "district": "Puri",
-    "category": "temple",
+    "district": "Konark",
+    "category": "historical",
     "description": "A 13th-century UNESCO marvel sculpted as a colossal 24-wheeled chariot of Surya Dev, celebrated for monumental stone carvings and sundials.",
-    "short_description": "13th-century UNESCO monumental stone chariot temple of the Sun God.",
+    "short_description": "13th-century UNESCO marvel sculpted as a colossal 24-wheeled Sun chariot.",
     "latitude": 19.8876,
     "longitude": 86.0945,
     "images": [
-      "https://images.unsplash.com/photo-1631166686956-56a0a0c75f80?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "November to February",
+    "best_time": "October to March",
     "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.673Z"
   },
   {
     "id": "ranthambore",
     "name": "Ranthambore Tiger Reserve",
     "district": "Sawai Madhopur",
     "category": "wildlife",
-    "description": "One of India's premier tiger reserves where Royal Bengal tigers roam freely amidst 1,000-year-old fort ruins, lakes, and deciduous forests.",
-    "short_description": "Premier Royal Bengal tiger habitat set against 10th-century fort ruins.",
+    "description": "Famed national park where royal Bengal tigers roam freely among ancient 10th-century fort ruins, lakes, and deciduous forests.",
+    "short_description": "Premier tiger sanctuary featuring wilderness safaris and historic fort ruins.",
     "latitude": 26.0173,
     "longitude": 76.5026,
     "images": [
-      "https://images.unsplash.com/photo-1615279867456-1e2f5e9e2291?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
-    "entry_fee": 600,
+    "entry_fee": 1200,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.674Z"
   },
   {
     "id": "victoria-memorial",
     "name": "Victoria Memorial Hall",
     "district": "Kolkata",
     "category": "historical",
-    "description": "An imposing British-era white Makrana marble monument set in 64 acres of landscaped gardens, housing rare national art galleries and archives.",
-    "short_description": "White Makrana marble monument and national museum in Kolkata.",
+    "description": "Magnificent white Makrana marble monument with 64 acres of landscaped gardens, housing rare Raj-era paintings, manuscripts, and sculptures.",
+    "short_description": "Stately white Makrana marble palace surrounded by sprawling gardens.",
     "latitude": 22.5448,
     "longitude": 88.3426,
     "images": [
@@ -278,7 +473,7 @@ export const mockDestinations: Destination[] = [
     "best_time": "October to March",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.674Z"
   },
   {
     "id": "ajanta-ellora",
@@ -302,8 +497,8 @@ export const mockDestinations: Destination[] = [
     "name": "Meenakshi Amman Temple",
     "district": "Madurai",
     "category": "temple",
-    "description": "Historic Dravidian temple complex on the Vaigai River with 14 towering gopurams decorated with thousands of colorful mythological sculptures.",
-    "short_description": "Towering Dravidian temple complex with 14 sculpted gopuram gateways.",
+    "description": "Historic Hindu temple on the southern bank of Vaigai River, famed for 14 towering gopurams encrusted with thousands of colorful mythological sculptures.",
+    "short_description": "Dravidian architectural masterpiece with 14 vibrant sculpted gopurams.",
     "latitude": 9.9195,
     "longitude": 78.1193,
     "images": [
@@ -317,129 +512,129 @@ export const mockDestinations: Destination[] = [
   {
     "id": "qutub-minar",
     "name": "Qutub Minar & Mehrauli Complex",
-    "district": "New Delhi",
+    "district": "Delhi",
     "category": "historical",
-    "description": "A 73-meter red sandstone minaret built in 1192, surrounded by ancient monuments including the rust-resistant 4th-century Iron Pillar of Chandragupta II.",
-    "short_description": "World's tallest brick minaret and ancient Delhi Sultanate monuments.",
+    "description": "A 73-meter-tall victory minaret of fluted red sandstone, built in 1192 and surrounded by ancient Mughal and Delhi Sultanate ruins including the rust-resistant Iron Pillar.",
+    "short_description": "World's tallest brick minaret standing inside a historic 12th-century monument complex.",
     "latitude": 28.5244,
     "longitude": 77.1855,
     "images": [
       "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
-    "entry_fee": 50,
+    "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.676Z"
   },
   {
     "id": "sundarbans",
     "name": "Sundarbans Biosphere Reserve",
     "district": "South 24 Parganas",
     "category": "wildlife",
-    "description": "The world's largest mangrove forest, home to swimming Royal Bengal tigers, estuarine crocodiles, and rare Gangetic dolphins across tidal waterways.",
-    "short_description": "World's largest mangrove delta and swimming Bengal tiger sanctuary.",
+    "description": "World's largest halophytic mangrove forest and UNESCO site, spanning the Ganges delta and home to royal Bengal tigers and saltwater crocodiles.",
+    "short_description": "Vast mangrove delta crisscrossed by tidal waterways, tigers, and biodiversity.",
     "latitude": 21.9497,
     "longitude": 89.1833,
     "images": [
       "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "November to March",
+    "best_time": "September to March",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.676Z"
   },
   {
     "id": "rishikesh-ganga",
     "name": "Rishikesh & Laxman Jhula",
-    "district": "Dehradun",
+    "district": "Rishikesh",
     "category": "temple",
-    "description": "The world capital of Yoga situated along the pristine emerald waters of the Ganges, offering white-water rafting, ashrams, and Triveni Ghat aarti.",
-    "short_description": "Yoga capital, white-water rafting hub, and Himalayan river ashrams.",
+    "description": "The Yoga Capital of the World along the emerald-green upper Ganges, celebrated for river rafting, Parmarth Niketan Ganga Aarti, and Himalayan foothill ashrams.",
+    "short_description": "Yoga capital on the emerald Ganges with iconic suspension bridges and river rafting.",
     "latitude": 30.0869,
     "longitude": 78.2676,
     "images": [
-      "https://images.unsplash.com/photo-1598890777032-bde13fbe34c9?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1545652985-5edd365b12eb?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "September to November & March to May",
+    "best_time": "September to April",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.677Z"
   },
   {
     "id": "cherrapunji-bridges",
     "name": "Living Root Bridges",
-    "district": "East Khasi Hills",
+    "district": "Cherrapunji",
     "category": "park",
-    "description": "Bio-engineered botanical wonders hand-woven by the indigenous Khasi tribe across centuries from the aerial roots of Ficus elastica trees.",
-    "short_description": "Living bio-engineered double-decker root bridges in Khasi hills.",
+    "description": "Bio-engineering wonders handcrafted by the Khasi and Jaintia tribes from aerial roots of rubber fig trees across rushing jungle streams.",
+    "short_description": "Centuries-old living bio-engineered bridges grown from tree roots across jungle streams.",
     "latitude": 25.2702,
     "longitude": 91.7323,
     "images": [
       "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
-    "entry_fee": 30,
+    "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.678Z"
   },
   {
     "id": "jaisalmer-fort",
     "name": "Jaisalmer Golden Fort & Thar Desert",
     "district": "Jaisalmer",
     "category": "historical",
-    "description": "The majestic golden sandstone living fort rising from the Thar Desert dunes, known for havelis, Jain temples, and sunset camel safaris at Sam Dunes.",
-    "short_description": "Living golden sandstone desert fort and Thar dune camel safaris.",
+    "description": "A living yellow sandstone fort rising out of the golden Thar Desert sand dunes, with carved havelis, Jain temples, and sunset camel safaris.",
+    "short_description": "Living golden fort rising dramatically over the Thar Desert dunes.",
     "latitude": 26.9124,
-    "longitude": 70.9126,
+    "longitude": 70.916,
     "images": [
-      "https://images.unsplash.com/photo-1578735427-9773f2469da8?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.678Z"
   },
   {
     "id": "kaziranga-park",
     "name": "Kaziranga National Park",
     "district": "Golaghat",
     "category": "wildlife",
-    "description": "UNESCO World Heritage sanctuary harboring two-thirds of the planet's great one-horned rhinoceros population in the fertile Brahmaputra floodplains.",
-    "short_description": "World's premier habitat for the great Indian one-horned rhinoceros.",
+    "description": "UNESCO World Heritage sanctuary in Assam hosting two-thirds of the world's great one-horned rhinoceroses among Brahmaputra floodplain grasslands.",
+    "short_description": "World-famous sanctuary of the Indian one-horned rhinoceros and Brahmaputra wetlands.",
     "latitude": 26.5775,
     "longitude": 93.1711,
     "images": [
-      "https://images.unsplash.com/photo-1564349683136-77e08dba1ef6?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "November to April",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.679Z"
   },
   {
     "id": "goa-coastal",
     "name": "Goa Coast & Chapora Fort",
-    "district": "North Goa",
+    "district": "North & South Goa",
     "category": "park",
     "description": "Golden sandy palm-fringed coastlines, Portuguese baroque heritage churches, seafood shacks, and historic hilltop forts overlooking the Arabian Sea.",
-    "short_description": "Golden palm beaches, oceanfront forts, and Portuguese colonial churches.",
-    "latitude": 15.6062,
-    "longitude": 73.738,
+    "short_description": "Sun-kissed Arabian Sea beaches, colonial heritage churches, and coastal forts.",
+    "latitude": 15.2993,
+    "longitude": 74.124,
     "images": [
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "November to March",
+    "best_time": "November to February",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.679Z"
   },
   {
     "id": "valley-of-flowers",
     "name": "Valley of Flowers National Park",
     "district": "Chamoli",
     "category": "park",
-    "description": "A UNESCO high-altitude alpine meadow nestled in West Himalaya, blooming with hundreds of rare wild alpine flowers and medicinal herbs each monsoon.",
-    "short_description": "UNESCO high-altitude Himalayan valley carpeted in endemic alpine blooms.",
+    "description": "Himalayan alpine valley carpeted in hundreds of species of vibrant wild flora during monsoon, set against glaciers and towering mountain peaks.",
+    "short_description": "High-altitude alpine valley blossoming with hundreds of endemic mountain wildflowers.",
     "latitude": 30.728,
     "longitude": 79.6053,
     "images": [
@@ -448,24 +643,24 @@ export const mockDestinations: Destination[] = [
     "best_time": "July to September",
     "entry_fee": 150,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.680Z"
   },
   {
     "id": "jonha-falls",
     "name": "Jonha & Hundru Waterfalls",
     "district": "Ranchi",
-    "category": "waterfall",
-    "description": "Scenic multi-tiered waterfalls cascading from heights over 98 meters amidst rocky plateaus and verdant Sal tree forests in Chotanagpur.",
-    "short_description": "Spectacular rocky cascades and green Sal forests in the Chotanagpur plateau.",
-    "latitude": 23.3058,
-    "longitude": 85.4425,
+    "category": "park",
+    "description": "Breathtaking multi-tiered cascade where the Kanchi and Subarnarekha rivers plummet over rocky plateaus surrounded by pristine Sal forests.",
+    "short_description": "Spectacular cascade surrounded by dense green Sal forests of Chotanagpur.",
+    "latitude": 23.3441,
+    "longitude": 85.6074,
     "images": [
-      "https://images.unsplash.com/photo-1530879064-4cad9f7be6ec?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "July to December",
-    "entry_fee": 30,
+    "best_time": "September to February",
+    "entry_fee": 10,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.680Z"
   },
   {
     "id": "betla-national-park",
@@ -473,279 +668,68 @@ export const mockDestinations: Destination[] = [
     "district": "Latehar",
     "category": "wildlife",
     "description": "One of India's earliest tiger sanctuaries, featuring dense Sal canopy, wild elephant herds, sloth bears, and 16th-century Chero dynasty fort ruins.",
-    "short_description": "Historic tiger reserve with wild elephants and 16th-century fort ruins.",
-    "latitude": 23.8667,
+    "short_description": "Sanctuary known for wild elephant herds, tigers, and historic 16th-century Chero fort ruins.",
+    "latitude": 23.8833,
     "longitude": 84.1833,
     "images": [
       "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "October to April",
-    "entry_fee": 100,
+    "best_time": "November to April",
+    "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.681Z"
   },
   {
     "id": "baidyanath-dham",
     "name": "Baidyanath Dham Temple",
     "district": "Deoghar",
     "category": "temple",
-    "description": "One of the twelve revered Jyotirlinga shrines in India, a celebrated pilgrimage destination attracting devotees worldwide during the holy Shravani Mela.",
-    "short_description": "One of the 12 sacred Jyotirlinga temples and major pilgrimage center.",
-    "latitude": 24.4844,
-    "longitude": 86.6993,
+    "description": "One of the twelve revered Jyotirlinga shrines in India, a celebrated pilgrimage destination attracting devotees worldwide during the holy Shravan Mela.",
+    "short_description": "Sacred Jyotirlinga pilgrimage temple attracting devotees across the subcontinent.",
+    "latitude": 24.4925,
+    "longitude": 86.7001,
     "images": [
-      "https://images.unsplash.com/photo-1592389946522-a81c9d8ecad7?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to March",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.681Z"
   },
   {
     "id": "netarhat-hills",
-    "name": "Netarhat â€” Queen of Chotanagpur",
+    "name": "Netarhat – Queen of Chotanagpur",
     "district": "Latehar",
     "category": "park",
-    "description": "A tranquil hill station at 3,700 ft known for cool pine forests, pear orchards, Magnolia Sunset Point, and Lower Ghaghri waterfall trails.",
-    "short_description": "Serene pine-forested hill station famous for Magnolia Sunset Point.",
-    "latitude": 23.4795,
-    "longitude": 84.269,
+    "description": "A tranquil hill station perched at 3,700 feet, famous for spectacular sunrise and sunset vistas at Magnolia Point, pine forests, and cool mountain breezes.",
+    "short_description": "Serene hill station famed for misty sunsets at Magnolia Point and dense pine forests.",
+    "latitude": 23.4833,
+    "longitude": 84.2667,
     "images": [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3ad?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80&auto=format&fit=crop"
     ],
     "best_time": "October to April",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "created_at": "2026-08-25T16:49:23.682Z"
   },
   {
     "id": "ranchi-lake",
     "name": "Ranchi Lake & Tagore Hill",
     "district": "Ranchi",
     "category": "park",
-    "description": "An 1842 historic lake nestled beneath Ranchi Hill alongside Tagore Hill, where Nobel laureate Rabindranath Tagore composed celebrated literary works.",
-    "short_description": "Scenic boating lake and historic hill associated with Rabindranath Tagore.",
-    "latitude": 23.3643,
-    "longitude": 85.3365,
+    "description": "Historic urban lake dug in 1842 by British Colonel Ouseley, overlooked by the scenic Tagore Hill where Rabindranath Tagore's brother Jyotirindranath once stayed.",
+    "short_description": "Scenic lake and historic hilltop viewpoint with panoramic city vistas.",
+    "latitude": 23.3644,
+    "longitude": 85.3216,
     "images": [
-      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80&auto=format&fit=crop"
     ],
-    "best_time": "Year-round",
-    "entry_fee": 10,
-    "is_featured": false,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "best_time": "October to March",
+    "entry_fee": 0,
+    "is_featured": true,
+    "created_at": "2026-08-25T16:49:23.682Z"
   }
 ];
-
-export const mockEvents: Event[] = [
-  {
-    id: '1',
-    name: 'Sarhul Festival',
-    description: 'A spring festival celebrated by the tribal communities of India, marking the worship of nature and the blossoming of Sal trees.',
-    category: 'festival',
-    date_start: '2026-03-25',
-    date_end: '2026-03-27',
-    location: 'Across India',
-    image_url: 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '2',
-    name: 'Karma Festival',
-    description: 'A harvest festival celebrated with traditional dance, music, and rituals to worship the Karma deity for good harvest and prosperity.',
-    category: 'cultural',
-    date_start: '2026-09-15',
-    date_end: '2026-09-16',
-    location: 'Tribal Villages',
-    image_url: 'https://images.unsplash.com/photo-1567337710282-87b0e0e5e1c5?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '3',
-    name: 'Tusu Parab',
-    description: 'A festival dedicated to Goddess Tusu, celebrated during Makar Sankranti with colorful processions and folk songs.',
-    category: 'festival',
-    date_start: '2026-01-14',
-    date_end: '2026-01-15',
-    location: 'Purulia, Dhanbad',
-    image_url: 'https://images.unsplash.com/photo-1519817298949-0e2a6e97c13f?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '4',
-    name: 'Chhath Puja',
-    description: 'An ancient Hindu festival dedicated to the Sun God, celebrated with devotion and rituals on the banks of rivers and ponds.',
-    category: 'festival',
-    date_start: '2026-11-10',
-    date_end: '2026-11-13',
-    location: 'Riverbanks across India',
-    image_url: 'https://images.unsplash.com/photo-1604313741082-56d9c3a5e05e?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '5',
-    name: 'Rohini Festival',
-    description: 'The first festival of Jharkhand, Rohini marks the commencement of sowing seeds in the fields. It is a symbolic celebration of the beginning of the agricultural cycle.',
-    category: 'cultural',
-    date_start: '2026-06-05',
-    date_end: '2026-06-06',
-    location: 'Rural Jharkhand',
-    image_url: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '6',
-    name: 'Bandna Festival',
-    description: 'A vibrant festival celebrated during the black moon of Kartik month. It is dedicated to the well-being of animals, particularly cows and bulls, which are crucial for farming.',
-    category: 'festival',
-    date_start: '2026-11-15',
-    date_end: '2026-11-17',
-    location: 'Santhal Pargana',
-    image_url: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {    id: '7',
-    name: 'Mysore Dussehra',
-    description: 'The state festival of Karnataka, celebrated with a grand procession of decorated elephants and the magnificent illumination of Mysore Palace.',
-    category: 'cultural',
-    date_start: '2026-10-13',
-    date_end: '2026-10-22',
-    location: 'Mysore, Karnataka',
-    image_url: 'https://images.unsplash.com/photo-1568454537842-d933259e7f6f?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {    id: '8',
-    name: 'Pushkar Camel Fair',
-    description: "One of the world's largest camel fairs, where thousands of camels, horses, and cattle are traded amidst vibrant cultural performances and competitions.",
-    category: 'fair',
-    date_start: '2026-11-18',
-    date_end: '2026-11-26',
-    location: 'Pushkar, Rajasthan',
-    image_url: 'https://images.unsplash.com/photo-1524749631380-db2f0b5dd9e2?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  },
-  {    id: '9',
-    name: 'Hornbill Festival',
-    description: 'Known as the Festival of Festivals, it showcases the rich traditional heritage and 16 tribes of Nagaland through music, dance, and food.',
-    category: 'cultural',
-    date_start: '2026-12-01',
-    date_end: '2026-12-10',
-    location: 'Kisama, Nagaland',
-    image_url: 'https://images.unsplash.com/photo-1577644545636-f08b87f7736c?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
-  }
-];
-
-export const mockReviews: (Review & { user_name: string; location: string })[] = [
-  {
-    id: '1',
-    user_id: 'user1',
-    user_name: 'Amit Sharma',
-    location: 'Mumbai, Maharashtra',
-    rating: 5,
-    comment: 'The Hundru Falls in Jharkhand are absolutely breathtaking during the monsoon! The power of the water is something you have to see to believe.',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '1',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '2',
-    user_id: 'user2',
-    user_name: 'Priya Patel',
-    location: 'Ahmedabad, Gujarat',
-    rating: 5,
-    comment: 'The Taj Mahal in Agra is a spiritual and architectural haven. Seeing it at sunrise was a life-changing experience!',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '3',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '3',
-    user_id: 'user3',
-    user_name: 'Rahul Verma',
-    location: 'New Delhi',
-    rating: 5,
-    comment: 'Leh Ladakh is like another planet. The high-altitude passes and the crystal clear lakes of Pangong are purely magical. Must visit!',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '2',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '4',
-    user_id: 'user4',
-    user_name: 'Anjali Gupta',
-    location: 'Kolkata, West Bengal',
-    rating: 5,
-    comment: 'Kerala Backwaters on a houseboat was the most peaceful experience. The greenery and the local food were just incredible.',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '6',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '5',
-    user_id: 'user5',
-    user_name: 'Suresh Iyer',
-    location: 'Chennai, Tamil Nadu',
-    rating: 5,
-    comment: 'The ruins of Hampi in Karnataka are a testament to our rich heritage. The stone chariot and the Virupaksha temple left me in awe.',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '4',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '6',
-    user_id: 'user6',
-    user_name: 'Meera Deshmukh',
-    location: 'Pune, Maharashtra',
-    rating: 5,
-    comment: 'The Golden Temple in Amritsar is so serene. The community kitchen (Langar) and the spiritual vibe are something everyone should experience.',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '5',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '7',
-    user_id: 'user7',
-    user_name: 'Vikram Singh',
-    location: 'Jaipur, Rajasthan',
-    rating: 5,
-    comment: 'The Amer Fort in Jaipur is a majestic masterpiece. The Sheesh Mahal is absolutely stunning, and the history here is so well preserved.',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '7',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '8',
-    user_id: 'user8',
-    user_name: 'Kavita Nair',
-    location: 'Kochi, Kerala',
-    rating: 5,
-    comment: 'Munnar Tea Gardens in Kerala are a paradise for nature lovers. The rolling hills and the fresh air were so rejuvenating for our family.',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '8',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '9',
-    user_id: 'user9',
-    user_name: 'Arjun Reddy',
-    location: 'Hyderabad, Telangana',
-    rating: 5,
-    comment: 'The Konark Sun Temple in Odisha is an architectural marvel. The stone carvings and the scientific design are mind-blowing!',
-    sentiment: 'positive',
-    target_type: 'destination',
-    target_id: '9',
-    created_at: new Date().toISOString()
-  }
-];
-
 
 

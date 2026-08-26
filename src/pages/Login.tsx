@@ -67,7 +67,7 @@ const Login = () => {
         <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none">
           <div 
             className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=1600&q=85&auto=format&fit=crop')` }}
+            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1548013146-72479768bada?w=1600&q=85&auto=format&fit=crop')` }}
           />
         </div>
 
@@ -273,4 +273,5 @@ const Login = () => {
 };
 
 export default Login;
+
 

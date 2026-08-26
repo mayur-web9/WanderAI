@@ -1,6 +1,5 @@
 ﻿import { handleImageError, FALLBACK_EVENT_IMAGE, FALLBACK_MARKETPLACE_IMAGE } from '../utils/imageFallback';
 import { UnsplashImage } from '../components/UnsplashImage';
-import { getEventImageUrl, getMarketplaceImageUrl } from '../services/unsplashService';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -219,7 +218,7 @@ const Dashboard = () => {
               <button
                 onClick={() => {
                   setIsAddingDestination(true);
-                  setEditingDestination({ name: '', emoji: 'ðŸ“', tag: 'Historical', desc: '', location: '', image: 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop' });
+                  setEditingDestination({ id: '', name: '', emoji: 'ðŸ“', tag: 'Historical', desc: '', location: '', image: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop' });
                 }}
                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-forest-600 hover:bg-forest-700 text-white font-bold text-xs rounded-xl shadow-sm transition"
               >
@@ -286,7 +285,7 @@ const Dashboard = () => {
                 <div key={event.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700/60 flex items-start justify-between gap-3 group">
                   <div className="flex gap-3">
                     {event.image_url && (
-                      <UnsplashImage src={getEventImageUrl(event)} fallbackSrc={event.image_url} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                      <UnsplashImage src={event.image_url || FALLBACK_EVENT_IMAGE} fallbackSrc={FALLBACK_EVENT_IMAGE} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
                     )}
                     <div>
                       <h3 className="font-bold text-sm text-gray-900 dark:text-white">{event.name}</h3>
@@ -339,7 +338,7 @@ const Dashboard = () => {
               {marketplaces.map((market) => (
                 <div key={market.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700/60 flex items-start justify-between gap-3 group">
                   <div className="flex gap-3">
-                    <UnsplashImage src={getMarketplaceImageUrl(market)} fallbackSrc={market.image} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                    <UnsplashImage src={market.image || FALLBACK_MARKETPLACE_IMAGE} fallbackSrc={FALLBACK_MARKETPLACE_IMAGE} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-14 h-14 rounded-xl object-cover shrink-0" />
                     <div>
                       <h3 className="font-bold text-sm text-gray-900 dark:text-white">{market.name}</h3>
                       <p className="text-[11px] text-forest-600 dark:text-forest-400 font-semibold">{market.location}</p>
@@ -499,6 +498,9 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+
 
 
 

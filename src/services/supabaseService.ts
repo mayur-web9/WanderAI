@@ -220,7 +220,7 @@ export async function getDbDestinations(): Promise<AiDestination[]> {
         tag: typeof d.tag === 'string' ? d.tag : (typeof d.category === 'string' ? d.category : 'Historical'),
         desc: typeof d.desc === 'string' ? d.desc : (typeof d.description === 'string' ? d.description : (typeof d.short_description === 'string' ? d.short_description : '')),
         location: typeof d.location === 'string' ? d.location : (typeof d.district === 'string' ? `${d.district}, India` : 'India'),
-        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop')
+        image: typeof d.image === 'string' ? d.image : (Array.isArray(d.images) && typeof d.images[0] === 'string' ? d.images[0] : 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop')
       }));
     }
   } catch {
@@ -494,4 +494,5 @@ export async function getDbItineraries(userId?: string): Promise<ItineraryRecord
   }
   return [];
 }
+
 

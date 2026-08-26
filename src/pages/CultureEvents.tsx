@@ -1,6 +1,5 @@
 ﻿import { handleImageError, FALLBACK_EVENT_IMAGE, FALLBACK_MARKETPLACE_IMAGE } from '../utils/imageFallback';
 import { UnsplashImage } from '../components/UnsplashImage';
-import { getEventImageUrl, getMarketplaceImageUrl } from '../services/unsplashService';
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { 
@@ -276,7 +275,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                   >
                     {/* Image Header */}
                     <div className="relative h-44 sm:h-48 overflow-hidden">
-                      <UnsplashImage src={getEventImageUrl(event)} fallbackSrc={event.image_url} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <UnsplashImage src={event.image_url || FALLBACK_EVENT_IMAGE} fallbackSrc={FALLBACK_EVENT_IMAGE} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       
                       {/* Category Pill */}
@@ -385,7 +384,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                   >
                     {/* Image Header */}
                     <div className="relative h-44 sm:h-48 overflow-hidden">
-                      <UnsplashImage src={getMarketplaceImageUrl(market)} fallbackSrc={market.image} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <UnsplashImage src={market.image || FALLBACK_MARKETPLACE_IMAGE} fallbackSrc={FALLBACK_MARKETPLACE_IMAGE} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       
                       {/* Tags */}
@@ -453,6 +452,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
     </div>
   );
 }
+
 
 
 
