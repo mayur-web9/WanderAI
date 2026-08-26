@@ -1,17 +1,24 @@
-export interface Destination {
+﻿export interface Destination {
   id: string;
   name: string;
   district: string;
+  state?: string;
   category: 'waterfall' | 'temple' | 'wildlife' | 'tribal' | 'historical' | 'park' | 'nature' | 'heritage' | 'beach' | 'hill';
   description: string;
   short_description: string;
   latitude?: number;
   longitude?: number;
-  images: string[];
   best_time?: string;
-  entry_fee: number;
+  entry_fee?: number;
   is_featured: boolean;
-  created_at: string;
+  famous_things?: string[];
+  nearby_markets?: string[];
+  local_festivals?: string[];
+  transit_info?: string;
+  rating?: number;
+  created_at?: string;
+  images?: string[];
+  image?: string;
 }
 
 export interface Event {
@@ -22,8 +29,31 @@ export interface Event {
   date_start: string;
   date_end: string;
   location: string;
+  state?: string;
+  rituals?: string[];
+  famous_for?: string[];
+  nearby_markets?: string[];
+  how_to_reach?: string;
+  best_viewing_tips?: string;
+  traditional_foods?: string[];
+  created_at?: string;
   image_url?: string;
-  created_at: string;
+}
+
+export interface Marketplace {
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+  state?: string;
+  tags: string[];
+  famous_items?: string[];
+  best_time_to_visit?: string;
+  timings?: string;
+  nearby_eateries?: string[];
+  shopping_tips?: string[];
+  created_at?: string;
+  image?: string;
 }
 
 export interface Review {
@@ -50,23 +80,13 @@ export interface Feedback {
   created_at: string;
 }
 
-export interface Marketplace {
-  id: string;
-  name: string;
-  description: string;
-  location: string;
-  image: string;
-  tags: string[];
-  created_at?: string;
-}
-
 export interface UserProfile {
   id: string;
   email: string;
   full_name: string;
   username?: string;
   bio?: string;
-  role: 'tourist' | 'guide' | 'admin';
+  role: 'tourist' | 'guide';
   phone?: string;
   avatar_url?: string;
   created_at: string;

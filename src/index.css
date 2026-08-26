@@ -5,13 +5,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    font-size: 15px; /* Normalized crisp base scale */
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px; /* Crisp modern scale (fixes oversized/zoomed UI elements) */
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     html {
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 
@@ -20,10 +20,10 @@
     letter-spacing: -0.02em;
   }
 
-  /* Custom subtle scrollbar */
+  /* Custom subtle sleek scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   
   ::-webkit-scrollbar-track {
@@ -31,20 +31,20 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    background: rgba(156, 163, 175, 0.3);
+    background: rgba(156, 163, 175, 0.25);
     border-radius: 9999px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(156, 163, 175, 0.5);
+    background: rgba(156, 163, 175, 0.45);
   }
 
   .dark ::-webkit-scrollbar-thumb {
-    background: rgba(75, 85, 99, 0.4);
+    background: rgba(75, 85, 99, 0.35);
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: rgba(107, 114, 128, 0.6);
+    background: rgba(107, 114, 128, 0.55);
   }
 }
 
@@ -63,11 +63,11 @@
 
   /* Glassmorphic navbar */
   .glass-nav {
-    background: rgba(250, 248, 245, 0.85);
+    background: rgba(250, 248, 245, 0.88);
     backdrop-filter: blur(16px);
   }
   .dark .glass-nav {
-    background: rgba(8, 16, 12, 0.85);
+    background: rgba(8, 16, 12, 0.88);
     backdrop-filter: blur(16px);
   }
 

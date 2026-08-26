@@ -5,7 +5,7 @@
  * Guarantees 100% unique, verified, high-definition stock photos across:
  * - 27 Curated Indian Destination Wonders
  * - 9 Cultural Festivals & Fairs
- * - 9 Traditional Historic Bazaars
+ * - 9 Traditional Historic marketplaces
  * - Hero & Dynamic Category Search fallbacks
  * ==============================================================================
  */
@@ -63,17 +63,17 @@ export const EVENT_IMAGE_REGISTRY: Record<string, string> = {
   'Bandna Festival': 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop'
 };
 
-// 3. UNIQUE VERIFIED TRADITIONAL BAZAARS REGISTRY
+// 3. UNIQUE VERIFIED TRADITIONAL marketplaces REGISTRY
 export const MARKETPLACE_IMAGE_REGISTRY: Record<string, string> = {
   'Dilli Haat': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop',
   'Colaba Causeway': 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop',
-  'Johari Bazaar': 'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop',
+  'Johari Market': 'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop',
   'Anjuna Flea Market': 'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1200&auto=format&fit=crop',
-  'Laad Bazaar': 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop',
+  'Laad Market': 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1200&auto=format&fit=crop',
   'Floating Vegetable Market': 'https://images.unsplash.com/photo-1566837945700-30057527ade0?q=80&w=1200&auto=format&fit=crop',
   'Police Bazar': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop',
   'Janpath Market': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop',
-  'Pondy Bazaar': 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1200&auto=format&fit=crop'
+  'Pondy Market': 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1200&auto=format&fit=crop'
 };
 
 /**
@@ -124,7 +124,7 @@ export function resolveEventImage(name: string, currentUrl?: string): string {
 }
 
 /**
- * Resolves a marketplace or bazaar image
+ * Resolves a marketplace or marketplace image
  */
 export function resolveMarketplaceImage(name: string, currentUrl?: string): string {
   if (!name) return 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop';

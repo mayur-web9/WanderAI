@@ -1,272 +1,627 @@
-﻿import { Destination, Event, Review, Marketplace } from '../types';
+import { Destination, Event, Review, Marketplace } from '../types';
 
 export const DEFAULT_MARKETPLACES: Marketplace[] = [
   {
     id: "1",
     name: "Dilli Haat, Delhi",
-    description: "An open-air food plaza and craft bazaar that offers a taste of India's cultural diversity. Artisans from across the country sell traditional handicrafts and handlooms.",
+    description: "An iconic open-air craft marketplace and food plaza organized like a traditional rural village. Master artisans from across all 28 Indian states set up rotational stalls selling authentic handlooms, tribal pottery, rosewood carvings, and regional cuisine.",
     location: "INA, New Delhi",
-    image: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80&auto=format&fit=crop",
-    tags: ["Crafts", "Food", "Culture"]
+    state: "Delhi",
+    tags: ["Crafts", "Food", "Culture", "Handlooms"],
+    famous_items: [
+      "Kashmiri Pashmina shawls & walnut wood carvings",
+      "Madhubani folk art paintings from Bihar",
+      "Rajasthani camel leather footwear & mojris",
+      "Assam bamboo basketry and cane lamps"
+    ],
+    best_time_to_visit: "October to March (Evenings 4:00 PM – 9:00 PM)",
+    timings: "10:30 AM – 10:00 PM (Open 7 days a week)",
+    nearby_eateries: [
+      "Momo stalls from Sikkim & Nagaland stall",
+      "Bengali fish fry at West Bengal counter",
+      "Rajasthani Thali & Pyaaz Kachori"
+    ],
+    shopping_tips: [
+      "Stalls rotate every 15 days, ensuring fresh handicraft collections",
+      "Govt-fixed entry ticket ensures clean, hassle-free pedestrian shopping",
+      "UPI & digital payments accepted at almost all craft stalls"
+    ]
   },
   {
     id: "2",
     name: "Colaba Causeway, Mumbai",
-    description: "The shopping soul of Mumbai. From trendy accessories and clothing to antique clocks and vintage collectibles, this market has it all.",
+    description: "The vibrant shopping soul of South Mumbai connecting historic colonial heritage with high-energy street shopping. Famous for antique brass compasses, boho jewelry, designer surplus fashion, and heritage cafe culture.",
     location: "Colaba, Mumbai",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
-    tags: ["Antiques", "Fashion", "Street Food"]
+    state: "Maharashtra",
+    tags: ["Antiques", "Fashion", "Street Food", "Bohemian"],
+    famous_items: [
+      "Vintage brass pocket compasses & nautical clocks",
+      "Handcrafted junk jewelry, oxidised silver rings & ear cuffs",
+      "Boho cotton shirts, kurti dresses, and graphic tees",
+      "Kolhapuri chappals and leather satchels"
+    ],
+    best_time_to_visit: "November to February (Late afternoon 3:00 PM – 8:00 PM)",
+    timings: "11:00 AM – 10:00 PM (Daily)",
+    nearby_eateries: [
+      "Cafe Mondegar (Iconic murals & draught beer)",
+      "Cafe Leopold (Historic 1871 bistro)",
+      "Bademiya (Legendary midnight Seekh Kebabs behind Taj)"
+    ],
+    shopping_tips: [
+      "Polite bargaining is customary for roadside street stalls",
+      "Walk up to Gateway of India (just 5 mins walk away) for sunset",
+      "Check condition of antique items before finalizing purchase"
+    ]
   },
   {
     id: "3",
-    name: "Johari Bazaar, Jaipur",
-    description: "Famous for its stunning collection of precious and semi-precious gemstones, traditional jewelry, and authentic Rajasthani textiles.",
+    name: "Johari Market, Jaipur",
+    description: "Centuries-old gemstone and traditional jewelry epicenter of the Pink City. Lined with terracotta-pink facades, this historic marketplace is world-renowned for Kundan, Meenakari, Polki diamonds, and authentic Bandhani tie-dye sarees.",
     location: "Pink City, Jaipur",
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80&auto=format&fit=crop",
-    tags: ["Jewelry", "Textiles", "Heritage"]
+    state: "Rajasthan",
+    tags: ["Jewelry", "Gemstones", "Textiles", "Heritage"],
+    famous_items: [
+      "Authentic Kundan and Meenakari enamel jewelry",
+      "Semi-precious emeralds, rubies, and birthstone rings",
+      "Handmade Rajasthani Bandhani, Leheriya & Gota Patti sarees",
+      "Jaipuri cotton quilts (Razai) & block-print bedsheets"
+    ],
+    best_time_to_visit: "October to March (11:00 AM – 7:00 PM)",
+    timings: "10:00 AM – 8:00 PM (Sunday partially open)",
+    nearby_eateries: [
+      "LMB (Laxmi Mishthan Bhandar) for Ghewar & Doodh Jalebi",
+      "Pandit Kulfi at Sirah Deori Marketplace",
+      "Samrat Restaurant for Crispy Pyaaz Kachori"
+    ],
+    shopping_tips: [
+      "Ask for hallmarked jewelry and authenticity certificates for precious gems",
+      "Combine with visits to nearby Hawa Mahal and City Palace",
+      "Gopalji ka Rasta lane inside the marketplace is the core wholesale jewel hub"
+    ]
   },
   {
     id: "4",
     name: "Anjuna Flea Market, Goa",
-    description: "A vibrant Wednesday market that captures Goa's bohemian spirit. You can find everything from beachwear and hammocks to local spices and handmade jewelry.",
+    description: "The legendary weekly coastal open-air market founded by hippies in the 1960s. Set right against the swaying coconut palms of Anjuna Beach, offering eclectic global clothing, dreamcatchers, organic spices, live acoustic music, and handmade crafts.",
     location: "Anjuna, Goa",
-    image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&q=80&auto=format&fit=crop",
-    tags: ["Bohemian", "Music", "Spices"]
+    state: "Goa",
+    tags: ["Bohemian", "Music", "Beachwear", "Spices"],
+    famous_items: [
+      "Handmade macrame dreamcatchers and bohemian wall hangings",
+      "Flowy tie-dye kaftans, beach kimonos, and linen trousers",
+      "Fresh Malabar cinnamon, cardamom, vanilla pods, and Goan cashews",
+      "Tibetan singing bowls and handmade brass incense burners"
+    ],
+    best_time_to_visit: "November to March (Wednesdays 9:00 AM – 6:00 PM)",
+    timings: "Wednesdays only (9:00 AM – Sunset)",
+    nearby_eateries: [
+      "Curlies Beach Shack for Goan Prawn Curry",
+      "German Bakery Anjuna for artisan coffee and apple strudel",
+      "Artjuna Garden Cafe for Mediterranean mezze platters"
+    ],
+    shopping_tips: [
+      "This market operates exclusively on Wednesdays during the tourist season",
+      "Arrive early morning around 9:30 AM to beat the coastal afternoon heat",
+      "Bring cash as coastal mobile network can occasionally be spotty"
+    ]
   },
   {
     id: "5",
-    name: "Laad Bazaar, Hyderabad",
-    description: "Located near the Charminar, this historic market is world-famous for its exquisite lacquer bangles encrusted with stones.",
+    name: "Laad Market, Hyderabad",
+    description: "Centuries-old marketplace radiating from the base of the iconic Charminar. Renowned worldwide for glistening lacquer bangles encrusted with colorful stones, Hyderabadi pearl sets, Zardozi embroidered bridal dupattas, and traditional attar (natural perfume).",
     location: "Charminar, Hyderabad",
-    image: "https://images.unsplash.com/photo-1612528442702-28c6a0abb6f4?w=800&q=80&auto=format&fit=crop",
-    tags: ["Bangles", "Lacquer", "Historic"]
+    state: "Telangana",
+    tags: ["Bangles", "Pearls", "Historic", "Zardozi"],
+    famous_items: [
+      "Hand-crafted lacquer bangles with studded stones (Kangan)",
+      "Certified Hyderabadi Basra and freshwater pearls",
+      "Pure floral Attar (Jasmine, Oudh, Sandalwood essence)",
+      "Hand-embroidered Zardozi bridal fabrics and velvet sherwanis"
+    ],
+    best_time_to_visit: "September to March (Evenings 5:00 PM – 9:30 PM)",
+    timings: "11:00 AM – 10:30 PM (Daily)",
+    nearby_eateries: [
+      "Shadab Hotel for Authentic Hyderabadi Dum Biryani",
+      "Nimrah Cafe & Bakery for Irani Chai & Osmania Biscuits with Charminar view",
+      "Pista House for Haleem (during festive season)"
+    ],
+    shopping_tips: [
+      "Artisans can custom-size bangles to your wrist right in front of you",
+      "The illuminated view of Charminar at dusk from the marketplace is breathtaking",
+      "Vehicle traffic is restricted inside the lane — best explored on foot"
+    ]
   },
   {
     id: "6",
     name: "Floating Vegetable Market, Srinagar",
-    description: "A unique early morning experience where vendors sell fresh produce from their traditional wooden boats (shikaras) on the serene Dal Lake.",
+    description: "A surreal, centuries-old floating marketplace on the tranquil waters of Dal Lake. Local Kashmiri farmers gather at dawn on their slender wooden Shikara boats to trade freshly harvested lake vegetables, Nadru (lotus stem), and exotic saffron.",
     location: "Dal Lake, Srinagar",
-    image: "https://images.unsplash.com/photo-1587502536263-c9b7ac76c3bc?w=800&q=80&auto=format&fit=crop",
-    tags: ["Nature", "Local", "Unique"]
+    state: "Jammu & Kashmir",
+    tags: ["Nature", "Unique", "Kashmir", "Shikara"],
+    famous_items: [
+      "Fresh Nadru (crisp Kashmiri lotus root stem)",
+      "Organic saffron threads (Kesar) from Pampore fields",
+      "Dried Kashmiri morels (Gucchi mushrooms) and walnuts",
+      "Fresh Kashmiri Kahwa green tea blend with saffron & crushed almonds"
+    ],
+    best_time_to_visit: "April to October (At the crack of dawn 5:00 AM – 7:00 AM)",
+    timings: "5:00 AM – 7:30 AM (Early morning only)",
+    nearby_eateries: [
+      "Floating Shikara Kahwa vendors serving hot saffron tea with honey",
+      "Ahdoos Restaurant (Srinagar city) for authentic Wazwan Rogan Josh",
+      "Krishna Dhaba for hot vegetarian Kashmiri meals"
+    ],
+    shopping_tips: [
+      "Hire a Shikara the night before from Boulevard Road Ghats for 5:00 AM departure",
+      "Barter trading is still practiced among local farmers between boats",
+      "Carry warm layers as early morning lake mist can be chilly"
+    ]
   },
   {
     id: "7",
     name: "Police Bazar, Shillong",
-    description: "The commercial hub of Shillong. A perfect mix of traditional and modern, where you can find exquisite Meghalayan handlooms, bamboo crafts, and amazing local street food.",
+    description: "The bustling cultural and commercial heartbeat of Meghalaya's hill capital. A pedestrian plaza offering authentic Khasi bamboo artifacts, warm hand-woven sheep wool shawls, traditional Khasi orange blossom honey, and buzzing rock music culture.",
     location: "Khyndailad, Shillong",
-    image: "https://images.unsplash.com/photo-1524594152303-9fd13543fe96?w=800&q=80&auto=format&fit=crop",
-    tags: ["Handlooms", "Bamboo", "Street Food"]
+    state: "Meghalaya",
+    tags: ["Handlooms", "Bamboo", "Street Food", "Northeast"],
+    famous_items: [
+      "Handcrafted Meghalayan cane chairs, hats & bamboo baskets",
+      "Endi (Eri) silk stoles & hand-knitted Naga wool sweaters",
+      "Pure Khasi hill wild honey & Sohiong berry jams",
+      "Organic Lakadong turmeric powder with highest curcumin content"
+    ],
+    best_time_to_visit: "September to May (Cool mountain weather)",
+    timings: "10:00 AM – 8:00 PM (Shops close early by 8 PM in the hills)",
+    nearby_eateries: [
+      "Delhi Mistan Bhandar for Jalebis and Puri Sabzi",
+      "City Hut Family Dhaba for Khasi pork curry and rice",
+      "Dylan's Cafe for gourmet burgers and retro music tribute"
+    ],
+    shopping_tips: [
+      "Central roundabout is completely pedestrianized for safe strolling",
+      "Pick up regional spices like Raja Mircha (Ghost Pepper) and wild cinnamon",
+      "Bargaining is polite but prices are generally very fair and budget-friendly"
+    ]
   },
   {
     id: "8",
     name: "Janpath Market, Delhi",
-    description: "A popular boutique market known for its long line of small kiosks selling ethnic clothing, silver jewelry, and handicrafts from across India and Tibet.",
+    description: "A beloved boutique avenue in the heart of Connaught Place. Famous for Tibetan antique markets, Rajasthani embroidered wall tapestries, brass Buddha statues, vintage silver jewelry, and the latest affordable street fashion.",
     location: "Connaught Place, New Delhi",
-    image: "https://images.unsplash.com/photo-1575101600-7da29a27cb7b?w=800&q=80&auto=format&fit=crop",
-    tags: ["Ethnic", "Kiosks", "Budget"]
+    state: "Delhi",
+    tags: ["Ethnic", "Kiosks", "Antiques", "Budget"],
+    famous_items: [
+      "Tibetan prayer wheels, thangka paintings, and brass singing bowls",
+      "Boho mirror-work jackets, harem pants, and Pashmina stoles",
+      "Antique brass door handles, tribal masks, and vintage coin necklaces",
+      "Hand-bound leather travel journals and incense boxes"
+    ],
+    best_time_to_visit: "October to March (12:00 PM – 6:00 PM)",
+    timings: "11:00 AM – 8:00 PM (Closed on Sundays)",
+    nearby_eateries: [
+      "Depaul's for legendary Hazelnut Cold Coffee & cheese balls",
+      "Saravana Bhavan (Janpath) for crispy South Indian Ghee Roast Dosa",
+      "Wenger's Deli for iconic Shami kebabs and chocolate waffles"
+    ],
+    shopping_tips: [
+      "The Tibetan section at the start of the street has rare Himalayan artifacts",
+      "Explore the Gujrati lane behind for authentic mirror-work tablecloths",
+      "Janpath Metro Station (Violet Line) exits directly into the market"
+    ]
   },
   {
     id: "9",
-    name: "Pondy Bazaar, Chennai",
-    description: "One of the busiest shopping areas in Chennai, offering everything from silk sarees and traditional footwear to modern electronics and local accessories.",
+    name: "Pondy Market, Chennai",
+    description: "One of the most energetic and celebrated shopping boulevards in South India. Located in the bustling heart of T. Nagar, offering pure Kanchipuram silk sarees, traditional gold jewelry, bronze pooja lamps, and South Indian filter coffee.",
     location: "T. Nagar, Chennai",
-    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80&auto=format&fit=crop",
-    tags: ["Silk Sarees", "Footwear", "Tradition"]
+    state: "Tamil Nadu",
+    tags: ["Silk Sarees", "Handlooms", "Tradition", "Gold"],
+    famous_items: [
+      "Pure Kanchipuram Mulberry Silk sarees with real Zari borders",
+      "Traditional Tanjore gold foil paintings of deities",
+      "Heavy brass Nachiarkoil temple lamps and bronze Nataraja idols",
+      "Handmade leather sandals, cotton dhotis, and temple jewelry"
+    ],
+    best_time_to_visit: "November to February (Evenings 4:00 PM – 9:00 PM)",
+    timings: "10:00 AM – 9:30 PM (Open 7 days a week)",
+    nearby_eateries: [
+      "Murugan Idli Shop for steaming Podi Idli and 4 varieties of chutneys",
+      "Geetha Cafe for authentic boiling hot Kumbakonam degree filter coffee",
+      "Hot Chips for fresh hot banana chips fried in pure coconut oil"
+    ],
+    shopping_tips: [
+      "Visit multi-story silk emporiums like Nalli and Kumaran for heirloom sarees",
+      "The pedestrian plaza walkway makes evening street shopping very comfortable",
+      "Look for Silk Mark certification on silk saree purchases"
+    ]
   }
 ];
 
 export const mockEvents: Event[] = [
   {
-    id: '1',
-    name: 'Sarhul Festival',
-    description: 'A spring festival celebrated by the tribal communities of India, marking the worship of nature and the blossoming of Sal trees.',
-    category: 'festival',
-    date_start: '2026-03-25',
-    date_end: '2026-03-27',
-    location: 'Across India',
-    image_url: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "1",
+    name: "Sarhul Festival",
+    description: "The paramount spring celebration of tribal communities in India, commemorating the eternal sacred bond between humanity and mother nature. Dedicated to the blossoming of the holy Sal trees, marking the arrival of the new harvest year with vibrant folk dance and sacred rituals.",
+    category: "festival",
+    date_start: "2026-03-25",
+    date_end: "2026-03-27",
+    location: "Ranchi & Tribal Belts",
+    state: "Jharkhand",
+    famous_for: [
+      "Worship of Sal tree blossoms at the sacred Sarna Sthal",
+      "Grand floral street processions with thousands in traditional Lal Paad sarees",
+      "Resonant tribal rhythm of Mandar drums and flute symphonies",
+      "Distribution of holy Sal flower blossoms for home prosperity"
+    ],
+    rituals: [
+      "Pahan (village priest) performs water prediction ritual for annual monsoon",
+      "Sacred offering of Handia (traditional herbal rice brew) to village deities",
+      "Community tribal circle dances continuing late into the starlit night"
+    ],
+    traditional_foods: [
+      "Dhuska with spicy Black Gram (Kala Chana) curry",
+      "Arsa Roti (sweet jaggery rice patties)",
+      "Rugra & Bamboo shoot festive tribal curry"
+    ],
+    nearby_markets: [
+      "Daily Market Ranchi for indigenous brass crafts",
+      "Kashmir Vastralaya craft center",
+      "Jharkhand Tribal Haat at Morabadi ground"
+    ],
+    how_to_reach: "Fly into Birsa Munda Airport Ranchi (IXR) or take direct trains to Ranchi Junction (RNC). Main processions converge along Kutchery Road.",
+    best_viewing_tips: "Stand along the main road near Albert Ekka Chowk on day 2 for the grand procession where over 50 cultural contingents perform."
   },
   {
-    id: '2',
-    name: 'Karma Festival',
-    description: 'A harvest festival celebrated with traditional dance, music, and rituals to worship the Karma deity for good harvest and prosperity.',
-    category: 'cultural',
-    date_start: '2026-09-15',
-    date_end: '2026-09-16',
-    location: 'Tribal Villages',
-    image_url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "2",
+    name: "Karma Festival",
+    description: "A deeply spiritual harvest and sisterhood festival celebrated across Eastern India. Youth worship the holy Karma tree (Nauclea parvifolia), seeking divine blessings for bountiful agricultural harvest, family well-being, and longevity for brothers.",
+    category: "cultural",
+    date_start: "2026-09-15",
+    date_end: "2026-09-16",
+    location: "Tribal Villages",
+    state: "Jharkhand & Odisha",
+    famous_for: [
+      "Ceremonial planting of the Karma tree branch in the village square",
+      "All-night vibrant Karma dance performed in concentric circles",
+      "Traditional folk storytelling recounting legends of Dharma and Karma",
+      "Sisters observing dawn-to-dusk sacred fasting for their brothers"
+    ],
+    rituals: [
+      "Young villagers venture into the deep forest to fetch sacred Karma branches",
+      "Decorating the branch with wild forest flowers and brass oil lamps",
+      "Ceremonial immersion of the branch into the local river at sunrise"
+    ],
+    traditional_foods: [
+      "Pitha (steamed rice cakes with sweet or lentil filling)",
+      "Chilka Roti (thin rice flour crepes)",
+      "Mahua blossom sweet delicacies"
+    ],
+    nearby_markets: [
+      "Ranchi Tribal Handicraft Cooperative",
+      "Hazaribagh Sohrai painting artist village",
+      "Purulia rural weekly haats"
+    ],
+    how_to_reach: "Easily accessible from Ranchi or Jamshedpur by road. Village festivities are celebrated across Latehar, Gumla, and Khunti districts.",
+    best_viewing_tips: "Visit a village Akhra (community square) after 8:00 PM to experience the hypnotic sound of traditional drums and coordinated circle dancing."
   },
   {
-    id: '3',
-    name: 'Tusu Parab',
-    description: 'A festival dedicated to Goddess Tusu, celebrated during Makar Sankranti with colorful processions and folk songs.',
-    category: 'festival',
-    date_start: '2026-01-14',
-    date_end: '2026-01-15',
-    location: 'Purulia, Dhanbad',
-    image_url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "3",
+    name: "Tusu Parab",
+    description: "An enchanting folk harvest festival celebrated on Makar Sankranti. Young women craft elaborate, brightly colored multi-tiered paper and bamboo architectural models called Chaudal, carrying them in jubilant musical processions to sacred rivers for ceremonial immersion.",
+    category: "festival",
+    date_start: "2026-01-14",
+    date_end: "2026-01-15",
+    location: "Purulia & Dhanbad",
+    state: "Jharkhand & West Bengal",
+    famous_for: [
+      "Grand multi-tiered colorful Chaudal folk architectural structures",
+      "Heartfelt Tusu folk songs sung in regional Kurmali and Bengali dialects",
+      "Vibrant riverside melas with giant Ferris wheels and folk craft stalls",
+      "Celebration of the winter paddy harvest across Chotanagpur"
+    ],
+    rituals: [
+      "Girls gather nightly during the month of Poush to sing traditional Tusu ballads",
+      "Carrying decorated Chaudals to the riverside with dhol and flutes on Sankranti",
+      "Holy dip in the Subarnarekha and Damodar rivers followed by til-gur feast"
+    ],
+    traditional_foods: [
+      "Tilwa & Gud Badam (sesame and jaggery brittle)",
+      "Gud Pitha & Dudh Pitha (rice dumplings in sweetened milk)",
+      "Muri Laru (puffed rice and date-palm jaggery laddoos)"
+    ],
+    nearby_markets: [
+      "Purulia Chowk Bazar for terracotta handicrafts and Chhau dance masks",
+      "Dhanbad Bank More Market for festive sweets and winter handlooms"
+    ],
+    how_to_reach: "Train to Dhanbad Junction (DHN) or Purulia Junction (PRR). The riverside ghats along Damodar and Kasai rivers host the largest gatherings.",
+    best_viewing_tips: "Arrive at Kasai riverbanks by 10:00 AM on Makar Sankranti morning to witness hundreds of colorful Chaudals parading simultaneously."
   },
   {
-    id: '4',
-    name: 'Chhath Puja',
-    description: 'An ancient Hindu festival dedicated to the Sun God, celebrated with devotion and rituals on the banks of rivers and ponds.',
-    category: 'festival',
-    date_start: '2026-11-06',
-    date_end: '2026-11-09',
-    location: 'River Banks across India',
-    image_url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "4",
+    name: "Chhath Puja",
+    description: "An ancient, revered Vedic festival dedicated to Surya Dev (Sun God) and Chhathi Maiya. Known for unmatched purity, four days of rigorous fasting without water, and millions of devotees standing waist-deep in holy river waters offering Arghya to the setting and rising sun.",
+    category: "festival",
+    date_start: "2026-11-06",
+    date_end: "2026-11-09",
+    location: "River Ghats across India",
+    state: "Bihar, Jharkhand & UP",
+    famous_for: [
+      "Sandalwood-scented river ghats illuminated with millions of clay diyas",
+      "Waist-deep river water prayers during sunset and sunrise",
+      "Traditional soulful Chhath folk geet sung by families in chorus",
+      "Sacred bamboo Soop baskets filled with seasonal fruits, sugarcane, and Thekua"
+    ],
+    rituals: [
+      "Day 1 (Nahay Khay): Holy bath and satvik pumpkin-rice meal",
+      "Day 2 (Kharna): Full day fast concluded with jaggery kheer and roti",
+      "Day 3 (Sandhya Arghya): Evening offerings to the setting sun in river waters",
+      "Day 4 (Usha Arghya): Dawn offerings to the rising sun and breaking the 36-hour fast"
+    ],
+    traditional_foods: [
+      "Thekua (crispy whole wheat, ghee, cardamom, and jaggery cookies)",
+      "Rasiya (Kheer cooked in unrefined sugarcane jaggery)",
+      "Kasari & fresh whole coconuts"
+    ],
+    nearby_markets: [
+      "Patna Ghat Marketplace for bamboo soop, daura baskets, and fresh sugarcane",
+      "Ranchi Kanke Dam & Bada Talab festive stalls"
+    ],
+    how_to_reach: "Celebrated enthusiastically across Patna (Ganga Ghats), Varanasi, Ranchi, and Delhi Yamuna Ghats. Direct flights and trains to Patna/Ranchi.",
+    best_viewing_tips: "Reach the river ghats by 4:00 PM on Day 3 for evening Arghya, and 4:30 AM on Day 4 for sunrise Arghya to witness the mesmerizing sea of glowing lamps."
   },
   {
-    id: '5',
-    name: 'Rohini Festival',
-    description: 'The first festival of Jharkhand, Rohini marks the commencement of sowing seeds in the fields. It is a symbolic celebration of the beginning of the agricultural cycle.',
-    category: 'festival',
-    date_start: '2026-05-25',
-    date_end: '2026-05-26',
-    location: 'Jharkhand Agricultural Belts',
-    image_url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "5",
+    name: "Rohini Festival",
+    description: "The symbolic commencement of the Indian agricultural cycle. Celebrated as the first festival of the agricultural year, farmers perform sacred seed-sowing rituals without ploughing, praying for timely monsoons, fertile soils, and abundant harvests.",
+    category: "festival",
+    date_start: "2026-05-25",
+    date_end: "2026-05-26",
+    location: "Agricultural Belts",
+    state: "Jharkhand & Bengal",
+    famous_for: [
+      "Ceremonial broadcasting of paddy seeds into fertile red soils",
+      "Worship of traditional farming tools, wooden ploughs, and seed baskets",
+      "Community singing of agricultural welcome songs and folk melodies",
+      "Celebration welcoming the upcoming monsoon season"
+    ],
+    rituals: [
+      "Farmers rise before dawn and carry sanctified paddy seeds to their fields",
+      "First handful of seeds sown facing east with prayers to the Earth Mother",
+      "Village elders host community storytelling feasts in the evening"
+    ],
+    traditional_foods: [
+      "Dhuska with fresh summer green mango chutney",
+      "Kendu fruit sweet dessert",
+      "Steamed herbal rice with wild saag"
+    ],
+    nearby_markets: [
+      "Khunti organic spice and grain market",
+      "Gumla agricultural haat for traditional tools and indigenous seeds"
+    ],
+    how_to_reach: "Celebrated across rural villages surrounding Ranchi, Hazaribagh, and Giridih. 1-2 hours drive from Ranchi city center.",
+    best_viewing_tips: "Visit rural farm homestays in early morning to watch the auspicious first seed sowing ritual across terraced green plateau fields."
   },
   {
-    id: '6',
-    name: 'Bandna Festival',
-    description: 'A vibrant festival celebrated during the black moon of Kartik month. It is dedicated to the well-being of animals, particularly cows and bulls, which are crucial for farming.',
-    category: 'cultural',
-    date_start: '2026-11-10',
-    date_end: '2026-11-12',
-    location: 'Rural Tribal Districts',
-    image_url: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "6",
+    name: "Bandna Festival",
+    description: "A vibrant, heartwarming harvest festival celebrated during the new moon of Kartik month. Dedicated entirely to honoring farm animals, particularly bullocks and cows, decorated with colorful floral garlands, painted horns, and traditional Sohrai geometric wall art.",
+    category: "cultural",
+    date_start: "2026-11-10",
+    date_end: "2026-11-12",
+    location: "Rural Tribal Districts",
+    state: "Jharkhand & Bengal",
+    famous_for: [
+      "Intricate Sohrai folk mural art painted with natural clays on mud home walls",
+      "Cattle decorated with marigold garlands, painted horns, and vermilion tilaks",
+      "Night-long Ohira folk songs sung by youth visiting every cattle shed",
+      "Gohal Puja (worship of the sacred animal shelter)"
+    ],
+    rituals: [
+      "Day 1: Thorough cleaning of cattle sheds and painting home courtyards",
+      "Day 2: Bathing farm animals, oiling their horns, and performing Aarti",
+      "Day 3: Khuntta ritual — joyful dance with decorated bullocks in village arenas"
+    ],
+    traditional_foods: [
+      "Chilka Roti with roasted country chicken curry",
+      "Gud Pitha (crisp jaggery sweet dumplings)",
+      "Freshly brewed Mahua and rice pitha"
+    ],
+    nearby_markets: [
+      "Hazaribagh Sohrai & Kohbar Art Center for authentic handmade wall scrolls",
+      "Ranchi Gram Udyog craft marketplace"
+    ],
+    how_to_reach: "Hazaribagh is 2 hours drive from Ranchi airport via NH-20. The rural villages of Barkagaon are renowned for world-famous Sohrai mural art.",
+    best_viewing_tips: "Walk through the painted village lanes of Hazaribagh during morning hours to admire museum-quality natural mud murals on every house."
   },
   {
-    id: '7',
-    name: 'Mysore Dussehra',
-    description: 'The state festival of Karnataka, celebrated with a grand procession of decorated elephants and the magnificent illumination of Mysore Palace.',
-    category: 'festival',
-    date_start: '2026-10-12',
-    date_end: '2026-10-22',
-    location: 'Mysore, Karnataka',
-    image_url: 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "7",
+    name: "Mysore Dussehra",
+    description: "The spectacular state festival of Karnataka with over 400 years of royal heritage. Culminating on Vijayadashami, the magnificent Mysore Palace is illuminated with 100,000 golden bulbs, hosting the grand Jamboo Savari elephant procession carrying the golden idol of Goddess Chamundeshwari.",
+    category: "festival",
+    date_start: "2026-10-12",
+    date_end: "2026-10-22",
+    location: "Mysore",
+    state: "Karnataka",
+    famous_for: [
+      "The breathtaking illumination of Mysore Palace with over 100,000 bulbs",
+      "Jamboo Savari: Royal elephant procession carrying 750kg pure gold Howdah",
+      "Torchlight Parade and equestrian acrobatics at Bannimantap Ground",
+      "Classical music and dance concerts inside the royal Durbar Hall"
+    ],
+    rituals: [
+      "Royal family performs special Puja to the royal throne and weapons (Ayudha Puja)",
+      "State honours bestowed upon the royal tusker leading the grand procession",
+      "Grand concluding torchlight drill and fireworks display"
+    ],
+    traditional_foods: [
+      "Authentic Mysore Pak made with pure desi ghee",
+      "Mysore Masala Dosa with red chilli-garlic chutney",
+      "Bisi Bele Bath served with spicy potato chips"
+    ],
+    nearby_markets: [
+      "Devaraja Market for sandalwood oils, incense, and fresh jasmine garlands",
+      "Cauvery Arts & Crafts Emporium for genuine Mysore rosewood inlays",
+      "KSIC Mysore Silk showroom for pure gold zari silk sarees"
+    ],
+    how_to_reach: "Fly into Bengaluru Airport (BLR) and take the 2-hour Vande Bharat Express to Mysore Junction (MYS).",
+    best_viewing_tips: "Book royal procession gold seats inside the Palace grounds well in advance for the best view of the golden Howdah departure."
   },
   {
-    id: '8',
-    name: 'Pushkar Camel Fair',
-    description: "One of the world's largest camel fairs, where thousands of camels, horses, and cattle are traded amidst vibrant cultural performances and competitions.",
-    category: 'cultural',
-    date_start: '2026-11-18',
-    date_end: '2026-11-26',
-    location: 'Pushkar, Rajasthan',
-    image_url: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "8",
+    name: "Pushkar Camel Fair",
+    description: "One of the planet's most iconic cultural and livestock spectacles. Over 50,000 decorated camels, horses, and cattle converge on the golden sand dunes of the Thar Desert, alongside hot air balloons, desert folk music, mustache competitions, and sacred dips in Pushkar Lake.",
+    category: "cultural",
+    date_start: "2026-11-18",
+    date_end: "2026-11-26",
+    location: "Pushkar",
+    state: "Rajasthan",
+    famous_for: [
+      "Thousands of colorfully adorned camels with handmade beaded saddles and pom-poms",
+      "Vibrant rural competitions: Longest Mustache contest, Matka Race, and Camel Dance",
+      "Hot air balloon rides offering sweeping panoramic views over the desert dunes",
+      "Sacred Kartik Purnima full-moon holy dip in the ancient Pushkar Sarovar lake"
+    ],
+    rituals: [
+      "Devotees perform Maha Aarti at Brahma Temple — one of the world's few Brahma shrines",
+      "Floating thousands of glowing clay lamps (Deepdan) across the 52 holy ghats at dusk",
+      "Desert campfire folk concerts with Kalbelia dancers and Rajasthani Sarangi players"
+    ],
+    traditional_foods: [
+      "Crisp hot Malpua dipped in saffron syrup from Halwai Gali",
+      "Rajasthani Dal Baati Churma served with desi ghee and garlic chutney",
+      "Thandai topped with dry fruits and rose petals"
+    ],
+    nearby_markets: [
+      "Pushkar Main Market for silver tribal jewelry, leather bags, and embroidered textiles",
+      "Sarafa Marketplace for brass statues, camel bone artifacts, and miniature paintings"
+    ],
+    how_to_reach: "Take a train or cab to Ajmer Junction (AII), then a scenic 30-minute mountain pass drive across the Nag Pahar hills into Pushkar.",
+    best_viewing_tips: "Head out to the sand dune mela ground during sunrise (6:30 AM) when camel herders stoke morning campfires in the desert mist."
   },
   {
-    id: '9',
-    name: 'Hornbill Festival',
-    description: 'Known as the Festival of Festivals, it showcases the rich traditional heritage and 16 tribes of Nagaland through music, dance, and food.',
-    category: 'cultural',
-    date_start: '2026-12-01',
-    date_end: '2026-12-10',
-    location: 'Kisama, Nagaland',
-    image_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80&auto=format&fit=crop',
-    created_at: new Date().toISOString()
+    id: "9",
+    name: "Hornbill Festival",
+    description: "Revered as the 'Festival of Festivals' in Northeast India. Held annually in the picturesque heritage village of Kisama, it unites all 16 indigenous warrior tribes of Nagaland to celebrate their rich folklore, warrior dances, indigenous games, and culinary heritage.",
+    category: "cultural",
+    date_start: "2026-12-01",
+    date_end: "2026-12-10",
+    location: "Kisama Heritage Village, Kohima",
+    state: "Nagaland",
+    famous_for: [
+      "Traditional tribal warrior dances with Hornbill feather headdresses and spears",
+      "Authentic Morungs (tribal architectural huts) built by each of the 16 tribes",
+      "The legendary Naga King Chilly (Bhut Jolokia) eating competition",
+      "International Hornbill Rock Concert featuring top rock and metal bands"
+    ],
+    rituals: [
+      "Ceremonial lighting of the festival fire by tribal elders in traditional regalia",
+      "Traditional indigenous archery, wrestling (Kene), and bamboo climbing contests",
+      "Evening bonfire feasts with folk singing celebrating tribal warrior ancestry"
+    ],
+    traditional_foods: [
+      "Smoked pork cooked with fermented bamboo shoots and Raja Mircha",
+      "Galho (fragrant Naga herbal rice porridge)",
+      "Zutho (traditional fermented organic rice beverage)"
+    ],
+    nearby_markets: [
+      "Kisama Crafts Marketplace for Naga warrior shawls, bead necklaces, and wood carvings",
+      "Kohima Night Market for street foods, local winter fashion, and handicrafts"
+    ],
+    how_to_reach: "Fly to Dimapur Airport (DMU) or take a train to Dimapur Railway Station, then a scenic 2.5-hour mountain taxi ride up to Kohima/Kisama.",
+    best_viewing_tips: "Arrive at the main arena by 9:30 AM for the morning tribal cultural parade where each tribe showcases their distinct war cries and chants."
   }
 ];
 
 export const mockReviews: (Review & { user_name: string; location: string })[] = [
   {
-    id: '1',
-    user_id: 'u1',
-    target_id: 'taj-mahal',
+    id: "1",
+    user_id: "u1",
+    target_id: "taj-mahal",
     rating: 5,
-    comment: 'WanderAI gave us the perfect sunrise photography timing for Taj Mahal and avoided all crowd rush! Truly unforgettable experience.',
-    created_at: '2026-08-20T10:00:00Z',
-    user_name: 'Amit Sharma',
-    location: 'Mumbai, Maharashtra'
+    comment: "WanderAI gave us the perfect sunrise timing for Taj Mahal and avoided all crowd rush! Truly unforgettable experience.",
+    created_at: "2026-08-20T10:00:00Z",
+    user_name: "Amit Sharma",
+    location: "Mumbai, Maharashtra"
   },
   {
-    id: '2',
-    user_id: 'u2',
-    target_id: 'kerala-backwaters',
+    id: "2",
+    user_id: "u2",
+    target_id: "kerala-backwaters",
     rating: 5,
-    comment: 'The 4-day Alleppey & Munnar circuit recommendation was flawless. The local Toddy shop food tips were 10/10 delicious!',
-    created_at: '2026-08-21T14:30:00Z',
-    user_name: 'Priya Patel',
-    location: 'Ahmedabad, Gujarat'
+    comment: "The 4-day Alleppey & Munnar circuit recommendation was flawless. The local Toddy shop food tips were 10/10 delicious!",
+    created_at: "2026-08-21T14:30:00Z",
+    user_name: "Priya Patel",
+    location: "Ahmedabad, Gujarat"
   },
   {
-    id: '3',
-    user_id: 'u3',
-    target_id: 'varanasi-ghats',
+    id: "3",
+    user_id: "u3",
+    target_id: "varanasi-ghats",
     rating: 5,
-    comment: 'Subah-e-Banaras sunrise boat ride and the evening Dashashwamedh Aarti guidance helped us navigate Varanasi with total peace of mind.',
-    created_at: '2026-08-22T08:15:00Z',
-    user_name: 'Rahul Verma',
-    location: 'New Delhi'
+    comment: "Subah-e-Banaras sunrise boat ride and the evening Dashashwamedh Aarti guidance helped us navigate Varanasi with total peace of mind.",
+    created_at: "2026-08-22T08:15:00Z",
+    user_name: "Rahul Verma",
+    location: "New Delhi"
   },
   {
-    id: '4',
-    user_id: 'u4',
-    target_id: 'hampi-ruins',
+    id: "4",
+    user_id: "u4",
+    target_id: "hampi-ruins",
     rating: 5,
-    comment: 'The heritage notes for the stone chariot and boulder sunsets across Tungabhadra river made me feel like an ancient explorer.',
-    created_at: '2026-08-23T11:45:00Z',
-    user_name: 'Anjali Gupta',
-    location: 'Kolkata, West Bengal'
+    comment: "The heritage notes for the stone chariot and boulder sunsets across Tungabhadra river made me feel like an ancient explorer.",
+    created_at: "2026-08-23T11:45:00Z",
+    user_name: "Anjali Gupta",
+    location: "Kolkata, West Bengal"
   },
   {
-    id: '5',
-    user_id: 'u5',
-    target_id: 'leh-ladakh',
+    id: "5",
+    user_id: "u5",
+    target_id: "leh-ladakh",
     rating: 5,
-    comment: 'The acclimatization advice and Pangong Tso homestay recommendations made our high-altitude bike ride super safe and magical.',
-    created_at: '2026-08-24T16:20:00Z',
-    user_name: 'Suresh Iyer',
-    location: 'Chennai, Tamil Nadu'
+    comment: "The acclimatization advice and Pangong Tso homestay recommendations made our high-altitude bike ride super safe and magical.",
+    created_at: "2026-08-24T16:20:00Z",
+    user_name: "Suresh Iyer",
+    location: "Chennai, Tamil Nadu"
   },
   {
-    id: '6',
-    user_id: 'u6',
-    target_id: 'golden-temple',
+    id: "6",
+    user_id: "u6",
+    target_id: "golden-temple",
     rating: 5,
-    comment: 'Langhar timing and midnight Palki Sahib seva tips were incredibly accurate and deeply moving. Best Indian travel AI by far.',
-    created_at: '2026-08-24T19:10:00Z',
-    user_name: 'Meera Deshmukh',
-    location: 'Pune, Maharashtra'
+    comment: "Langar timing and midnight Palki Sahib seva tips were incredibly accurate and deeply moving. Best Indian travel AI by far.",
+    created_at: "2026-08-24T19:10:00Z",
+    user_name: "Meera Deshmukh",
+    location: "Pune, Maharashtra"
   },
   {
-    id: '7',
-    user_id: 'u7',
-    target_id: 'amer-fort',
+    id: "7",
+    user_id: "u7",
+    target_id: "amer-fort",
     rating: 5,
-    comment: 'Explored Jaipur with the instant chat feature in Hindi! It recommended the best Pyaaz Kachori near Johari Bazaar.',
-    created_at: '2026-08-25T09:00:00Z',
-    user_name: 'Vikram Singh',
-    location: 'Jaipur, Rajasthan'
+    comment: "Explored Jaipur with the instant chat feature in Hindi! It recommended the best Pyaaz Kachori near Johari Market.",
+    created_at: "2026-08-25T09:00:00Z",
+    user_name: "Vikram Singh",
+    location: "Jaipur, Rajasthan"
   },
   {
-    id: '8',
-    user_id: 'u8',
-    target_id: 'cherrapunji-bridges',
+    id: "8",
+    user_id: "u8",
+    target_id: "cherrapunji-bridges",
     rating: 5,
-    comment: 'Nongriat double decker root bridge trek plan was spot on with exact step counts, guide contacts, and rain gear prep.',
-    created_at: '2026-08-25T12:00:00Z',
-    user_name: 'Kavita Nair',
-    location: 'Kochi, Kerala'
+    comment: "Nongriat double decker root bridge trek plan was spot on with exact step counts, guide contacts, and rain gear prep.",
+    created_at: "2026-08-25T12:00:00Z",
+    user_name: "Kavita Nair",
+    location: "Kochi, Kerala"
   },
   {
-    id: '9',
-    user_id: 'u9',
-    target_id: 'goa-coastal',
+    id: "9",
+    user_id: "u9",
+    target_id: "goa-coastal",
     rating: 5,
-    comment: 'Showed us unexplored peaceful beaches in South Goa away from commercial party spots. Exactly the getaway we needed!',
-    created_at: '2026-08-25T15:30:00Z',
-    user_name: 'Arjun Reddy',
-    location: 'Hyderabad, Telangana'
+    comment: "Showed us unexplored peaceful beaches in South Goa away from commercial party spots. Exactly the getaway we needed!",
+    created_at: "2026-08-25T15:30:00Z",
+    user_name: "Arjun Reddy",
+    location: "Hyderabad, Telangana"
   }
 ];
 
@@ -275,461 +630,836 @@ export const mockDestinations: Destination[] = [
     "id": "taj-mahal",
     "name": "Taj Mahal",
     "district": "Agra",
+    "state": "Uttar Pradesh",
     "category": "historical",
-    "description": "Agra's iconic ivory-white marble mausoleum, a symbol of eternal love and a UNESCO World Heritage site standing gracefully beside the Yamuna River.",
-    "short_description": "UNESCO World Heritage white marble monument and symbol of eternal love.",
+    "rating": 4.9,
+    "description": "Agra's iconic ivory-white marble mausoleum, commissioned in 1632 by Mughal Emperor Shah Jahan for his beloved wife Mumtaz Mahal. Renowned globally for symmetrical gardens, intricate Pietra Dura stone inlays, and ethereal reflections on the Yamuna River at dawn.",
+    "short_description": "UNESCO World Heritage white marble monument and eternal symbol of love.",
     "latitude": 27.1751,
     "longitude": 78.0421,
-    "images": [
-      "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Sunrise 6:00 AM – 8:30 AM is magical)",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.668Z"
+    "famous_things": [
+      "Pietra Dura floral marble inlay work with semi-precious gems",
+      "Mehtab Bagh sunset viewpoint across the Yamuna River",
+      "Iconic reflecting pool and Four Minarets architecture",
+      "World-famous Agra Petha (Ash Gourd sweet) at Sadar Market"
+    ],
+    "nearby_markets": [
+      "Sadar Market for leather footwear, marble replicas & Petha",
+      "Kinari Market near Jama Masjid for wedding jewelry & spices",
+      "Subhash Market for traditional Zardozi silk embroidery"
+    ],
+    "local_festivals": [
+      "Taj Mahotsav (10-day cultural festival in February at Shilpgram)",
+      "Sharad Purnima (Night viewing under full moonlight)"
+    ],
+    "transit_info": "Nearest Airport: Kheria Airport Agra (AGR) / Delhi IGI (DEL, 3.5 hrs via Yamuna Expressway). Railway: Agra Cantt (AGC) with 100-min Gatimaan Express from Delhi."
   },
   {
     "id": "varanasi-ghats",
     "name": "Varanasi Ghats",
     "district": "Varanasi",
+    "state": "Uttar Pradesh",
     "category": "temple",
-    "description": "Experience the spiritual soul of India along the sacred riverfront steps of the Ganges, famous for ancient temples and evening Maha Ganga Aarti.",
+    "rating": 4.9,
+    "description": "One of the oldest continuously inhabited cities on Earth. The spiritual heart of India along the sacred crescent curve of the River Ganges, famous for 84 ancient stone ghats, sunrise boat meditation, labyrinthine old alleys, and the spellbinding evening Maha Ganga Aarti.",
     "short_description": "Sacred riverfront ghats and evening Ganga Aarti along the holy Ganges.",
     "latitude": 25.3176,
     "longitude": 83.0062,
-    "images": [
-      "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Crisp winter mornings and temple festivals)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.669Z"
+    "famous_things": [
+      "Subah-e-Banaras sunrise rowing boat ride along Dashashwamedh Ghat",
+      "Grand multi-priest evening Maha Ganga Aarti with brass lamps",
+      "Kashi Vishwanath Temple Golden Shikhara corridor",
+      "Banarasi Paan, Malaiyo winter saffron froth, and Blue Lassi"
+    ],
+    "nearby_markets": [
+      "Chowk & Thatheri Market for authentic Banarasi Silk Sarees & brassware",
+      "Vishwanath Gali for rudraksha malas, copper pooja vessels & sweets",
+      "Godowlia Market for perfumes, silk stoles & street food"
+    ],
+    "local_festivals": [
+      "Dev Deepawali (Ghats illuminated with 1 million diyas on Kartik Purnima)",
+      "Maha Shivratri (Grand procession to Kashi Vishwanath)"
+    ],
+    "transit_info": "Nearest Airport: Lal Bahadur Shastri International Airport (VNS, 25 km). Railway: Varanasi Junction (BSB) & Banaras Station (BSBS) connected by Vande Bharat from Delhi."
   },
   {
     "id": "kerala-backwaters",
     "name": "Kerala Backwaters",
-    "district": "Alleppey",
-    "category": "park",
-    "description": "A tranquil labyrinth of palm-fringed canals, lagoons, and lakes, best explored aboard a traditional luxury Kettuvallam wooden houseboat.",
+    "district": "Alleppey (Alappuzha)",
+    "state": "Kerala",
+    "category": "nature",
+    "rating": 4.8,
+    "description": "A tranquil, interconnected web of palm-fringed canals, serene lagoons, and emerald lakes running parallel to the Arabian Sea coast. Best experienced aboard a traditional luxury wooden Kettuvallam houseboat gliding past paddy fields and village toddy shops.",
     "short_description": "Serene network of emerald lagoons and traditional luxury houseboats.",
     "latitude": 9.4981,
     "longitude": 76.3388,
-    "images": [
-      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "September to March",
+    "best_time": "September to March (Pleasant breeze and birdwatching season)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.670Z"
+    "famous_things": [
+      "Overnight luxury Kettuvallam houseboat cruise with private chef",
+      "Vembanad Lake kayaking through narrow village canals",
+      "Authentic Karimeen Pollichathu (pearl spot fish wrapped in banana leaf)",
+      "Traditional Ayurvedic rejuvenation massages & herbal treatments"
+    ],
+    "nearby_markets": [
+      "Alleppey Floating Triveni Supermarket & spice stalls",
+      "Mullakkal Street for coir home decor, spices & brass lamps",
+      "Canal Market for Malabar black pepper, cardamom & coconut oil"
+    ],
+    "local_festivals": [
+      "Nehru Trophy Boat Race (Roaring snake boat race in Punnamada Lake, August)",
+      "Mullakkal Chirappu (December temple festival with cultural processions)"
+    ],
+    "transit_info": "Nearest Airport: Cochin International Airport (COK, 85 km). Railway: Alappuzha Railway Station (ALLP) with scenic coastal train links."
   },
   {
     "id": "hampi-ruins",
     "name": "Hampi Ruins",
-    "district": "Hampi",
-    "category": "historical",
-    "description": "UNESCO World Heritage Site with monumental stone chariot, ancient Vijayanagara temples, and dramatic boulder-strewn landscapes.",
+    "district": "Vijayanagara",
+    "state": "Karnataka",
+    "category": "heritage",
+    "rating": 4.9,
+    "description": "UNESCO World Heritage open-air museum and former capital of the magnificent 14th-century Vijayanagara Empire. Set in an otherworldly landscape of giant granite boulders and banana plantations, featuring the iconic Stone Chariot, musical pillars, and sunset viewpoints.",
     "short_description": "Ancient Vijayanagara empire capital and iconic stone chariot ruins.",
     "latitude": 15.335,
     "longitude": 76.46,
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "November to February",
+    "best_time": "October to February (Comfortable daytime temperatures for cycling)",
     "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.670Z"
+    "famous_things": [
+      "Vitthala Temple Stone Chariot & 56 musical acoustic pillars",
+      "Sunset view over boulder-strewn landscape from Matanga Hill",
+      "Virupaksha Temple — continuously active temple since the 7th century",
+      "Coracle (round bowl boat) ride across the Tungabhadra River"
+    ],
+    "nearby_markets": [
+      "Hampi Market lane fronting Virupaksha temple for stone carvings & leather crafts",
+      "Kamalapur Market for local banana chips and Karnataka filter coffee",
+      "Hospet Market for Lambani tribal embroidered handicrafts"
+    ],
+    "local_festivals": [
+      "Hampi Utsav (3-day mega cultural carnival in November with laser shows)",
+      "Virupaksha Car Festival (Grand chariot pulling in March/April)"
+    ],
+    "transit_info": "Nearest Airport: Jindal Vijaynagar Airport (VDY, 35 km) / Hubli (HBX, 140 km). Railway: Hosapete Junction (HPT, 13 km) with direct trains from Bengaluru & Goa."
   },
   {
     "id": "leh-ladakh",
     "name": "Leh Ladakh & Pangong Tso",
     "district": "Leh",
-    "category": "park",
-    "description": "High-altitude Himalayan desert renowned for dramatic mountain passes, Tibetan Buddhist monasteries, and the pristine cobalt-blue Pangong Tso lake.",
+    "state": "Ladakh",
+    "category": "hill",
+    "rating": 4.9,
+    "description": "High-altitude Himalayan wonderland of stark moonscapes, soaring mountain passes, and ancient Tibetan Buddhist gompas perched on rugged cliffs. Famous for the mesmerizing color-changing cobalt waters of Pangong Tso lake at 14,270 feet and the Nubra sand dunes.",
     "short_description": "High-altitude Himalayan passes, Tibetan monasteries, and azure alpine lakes.",
     "latitude": 34.1526,
     "longitude": 77.5771,
-    "images": [
-      "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "May to September",
+    "best_time": "May to September (Road passes open, pleasant sunny weather)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.671Z"
+    "famous_things": [
+      "Pangong Tso Lake extending from India to Tibet with changing shades of blue",
+      "Double-humped Bactrian camel safari in Nubra Valley sand dunes",
+      "Khardung La — one of the world's highest motorable mountain passes (17,982 ft)",
+      "Thiksey & Hemis Monasteries with giant Maitreya Buddha statues"
+    ],
+    "nearby_markets": [
+      "Leh Main Market for Pashmina shawls, Tibetan carpets & prayer wheels",
+      "Moti Market for authentic Tibetan turquoise & silver jewelry",
+      "Choglamsar Tibetan Refugee Market for hand-knitted yak wool caps"
+    ],
+    "local_festivals": [
+      "Hemis Festival (June/July featuring sacred masked Cham dance)",
+      "Ladakh Festival (September carnival in Leh with archery & polo matches)"
+    ],
+    "transit_info": "Nearest Airport: Kushok Bakula Rimpochee Airport (IXL, Leh). Highway: Manali-Leh Highway & Srinagar-Leh Highway (open June–October). Mandatory 48-hr acclimatization."
   },
   {
     "id": "golden-temple",
     "name": "Golden Temple (Harmandir Sahib)",
     "district": "Amritsar",
+    "state": "Punjab",
     "category": "temple",
-    "description": "The spiritual heart of Sikhism, adorned with gold leaf and surrounded by the sacred Amrit Sarovar lake, hosting the world's largest community kitchen.",
+    "rating": 5,
+    "description": "The holiest sanctum of Sikhism, gilded with 500 kg of pure gold leaf and surrounded by the sacred Amrit Sarovar (Pool of Nectar). Open to all faiths, housing Guru Granth Sahib and the world's largest community kitchen (Langar) feeding 100,000 pilgrims daily for free.",
     "short_description": "Spiritual Sikh holy shrine with gleaming gold dome and sacred Amrit Sarovar.",
     "latitude": 31.62,
     "longitude": 74.8765,
-    "images": [
-      "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Pleasant winter weather, especially at night)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.671Z"
+    "famous_things": [
+      "Harmandir Sahib gold sanctum reflection in the holy Amrit Sarovar lake",
+      "Langar Seva — tasting holy Dal, Kheer, and hot rotis in community hall",
+      "Palki Sahib ceremony (Nightly procession at 9:30 PM and dawn at 4:30 AM)",
+      "Wagah Border Beating Retreat ceremony (30 km away at Indo-Pak border)"
+    ],
+    "nearby_markets": [
+      "Hall Market for Phulkari embroidered dupattas, Punjabi juttis & pickles",
+      "Katra Jaimal Singh for authentic Amritsari textiles & pashminas",
+      "Guru Market for traditional gold and jadau jewelry"
+    ],
+    "local_festivals": [
+      "Baisakhi (Grand harvest and Khalsa founding celebration in April)",
+      "Guru Nanak Gurpurab (Magnificent night fireworks and temple illumination)"
+    ],
+    "transit_info": "Nearest Airport: Sri Guru Ram Dass Jee International Airport (ATQ, 12 km). Railway: Amritsar Junction (ASR) with Vande Bharat and Shatabdi from Delhi."
   },
   {
     "id": "munnar-tea-gardens",
     "name": "Munnar Tea Gardens",
-    "district": "Munnar",
-    "category": "park",
-    "description": "Breathtaking rolling hills covered in manicured organic tea plantations, misty mountain viewpoints, and exotic flora in the Western Ghats.",
+    "district": "Idukki",
+    "state": "Kerala",
+    "category": "hill",
+    "rating": 4.8,
+    "description": "Idyllic hill station situated at 5,200 feet at the confluence of three mountain streams in the Western Ghats. Blanketed by endless manicured emerald-green tea plantations, cascading waterfalls, misty peak trails, and the endangered Nilgiri Tahr mountain goat sanctuary.",
     "short_description": "Rolling emerald hills, manicured tea estates, and misty mountain viewpoints.",
     "latitude": 10.0889,
     "longitude": 77.0595,
-    "images": [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "September to May",
+    "best_time": "September to May (Crisp cool mountain air and clear valley views)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.672Z"
+    "famous_things": [
+      "Kolukkumalai Tea Estate — one of the highest organic tea gardens in the world",
+      "Eravikulam National Park to spot the rare Nilgiri Tahr mountain goats",
+      "Top Station viewpoint offering panoramic vistas of the Western Ghats clouds",
+      "Fresh cardamom tea and homemade chocolate tasting"
+    ],
+    "nearby_markets": [
+      "Munnar Town Market for fresh green pepper, cinnamon, nutmeg & essential oils",
+      "KDHP Tea Museum Sales Outlet for single-estate reserve tea leaves",
+      "Mattupetty Dam souvenir stalls for wooden crafts and wild honey"
+    ],
+    "local_festivals": [
+      "Neelakurinji Blossom (Spectacular blue-purple flower blooming once every 12 years)",
+      "Onam Harvest Festival (Celebrated with flower carpets and traditional feasts in Sept)"
+    ],
+    "transit_info": "Nearest Airport: Cochin International Airport (COK, 110 km, 3.5 hrs scenic drive). Railway: Aluva (AWY, 110 km) / Ernakulam Junction (ERS, 130 km)."
   },
   {
     "id": "mysore-palace",
     "name": "Mysore Palace",
     "district": "Mysore",
-    "category": "historical",
-    "description": "Grand Indo-Saracenic royal palace of the Wadiyar dynasty, renowned for opulent durbar halls, carved mahogany ceilings, and 100,000 festival lights.",
+    "state": "Karnataka",
+    "category": "heritage",
+    "rating": 4.9,
+    "description": "The grand official residence of the Wadiyar royal dynasty. A masterwork of Indo-Saracenic architecture featuring opulent turquoise durbar halls, intricately carved teakwood ceilings, stained glass domes, and an ethereal illumination by 100,000 bulbs on Sundays and festivals.",
     "short_description": "Opulent royal palace illuminated with over 100,000 festival lights.",
     "latitude": 12.3051,
     "longitude": 76.6551,
-    "images": [
-      "https://images.unsplash.com/photo-1580837119756-563d608dd119?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Especially during the 10-day Dussehra festival)",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.672Z"
+    "famous_things": [
+      "Sunday & festive evening Palace Illumination (7:00 PM – 8:00 PM)",
+      "Grand Durbar Hall with peacock stained-glass ceiling and golden throne",
+      "Gombe Thotti (Doll's pavilion) housing a 750 kg golden howdah",
+      "Authentic melt-in-mouth Mysore Pak sweet from original confectioners"
+    ],
+    "nearby_markets": [
+      "Devaraja Market for sandalwood artifacts, attar, and fragrant flowers",
+      "Sayyaji Rao Road for traditional Mysore Silk sarees with pure zari",
+      "Cauvery Arts Emporium for certified rosewood inlay furniture"
+    ],
+    "local_festivals": [
+      "Mysore Dussehra (Grand 10-day state festival with elephant procession)",
+      "Mysore Palace Music Festival (Renowned Indian classical concerts in Oct)"
+    ],
+    "transit_info": "Nearest Airport: Mysore Domestic Airport (MYQ) / Bengaluru International (BLR, 170 km via Expressway). Railway: Mysore Junction (MYS) with direct Vande Bharat links."
   },
   {
     "id": "amer-fort",
     "name": "Amer Fort & Palace",
     "district": "Jaipur",
+    "state": "Rajasthan",
     "category": "historical",
-    "description": "Magnificent hilltop fort showcasing Rajput architecture, mirror palace (Sheesh Mahal), and sweeping valley views.",
+    "rating": 4.8,
+    "description": "Magnificent 16th-century hilltop citadel constructed from red sandstone and yellow marble overlooking the calm waters of Maota Lake. Renowned for its opulent Sheesh Mahal (Mirror Palace) where a single candle light illuminates thousands of Belgian convex mirrors.",
     "short_description": "Hilltop fort showcasing Rajput architecture, courtyards, and mirror palaces.",
     "latitude": 26.9855,
     "longitude": 75.8513,
-    "images": [
-      "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Early morning or evening for light & sound show)",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.673Z"
+    "famous_things": [
+      "Sheesh Mahal (Hall of Mirrors) with intricate glass mosaic ceilings",
+      "Diwan-i-Aam public audience hall with double-pillared colonnades",
+      "Evening Sound & Light Show narrated by Amitabh Bachchan",
+      "Jaigarh Fort secret subterranean tunnel connecting the two fortresses"
+    ],
+    "nearby_markets": [
+      "Amer Town Market for handmade puppet crafts and lac bangles",
+      "Johari Market (Jaipur city, 11 km) for precious gemstones and Kundan jewelry",
+      "Bapu Market for camel leather footwear and traditional Jaipuri bedsheets"
+    ],
+    "local_festivals": [
+      "Teej Festival (Royal procession of Goddess Parvati in August)",
+      "Jaipur Literature Festival (World-renowned cultural fest in January)"
+    ],
+    "transit_info": "Nearest Airport: Jaipur International Airport (JAI, 22 km). Railway: Jaipur Junction (JP, 13 km). Local AC low-floor buses and cabs run frequently from Hawa Mahal."
   },
   {
     "id": "konark-sun-temple",
     "name": "Konark Sun Temple",
-    "district": "Konark",
-    "category": "historical",
-    "description": "A 13th-century UNESCO marvel sculpted as a colossal 24-wheeled chariot of Surya Dev, celebrated for monumental stone carvings and sundials.",
+    "district": "Puri",
+    "state": "Odisha",
+    "category": "heritage",
+    "rating": 4.8,
+    "description": "13th-century UNESCO World Heritage architectural marvel sculpted as a colossal 24-wheeled chariot of Surya Dev (Sun God) pulled by seven stone horses. The wheels function as precise sundials, capable of calculating time down to the exact minute by sun shadows.",
     "short_description": "13th-century UNESCO marvel sculpted as a colossal 24-wheeled Sun chariot.",
     "latitude": 19.8876,
     "longitude": 86.0945,
-    "images": [
-      "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Cool ocean breeze and annual dance festival in Dec)",
     "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.673Z"
+    "famous_things": [
+      "24 monumental sculpted Sun Chariot wheels with functioning sundial spokes",
+      "Natya Mandapa (Dance Hall) carved with over 100 classical Odissi dance poses",
+      "Konark Dance Festival held against the floodlit temple backdrop in December",
+      "Chandrabhaga Beach (3 km away) — celebrated clean blue flag beach and sunrise spot"
+    ],
+    "nearby_markets": [
+      "Konark Open-Air Craft Stalls for stone sculpture replicas and sea-shell crafts",
+      "Pipili Artisan Village (on way to Puri) for vibrant Applique textile lamps",
+      "Puri Grand Road Market for Lord Jagannath Pattachitra scroll paintings"
+    ],
+    "local_festivals": [
+      "Konark Dance & Music Festival (1st to 5th December annually)",
+      "Magha Saptami (Sacred sunrise holy dip at Chandrabhaga Beach in February)"
+    ],
+    "transit_info": "Nearest Airport: Biju Patnaik International Airport, Bhubaneswar (BBI, 65 km). Railway: Puri Railway Station (PURI, 35 km) / Bhubaneswar (BBS). Marine Drive connects Puri & Konark."
   },
   {
     "id": "ranthambore",
     "name": "Ranthambore Tiger Reserve",
     "district": "Sawai Madhopur",
+    "state": "Rajasthan",
     "category": "wildlife",
-    "description": "Famed national park where royal Bengal tigers roam freely among ancient 10th-century fort ruins, lakes, and deciduous forests.",
+    "rating": 4.8,
+    "description": "One of Northern India's largest and most famous national parks. Royal Bengal tigers roam freely among 10th-century fort ramparts, banyan trees, and lotus-filled lakes where marsh crocodiles bask, offering India's most thrilling wildlife jeep safaris.",
     "short_description": "Premier tiger sanctuary featuring wilderness safaris and historic fort ruins.",
     "latitude": 26.0173,
     "longitude": 76.5026,
-    "images": [
-      "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to April",
+    "best_time": "October to April (Park open Oct–June, safaris best Nov–March)",
     "entry_fee": 1200,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.674Z"
+    "famous_things": [
+      "Open-top 4x4 Gypsy Tiger Safari across Zones 1 through 10",
+      "10th-century Ranthambore Fort perched 700 ft above the jungle",
+      "Padam Talao & Rajbagh Lake with ruins and basking crocodiles",
+      "Trinetra Ganesha Temple located inside the ancient fort walls"
+    ],
+    "nearby_markets": [
+      "Sawai Madhopur Main Market for Dastkar Ranthambore women's handicrafts",
+      "Village Women Craft Center for hand block prints & tiger souvenir pottery",
+      "Local Guava Orchards for world-famous fresh Sawai Madhopur guavas"
+    ],
+    "local_festivals": [
+      "Ganesh Chaturthi (Major 3-day pilgrimage mela at Trinetra Ganesha temple in Sept)"
+    ],
+    "transit_info": "Nearest Airport: Jaipur International Airport (JAI, 160 km, 3.5 hrs drive). Railway: Sawai Madhopur Junction (SWM, 11 km) on Delhi-Mumbai main line with Superfast train stops."
   },
   {
     "id": "victoria-memorial",
     "name": "Victoria Memorial Hall",
     "district": "Kolkata",
+    "state": "West Bengal",
     "category": "historical",
-    "description": "Magnificent white Makrana marble monument with 64 acres of landscaped gardens, housing rare Raj-era paintings, manuscripts, and sculptures.",
+    "rating": 4.7,
+    "description": "Imposing British-era white Makrana marble monument set in 64 acres of landscaped gardens beside the Hooghly River. Designed in grand Indo-Saracenic revival style, it houses 25 galleries with rare historical portraits, royal artifacts, and Raj-era paintings.",
     "short_description": "Stately white Makrana marble palace surrounded by sprawling gardens.",
     "latitude": 22.5448,
     "longitude": 88.3426,
-    "images": [
-      "https://images.unsplash.com/photo-1558431382-27e303142255?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Pleasant winter weather for strolls in the garden)",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.674Z"
+    "famous_things": [
+      "Gleaming white Makrana marble architecture and revolving Angel of Victory statue",
+      "Queen's Hall dome galleries with historic Indian and European paintings",
+      "Evening Son-et-Lumiere (Sound and Light Show) in the manicured gardens",
+      "Iconic Kolkata horse carriage ride along the Queen's Way boulevard"
+    ],
+    "nearby_markets": [
+      "New Market (Hogg Market) for Kolkata sweets, leather goods & silver jewelry",
+      "Dakshinapan Shopping Center for certified handloom emporiums of all states",
+      "College Street (Boi Para) — largest second-hand book market in Asia"
+    ],
+    "local_festivals": [
+      "Kolkata Durga Puja (UNESCO Intangible Cultural Heritage fest in October)",
+      "International Kolkata Book Fair (World's largest non-trade book fair in Jan)"
+    ],
+    "transit_info": "Nearest Airport: Netaji Subhash Chandra Bose International Airport (CCU, 22 km). Metro: Maidan Metro Station & Rabindra Sadan Station are 5 mins walk away."
   },
   {
     "id": "ajanta-ellora",
     "name": "Ajanta & Ellora Caves",
-    "district": "Aurangabad",
-    "category": "historical",
-    "description": "Rock-cut cave temples spanning ancient Buddhist, Hindu, and Jain heritage, featuring the monolithic Kailash Temple carved from a single cliff.",
+    "district": "Aurangabad (Chhatrapati Sambhajinagar)",
+    "state": "Maharashtra",
+    "category": "heritage",
+    "rating": 4.9,
+    "description": "UNESCO World Heritage rock-cut cave monuments spanning 2nd century BCE to 10th century CE. Ellora features the breathtaking monolithic Kailash Temple carved top-down from a single volcanic basalt cliff, while Ajanta houses world-famous ancient Buddhist fresco murals.",
     "short_description": "Ancient rock-cut cave monuments and the monolithic Kailash Temple.",
     "latitude": 20.0268,
     "longitude": 75.178,
-    "images": [
-      "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Pleasant temperatures for cave exploration)",
     "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "famous_things": [
+      "Kailash Temple (Cave 16) — world's largest monolithic rock excavation",
+      "Ajanta Cave 1 & 2 ancient Buddhist fresco paintings & Padmapani Bodhisattva",
+      "Ajanta Viewpoint overlooking the horseshoe gorge of Waghur River",
+      "Himroo and Paithani handloom weaving demonstrations in Aurangabad"
+    ],
+    "nearby_markets": [
+      "Gul Mandi & City Chowk for authentic Paithani silk sarees and Himroo shawls",
+      "Nirala Market for Bidriware metal craft souvenirs and local street food",
+      "Tara Pan Center for royal Aurangabadi digestive sweet paan"
+    ],
+    "local_festivals": [
+      "Ellora-Ajanta International Music & Dance Festival (Held in January)",
+      "Buddha Purnima (Special meditation gatherings at Ajanta Caves in May)"
+    ],
+    "transit_info": "Nearest Airport: Chhatrapati Sambhajinagar Airport (IXU, 30 km to Ellora, 100 km to Ajanta). Railway: Aurangabad Station (AWB) with direct Vande Bharat train from Mumbai."
   },
   {
     "id": "meenakshi-temple",
     "name": "Meenakshi Amman Temple",
     "district": "Madurai",
+    "state": "Tamil Nadu",
     "category": "temple",
-    "description": "Historic Hindu temple on the southern bank of Vaigai River, famed for 14 towering gopurams encrusted with thousands of colorful mythological sculptures.",
+    "rating": 4.9,
+    "description": "Historic Dravidian temple complex on the southern bank of the Vaigai River, dedicated to Goddess Meenakshi and Lord Sundareswarar. Dominated by 14 towering gopurams encrusted with thousands of brightly painted mythological stucco sculptures and the Hall of Thousand Pillars.",
     "short_description": "Dravidian architectural masterpiece with 14 vibrant sculpted gopurams.",
     "latitude": 9.9195,
     "longitude": 78.1193,
-    "images": [
-      "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Cool weather, especially during Chithirai festival)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.675Z"
+    "famous_things": [
+      "Hall of 1,000 Pillars (Aayiram Kaal Mandapam) with musical acoustic pillars",
+      "Golden Lotus Tank (Potramarai Kulam) reflection of southern gopuram",
+      "Nightly Palliarai Ceremony (Lord Shiva carried to Goddess Meenakshi's chamber at 9 PM)",
+      "Famous Madurai Jigarthanda dessert and piping hot Madurai Kari Dosa"
+    ],
+    "nearby_markets": [
+      "Puthu Mandapam opposite eastern tower for brass vessels, tailoring & Madurai Sungudi cotton sarees",
+      "Chithirai Street encircling the temple for bronze pooja idols & fragrant Madurai Malli (Jasmine)",
+      "Avani Moola Street for South Indian snacks and sweet halwa"
+    ],
+    "local_festivals": [
+      "Chithirai Festival (10-day divine celestial wedding of Goddess Meenakshi in April/May)",
+      "Float Festival (Theppam mela celebrated on full moon in January/February)"
+    ],
+    "transit_info": "Nearest Airport: Madurai Airport (IXM, 12 km). Railway: Madurai Junction (MDU) connected by direct Vande Bharat & Express trains from Chennai and Bengaluru."
   },
   {
     "id": "qutub-minar",
     "name": "Qutub Minar & Mehrauli Complex",
-    "district": "Delhi",
+    "district": "New Delhi",
+    "state": "Delhi",
     "category": "historical",
-    "description": "A 73-meter-tall victory minaret of fluted red sandstone, built in 1192 and surrounded by ancient Mughal and Delhi Sultanate ruins including the rust-resistant Iron Pillar.",
+    "rating": 4.7,
+    "description": "A soaring 73-meter victory minaret of fluted red sandstone and marble, built in 1192 by Qutb-ud-din Aibak. Surrounded by ancient architectural ruins including the Quwwat-ul-Islam Mosque and the 1,600-year-old rust-resistant Iron Pillar of Chandragupta II.",
     "short_description": "World's tallest brick minaret standing inside a historic 12th-century monument complex.",
     "latitude": 28.5244,
     "longitude": 77.1855,
-    "images": [
-      "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Sunny winter afternoons with manicured lawn picnics)",
     "entry_fee": 40,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.676Z"
+    "famous_things": [
+      "73-meter fluted red sandstone minaret with intricate Arabic calligraphy carvings",
+      "Ancient 4th-century Iron Pillar that has never rusted despite centuries of outdoor exposure",
+      "Ala'i Minar — the ambitious unfinished base intended to be twice the height of Qutub",
+      "Illuminated monument viewing at night with landscaped archaeological gardens"
+    ],
+    "nearby_markets": [
+      "Mehrauli Village Marketplace for traditional pottery and Sufi attar",
+      "Dilli Haat INA (15 mins via Metro) for regional handicrafts and food courts",
+      "Ambawatta One complex for designer boutiques and rooftop Qutub-facing bistros"
+    ],
+    "local_festivals": [
+      "Qutub Festival (3-day classical music and Sufi qawwali festival in November)",
+      "Phool Walon Ki Sair (Historic floral fan festival celebrated in Mehrauli in autumn)"
+    ],
+    "transit_info": "Nearest Airport: Indira Gandhi International Airport (DEL, 12 km). Metro: Qutub Minar Metro Station (Yellow Line) is 1.5 km away with e-rickshaws available."
   },
   {
     "id": "sundarbans",
     "name": "Sundarbans Biosphere Reserve",
     "district": "South 24 Parganas",
+    "state": "West Bengal",
     "category": "wildlife",
-    "description": "World's largest halophytic mangrove forest and UNESCO site, spanning the Ganges delta and home to royal Bengal tigers and saltwater crocodiles.",
+    "rating": 4.8,
+    "description": "World's largest contiguous halophytic mangrove forest and UNESCO Biosphere Reserve in the Ganges-Brahmaputra delta. Home to swimming Royal Bengal tigers, estuarine saltwater crocodiles, Gangetic river dolphins, and over 260 species of exotic migratory birds.",
     "short_description": "Vast mangrove delta crisscrossed by tidal waterways, tigers, and biodiversity.",
     "latitude": 21.9497,
     "longitude": 89.1833,
-    "images": [
-      "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "September to March",
+    "best_time": "September to March (Winter months with calm waters and sunbathing wildlife)",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.676Z"
+    "famous_things": [
+      "Boat safari through narrow tidal mangrove creeks (Pakhiralay & Sajnekhali)",
+      "Sajnekhali Bird Sanctuary watchtower and Mangrove Interpretation Centre",
+      "Dobanki Canopy Walk elevated 20 feet above the tidal forest floor",
+      "Pure wild Sundarbans mangrove honey (Mou) harvested by local honey collectors"
+    ],
+    "nearby_markets": [
+      "Godkhali Ferry Ghat local market for organic mangrove honey and fish",
+      "Canning Local Marketplace for regional Bengal sweets and freshwater crabs",
+      "Pakhiralay village craft stalls for mangrove wood sculptures"
+    ],
+    "local_festivals": [
+      "Bonbibi Mela (January celebration honoring the goddess of the forest)",
+      "Rash Mela on Sagar Island (Grand full-moon delta celebration in November)"
+    ],
+    "transit_info": "Nearest Airport: Kolkata Airport (CCU, 110 km to Godkhali boat base). Railway: Canning Station (45 km from Kolkata by local train), followed by road transfer to Godkhali boat ghat."
   },
   {
     "id": "rishikesh-ganga",
     "name": "Rishikesh & Laxman Jhula",
-    "district": "Rishikesh",
+    "district": "Dehradun",
+    "state": "Uttarakhand",
     "category": "temple",
-    "description": "The Yoga Capital of the World along the emerald-green upper Ganges, celebrated for river rafting, Parmarth Niketan Ganga Aarti, and Himalayan foothill ashrams.",
+    "rating": 4.9,
+    "description": "The Yoga Capital of the World nestled in the Himalayan foothills where the emerald-green Ganges surges into the northern plains. Celebrated for iconic suspension bridges, spiritual ashrams, cliff jumping, white-water river rafting, and the sublime Parmarth Niketan Ganga Aarti.",
     "short_description": "Yoga capital on the emerald Ganges with iconic suspension bridges and river rafting.",
     "latitude": 30.0869,
     "longitude": 78.2676,
-    "images": [
-      "https://images.unsplash.com/photo-1545652985-5edd365b12eb?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "September to April",
+    "best_time": "September to November & February to May (Ideal for rafting and yoga retreats)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.677Z"
+    "famous_things": [
+      "White-water river rafting from Shivpuri and Marine Drive rapids (Grade 3+)",
+      "Parmarth Niketan & Triveni Ghat sunset Ganga Aarti with devotional chants",
+      "The Beatles Ashram (Chaurasi Kutia) with retro transcendental meditation murals",
+      "Bungee jumping and giant swing at Mohan Chatti (India's highest 83m jump)"
+    ],
+    "nearby_markets": [
+      "Tapovan & Lakshman Jhula Market for yoga mats, singing bowls & bohemian clothes",
+      "Ram Jhula Marketplace for Ayurvedic oils, Rudraksha beads & Himalayan rock salt",
+      "Rishikesh Main Market for brass puja bells and pure hill honey"
+    ],
+    "local_festivals": [
+      "International Yoga Festival (Held annually in March at Parmarth Niketan)",
+      "Ganga Dussehra (Sacred carnival celebrating the descent of River Ganga in June)"
+    ],
+    "transit_info": "Nearest Airport: Jolly Grant Airport, Dehradun (DED, 20 km). Railway: Yog Nagari Rishikesh (YNRK) / Haridwar Junction (HW, 25 km, with frequent Vande Bharat trains)."
   },
   {
     "id": "cherrapunji-bridges",
     "name": "Living Root Bridges",
-    "district": "Cherrapunji",
-    "category": "park",
-    "description": "Bio-engineering wonders handcrafted by the Khasi and Jaintia tribes from aerial roots of rubber fig trees across rushing jungle streams.",
+    "district": "East Khasi Hills (Sohra)",
+    "state": "Meghalaya",
+    "category": "nature",
+    "rating": 4.9,
+    "description": "Centuries-old bio-engineering wonders hand-grown by indigenous Khasi and Jaintia tribes. Aerial roots of Ficus elastica (rubber fig) trees are guided across rushing jungle rivers through hollowed areca nut trunks, growing stronger with age to endure heavy tropical monsoons.",
     "short_description": "Centuries-old living bio-engineered bridges grown from tree roots across jungle streams.",
     "latitude": 25.2702,
     "longitude": 91.7323,
-    "images": [
-      "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to April",
+    "best_time": "October to April (Dry winter months ideal for hiking the 3,500 steps)",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.678Z"
+    "famous_things": [
+      "Nongriat Double Decker Living Root Bridge (Umshiang) in deep rainforest",
+      "Rainbow Falls with natural crystal-clear turquoise natural swimming pool",
+      "Nohkalikai Falls — India's tallest plunge waterfall (1,115 feet)",
+      "Mawsmai Limestone Caves with prehistoric stalactites and fossils"
+    ],
+    "nearby_markets": [
+      "Sohra (Cherrapunji) Market for organic Khasi orange blossom honey & cinnamon",
+      "Iewduh (Bara Bazar) Shillong for hand-woven bamboo baskets & traditional Khasi knives",
+      "Nongriat village homestay stalls for local wild berry jams"
+    ],
+    "local_festivals": [
+      "Nongkrem Dance Festival (Traditional 5-day Khasi harvest festival in November)",
+      "Shillong Autumn Festival (Music, food, and cultural carnival in October/November)"
+    ],
+    "transit_info": "Nearest Airport: Shillong Airport (SHL, 85 km) / Guwahati Airport (GAU, 160 km, 4.5 hrs scenic drive). Base village Tyrna is 20 km from Cherrapunji town."
   },
   {
     "id": "jaisalmer-fort",
     "name": "Jaisalmer Golden Fort & Thar Desert",
     "district": "Jaisalmer",
-    "category": "historical",
-    "description": "A living yellow sandstone fort rising out of the golden Thar Desert sand dunes, with carved havelis, Jain temples, and sunset camel safaris.",
+    "state": "Rajasthan",
+    "category": "heritage",
+    "rating": 4.9,
+    "description": "A living golden sandstone citadel (Sonar Qila) rising majestically from the Thar Desert dunes. One-fourth of the city's population still resides within its ramparts among 12th-century Jain temples, intricately carved merchant havelis, and sunset desert camel safaris.",
     "short_description": "Living golden fort rising dramatically over the Thar Desert dunes.",
     "latitude": 26.9124,
     "longitude": 70.916,
-    "images": [
-      "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Pleasant desert days and cool star-lit nights)",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.678Z"
+    "famous_things": [
+      "Sonar Qila — living 12th-century fort made of golden-yellow sandstone",
+      "Sam Sand Dunes sunset camel safari and desert tent camping under Milky Way",
+      "Patwon Ki Haveli — a cluster of 5 opulent havelis with intricate stone jali screens",
+      "7 ancient Jain Temples inside the fort carved with Dilwara-style marble finesse"
+    ],
+    "nearby_markets": [
+      "Sadar Market for Rajasthani camel leather footwear, bags & puppet souvenirs",
+      "Bhatia Market for hand-woven woollen carpets, mirror-work textiles & Bandhani",
+      "Manak Chowk for antique brass artifacts, silver jewelry, and embroidered quilts"
+    ],
+    "local_festivals": [
+      "Jaisalmer Desert Festival (3-day vibrant cultural fest in February at Sam Dunes)",
+      "Ramdevra Fair (Major pilgrimage carnival in August/September)"
+    ],
+    "transit_info": "Nearest Airport: Jaisalmer Airport (JSA, seasonal) / Jodhpur Airport (JDH, 280 km, 4.5 hrs drive). Railway: Jaisalmer Railway Station (JSM) with direct trains from Delhi & Jaipur."
   },
   {
     "id": "kaziranga-park",
     "name": "Kaziranga National Park",
-    "district": "Golaghat",
+    "district": "Golaghat & Nagaon",
+    "state": "Assam",
     "category": "wildlife",
-    "description": "UNESCO World Heritage sanctuary in Assam hosting two-thirds of the world's great one-horned rhinoceroses among Brahmaputra floodplain grasslands.",
+    "rating": 4.9,
+    "description": "UNESCO World Heritage wildlife sanctuary in the lush Brahmaputra floodplains, hosting over two-thirds of the world's population of great Indian one-horned rhinoceroses. Also sanctuary to wild water buffalo, royal Bengal tigers, Asiatic elephants, and swamp deer.",
     "short_description": "World-famous sanctuary of the Indian one-horned rhinoceros and Brahmaputra wetlands.",
     "latitude": 26.5775,
     "longitude": 93.1711,
-    "images": [
-      "https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "November to April",
+    "best_time": "November to April (Park open Nov–April, wildlife spotting peak in Feb–April)",
     "entry_fee": 100,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.679Z"
+    "famous_things": [
+      "Dawn elephant safari & 4x4 open jeep safari in Central (Kohora) & Western (Bagori) ranges",
+      "Spotting the 'Big Five': Rhino, Tiger, Elephant, Wild Water Buffalo, and Swamp Deer",
+      "Kaziranga National Orchid and Biodiversity Park housing 500+ indigenous orchid species",
+      "Brahmaputra river dolphin spotting boat safari near Silghat"
+    ],
+    "nearby_markets": [
+      "Kohora Main Market for Assam tea varieties (CTC & Orthodox) & bamboo crafts",
+      "Bokakhat Market for world-famous fresh Peda (sweet milk fudge) and cane furniture",
+      "Kaziranga Handloom Emporium for authentic Assamese Muga & Eri silk Mekhela Chador"
+    ],
+    "local_festivals": [
+      "Kaziranga Elephant Festival (Held annually in February promoting conservation)",
+      "Bhogali Bihu (Assamese harvest festival with community bonfires in January)"
+    ],
+    "transit_info": "Nearest Airport: Jorhat Airport (JRH, 95 km) / Guwahati Airport (GAU, 220 km, 4.5 hrs via 4-lane NH-715). Railway: Furkating (FKG, 75 km) / Guwahati (GHY)."
   },
   {
     "id": "goa-coastal",
     "name": "Goa Coast & Chapora Fort",
     "district": "North & South Goa",
-    "category": "park",
-    "description": "Golden sandy palm-fringed coastlines, Portuguese baroque heritage churches, seafood shacks, and historic hilltop forts overlooking the Arabian Sea.",
+    "state": "Goa",
+    "category": "beach",
+    "rating": 4.8,
+    "description": "Tropical coastal paradise of golden sandy palm-lined beaches, 17th-century Portuguese baroque churches, vibrant flea markets, seafood shacks, and historic hilltop fortresses like Chapora Fort overlooking the azure Arabian Sea.",
     "short_description": "Sun-kissed Arabian Sea beaches, colonial heritage churches, and coastal forts.",
     "latitude": 15.2993,
     "longitude": 74.124,
-    "images": [
-      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "November to February",
+    "best_time": "November to February (Pleasant sunny days, festive nightlife, and beach shacks)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.679Z"
+    "famous_things": [
+      "Panoramic sunset view over Vagator Beach from 1717 Chapora Fort ramparts",
+      "Water sports at Calangute & Baga (Parasailing, jet skiing, and scuba diving at Grande Island)",
+      "Basilica of Bom Jesus (UNESCO World Heritage church housing St. Francis Xavier tomb)",
+      "Authentic Goan Fish Curry Thali, Prawn Balchão, and Bebinca layer cake"
+    ],
+    "nearby_markets": [
+      "Anjuna Wednesday Flea Market for boho beachwear, spices & handicrafts",
+      "Arpora Saturday Night Market for international food stalls, live music & designer wear",
+      "Mapusa Friday Market for local Goan pork sausages (Choriz), cashews & Feni"
+    ],
+    "local_festivals": [
+      "Goa Carnival (4-day colorful street float parade in February before Lent)",
+      "Sunburn Festival & New Year celebrations across coastal beaches in December"
+    ],
+    "transit_info": "Nearest Airport: Manohar International Airport, Mopa (GOX) / Dabolim Airport (GOI). Railway: Madgaon Junction (MAO) & Thivim (THVM) connected by Vande Bharat from Mumbai."
   },
   {
     "id": "valley-of-flowers",
     "name": "Valley of Flowers National Park",
     "district": "Chamoli",
-    "category": "park",
-    "description": "Himalayan alpine valley carpeted in hundreds of species of vibrant wild flora during monsoon, set against glaciers and towering mountain peaks.",
+    "state": "Uttarakhand",
+    "category": "nature",
+    "rating": 4.9,
+    "description": "UNESCO World Heritage high-altitude alpine valley nestled at 12,000 feet in the Garhwal Himalayas. Carpeted with over 500 species of endemic alpine wildflowers during monsoon, framed by snow-capped peaks, glaciers, and rushing crystal streams.",
     "short_description": "High-altitude alpine valley blossoming with hundreds of endemic mountain wildflowers.",
     "latitude": 30.728,
     "longitude": 79.6053,
-    "images": [
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "July to September",
+    "best_time": "July to September (Peak blooming season with vibrant floral carpets)",
     "entry_fee": 150,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.680Z"
+    "famous_things": [
+      "Over 500 varieties of wild alpine flora including the rare Brahma Kamal and Blue Poppy",
+      "Scenic 14 km Himalayan trek from base camp Govindghat via Ghangaria",
+      "Hemkund Sahib (14,107 ft) — sacred high-altitude Sikh pilgrimage shrine and glacial lake",
+      "Pristine Pushpawati River flowing through the heart of the blossom valley"
+    ],
+    "nearby_markets": [
+      "Govindghat Market for trekking gear, woollens, and walking poles",
+      "Joshimath Main Market for organic Garhwali kidney beans (Rajma) and hand-woven shawls",
+      "Badrinath Temple Market for Ayurvedic mountain herbs and holy souvenirs"
+    ],
+    "local_festivals": [
+      "Nanda Devi Raj Jat Yatra (Grand Himalayan pilgrimage celebration)",
+      "Badrinath Kapat Opening (Holy temple opening festival in May)"
+    ],
+    "transit_info": "Nearest Airport: Jolly Grant Airport, Dehradun (DED, 290 km). Railway: Rishikesh / Haridwar, followed by scenic road drive along Alaknanda river to Govindghat (trek base)."
   },
   {
     "id": "jonha-falls",
     "name": "Jonha & Hundru Waterfalls",
     "district": "Ranchi",
-    "category": "park",
-    "description": "Breathtaking multi-tiered cascade where the Kanchi and Subarnarekha rivers plummet over rocky plateaus surrounded by pristine Sal forests.",
+    "state": "Jharkhand",
+    "category": "waterfall",
+    "rating": 4.7,
+    "description": "Spectacular cascading waterfalls on the edge of the Ranchi Plateau. Hundru plummets 320 feet over massive granite cliffs on the Subarnarekha River, while Jonha (Gautamdhara) cascades down 722 stone steps with an ancient Buddhist shrine.",
     "short_description": "Spectacular cascade surrounded by dense green Sal forests of Chotanagpur.",
     "latitude": 23.3441,
     "longitude": 85.6074,
-    "images": [
-      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "September to February",
+    "best_time": "September to February (Post-monsoon full water volume and pleasant forest weather)",
     "entry_fee": 10,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.680Z"
+    "famous_things": [
+      "Hundru Falls — 320-foot plunge forming magnificent natural pools amidst rock formations",
+      "Jonha Falls (Gautamdhara) descending 722 stone steps through dense Sal canopy",
+      "Gautam Buddha Ashram and temple perched beside the waterfall pool",
+      "Scenic drive through the rolling Chotanagpur plateau and rural tribal villages"
+    ],
+    "nearby_markets": [
+      "Jonha Local Haat for fresh forest honey, bamboo shoots & local seasonal fruits",
+      "Ranchi Main Road Marketplace for tribal brass Dokra crafts and Tussar silk sarees",
+      "Firayalal Chowk for Jharkhand sweet delicacies like Khaja and Tilkut"
+    ],
+    "local_festivals": [
+      "Makar Sankranti Mela (Grand riverside fair held at Jonha falls in mid-January)",
+      "Sarhul & Karma tribal celebrations in surrounding Sal forest villages"
+    ],
+    "transit_info": "Nearest Airport: Birsa Munda Airport, Ranchi (IXR, 40 km). Railway: Jonha Railway Station (5 km) / Ranchi Junction (RNC, 38 km). Easily accessible via Ranchi-Purulia Highway."
   },
   {
     "id": "betla-national-park",
     "name": "Betla National Park",
     "district": "Latehar",
+    "state": "Jharkhand",
     "category": "wildlife",
-    "description": "One of India's earliest tiger sanctuaries, featuring dense Sal canopy, wild elephant herds, sloth bears, and 16th-century Chero dynasty fort ruins.",
+    "rating": 4.7,
+    "description": "One of India's earliest tiger sanctuaries under Project Tiger (1974) and the only national park in Jharkhand. Spanning dense Sal and bamboo forest canopy, it is home to wild Asian elephant herds, leopards, sloth bears, and 16th-century Chero Dynasty fort ruins.",
     "short_description": "Sanctuary known for wild elephant herds, tigers, and historic 16th-century Chero fort ruins.",
     "latitude": 23.8833,
     "longitude": 84.1833,
-    "images": [
-      "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "November to April",
+    "best_time": "November to April (Comfortable weather for morning and evening jungle safaris)",
     "entry_fee": 50,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.681Z"
+    "famous_things": [
+      "Open jeep safaris through dense Sal canopy with high wild elephant sighting rate",
+      "Twin 16th-century Palamau Forts built by Chero King Medini Ray deep inside the jungle",
+      "Natural waterholes (Madhuchua & Kamaldah Lake) where wildlife gather at dusk",
+      "Watchtower viewing overlooking elephant herds and herds of spotted deer (Chital)"
+    ],
+    "nearby_markets": [
+      "Betla Village Gate Market for local tribal wood carvings and forest honey",
+      "Daltonganj (Medininagar) Market for local spices, tribal handlooms & bell metal crafts",
+      "Latehar rural marketplace for organic Mahua blossom sweets"
+    ],
+    "local_festivals": [
+      "Karam Festival (Celebrated with great joy across tribal settlements in September)",
+      "Palamau Qila Cultural Fair (Winter heritage mela held near the ancient fort ruins)"
+    ],
+    "transit_info": "Nearest Airport: Ranchi Airport (IXR, 175 km, 4 hrs drive via NH-39). Railway: Daltonganj (DTO, 25 km) / Latehar (LTH, 40 km). Regular forest department safari jeeps at main gate."
   },
   {
     "id": "baidyanath-dham",
     "name": "Baidyanath Dham Temple",
     "district": "Deoghar",
+    "state": "Jharkhand",
     "category": "temple",
-    "description": "One of the twelve revered Jyotirlinga shrines in India, a celebrated pilgrimage destination attracting devotees worldwide during the holy Shravan Mela.",
+    "rating": 4.9,
+    "description": "One of the twelve revered Jyotirlinga shrines of Lord Shiva in India and a designated Shakti Peeth. The historic temple complex features 22 shrines with towering red-flagged stone spires. Center of the world-famous month-long Shravani Mela where millions of Kanwariyas walk 105 km barefoot.",
     "short_description": "Sacred Jyotirlinga pilgrimage temple attracting devotees across the subcontinent.",
     "latitude": 24.4925,
     "longitude": 86.7001,
-    "images": [
-      "https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Pleasant weather; July–August for Shravani Mela)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.681Z"
+    "famous_things": [
+      "Baba Baidyanath Jyotirlinga sanctum with gold-plated Chandra Kanta crown",
+      "Shravani Mela — world's longest unorganized pilgrimage with saffron-clad Kanwariyas",
+      "Naulakha Temple (146-ft temple modeled on Belur Ramakrishna Math)",
+      "Trikut Parvat ropeway (Scenic cable car ride overlooking three forested mountain peaks)"
+    ],
+    "nearby_markets": [
+      "Tower Chowk Deoghar for world-famous Deoghar Peda (sweet milk fudge cooked in iron kadhais)",
+      "Baidyanath Mandir Gali for sacred brass tridents, rudraksha malas & vermilion",
+      "Jasidih Market for local handloom towels and brass pooja vessels"
+    ],
+    "local_festivals": [
+      "Shravani Mela (Month-long Kanwar pilgrimage in July/August with millions of pilgrims)",
+      "Maha Shivratri (Grand all-night temple aarti and flower decoration in Feb/March)"
+    ],
+    "transit_info": "Nearest Airport: Deoghar International Airport (DGH, 6 km with direct flights from Delhi, Kolkata & Bengaluru). Railway: Jasidih Junction (JSME, 8 km on Delhi-Howrah main line)."
   },
   {
     "id": "netarhat-hills",
     "name": "Netarhat – Queen of Chotanagpur",
     "district": "Latehar",
-    "category": "park",
-    "description": "A tranquil hill station perched at 3,700 feet, famous for spectacular sunrise and sunset vistas at Magnolia Point, pine forests, and cool mountain breezes.",
+    "state": "Jharkhand",
+    "category": "hill",
+    "rating": 4.8,
+    "description": "A serene, unspoiled hill station perched at an elevation of 3,700 feet amidst the dense forests of the Pat region. Celebrated for dramatic sunrises and sunsets at Magnolia Point, fragrant pine and eucalyptus forests, cool mountain climate, and Upper Ghaghri waterfalls.",
     "short_description": "Serene hill station famed for misty sunsets at Magnolia Point and dense pine forests.",
     "latitude": 23.4833,
     "longitude": 84.2667,
-    "images": [
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to April",
+    "best_time": "October to April (Crisp mountain air, misty sunrises, and blooming pear orchards)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.682Z"
+    "famous_things": [
+      "Magnolia Point — legendary sunset viewpoint over deep forested valleys",
+      "Sunrise viewpoint near Netarhat Residential School over morning clouds",
+      "Pine Forest & Netarhat Dam surrounded by eucalyptus plantations",
+      "Upper & Lower Ghaghri Waterfalls cascading through dense jungle gorges"
+    ],
+    "nearby_markets": [
+      "Netarhat Main Chowk for fresh hill pears, organic wild honey & forest mushrooms",
+      "Lodh Market for tribal handicraft bamboo mats and hand-carved walking sticks",
+      "Mahuadanr Marketplace for fresh organic farm vegetables and hill spices"
+    ],
+    "local_festivals": [
+      "Sarhul & Karma spring/harvest celebrations in Asur tribal forest villages",
+      "Netarhat Winter Carnival (Tourist cultural fest held in December)"
+    ],
+    "transit_info": "Nearest Airport: Birsa Munda Airport, Ranchi (IXR, 155 km, 3.5 hrs scenic drive through winding ghat roads). Railway: Latehar (LTH, 90 km) / Ranchi (RNC, 155 km)."
   },
   {
     "id": "ranchi-lake",
     "name": "Ranchi Lake & Tagore Hill",
     "district": "Ranchi",
-    "category": "park",
-    "description": "Historic urban lake dug in 1842 by British Colonel Ouseley, overlooked by the scenic Tagore Hill where Rabindranath Tagore's brother Jyotirindranath once stayed.",
+    "state": "Jharkhand",
+    "category": "nature",
+    "rating": 4.6,
+    "description": "Historic urban landmark dug in 1842 by British Colonel Ouseley at the base of Ranchi Hill. Overlooked by the tranquil 300-foot Tagore Hill (Morabadi), where Nobel Laureate Rabindranath Tagore's elder brother Jyotirindranath Tagore built his literary retreat 'Shanti Dham'.",
     "short_description": "Scenic lake and historic hilltop viewpoint with panoramic city vistas.",
     "latitude": 23.3644,
     "longitude": 85.3216,
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80&auto=format&fit=crop"
-    ],
-    "best_time": "October to March",
+    "best_time": "October to March (Pleasant breeze for evening boating and hill sunset walks)",
     "entry_fee": 0,
     "is_featured": true,
-    "created_at": "2026-08-25T16:49:23.682Z"
+    "famous_things": [
+      "Tagore Hill 'Shanti Dham' heritage pavilion with 360-degree panoramic city views",
+      "Pahari Mandir perched atop 468 steps of Ranchi Hill dedicated to Lord Shiva",
+      "Paddle boating and evening illuminated musical fountain in Ranchi Lake",
+      "Ramakrishna Mission Ashram & Brahma Temple situated at the foot of Tagore Hill"
+    ],
+    "nearby_markets": [
+      "Morabadi Ground Night Market for mouth-watering street food and tribal handicrafts",
+      "Upper Bazar Ranchi for wholesale dry fruits, fabrics, and traditional brassware",
+      "Main Road Ranchi for modern shopping malls and iconic sweet shops"
+    ],
+    "local_festivals": [
+      "Maha Shivratri (Thousands climb 468 steps of Pahari Mandir with tridents and flowers)",
+      "Rabindra Jayanti (Celebrated with classical music at Tagore Hill pavilion in May)"
+    ],
+    "transit_info": "Nearest Airport: Birsa Munda Airport Ranchi (IXR, 8 km). Railway: Ranchi Junction (RNC, 4 km). Located centrally in the city, easily reachable by e-rickshaws and auto-rickshaws."
   }
 ];
-
-

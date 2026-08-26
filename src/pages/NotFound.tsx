@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 
 const NotFound = () => (
-  <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 sm:px-6 py-16 bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+  <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 sm:px-6 pt-4 pb-16 bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <div className="max-w-md w-full text-center space-y-6 bg-white dark:bg-gray-900 p-8 sm:p-10 rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-xl">
       <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-forest-600 via-forest-500 to-saffron-500 text-white text-3xl flex items-center justify-center mx-auto shadow-lg shadow-forest-900/20">
         🧭
@@ -16,7 +16,7 @@ const NotFound = () => (
           404 Not Found
         </h1>
         <p className="mt-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-          Looks like this travel trail hasn’t been mapped yet, or the page you are looking for has taken another detour across India.
+          Looks like this travel trail hasn't been mapped yet, or the page you are looking for has taken another detour across India.
         </p>
       </div>
 

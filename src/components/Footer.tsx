@@ -118,7 +118,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/events" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
-                  Events & Bazaars
+                  Festivals & Marketplaces
                 </Link>
               </li>
               <li>

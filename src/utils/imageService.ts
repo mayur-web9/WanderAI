@@ -4,7 +4,7 @@
  * Every single image URL in this registry is:
  * 1. 100% verified to return HTTP 200 OK from Unsplash CDN
  * 2. Authentically matched to the exact Indian landmark, festival, or marketplace
- * 3. Guaranteed unique (zero duplicates across all destinations, events, and bazaars)
+ * 3. Guaranteed unique (zero duplicates across all destinations, events, and marketplaces)
  */
 
 export const DESTINATION_IMAGE_MAP: Record<string, string> = {
@@ -40,13 +40,13 @@ export const DESTINATION_IMAGE_MAP: Record<string, string> = {
 export const MARKETPLACE_IMAGE_MAP: Record<string, string> = {
   "Dilli Haat, Delhi": "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80&auto=format&fit=crop",
   "Colaba Causeway, Mumbai": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
-  "Johari Bazaar, Jaipur": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80&auto=format&fit=crop",
+  "Johari Market, Jaipur": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80&auto=format&fit=crop",
   "Anjuna Flea Market, Goa": "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&q=80&auto=format&fit=crop",
-  "Laad Bazaar, Hyderabad": "https://images.unsplash.com/photo-1612528442702-28c6a0abb6f4?w=800&q=80&auto=format&fit=crop",
+  "Laad Market, Hyderabad": "https://images.unsplash.com/photo-1612528442702-28c6a0abb6f4?w=800&q=80&auto=format&fit=crop",
   "Floating Vegetable Market, Srinagar": "https://images.unsplash.com/photo-1587502536263-c9b7ac76c3bc?w=800&q=80&auto=format&fit=crop",
   "Police Bazar, Shillong": "https://images.unsplash.com/photo-1524594152303-9fd13543fe96?w=800&q=80&auto=format&fit=crop",
   "Janpath Market, Delhi": "https://images.unsplash.com/photo-1575101600-7da29a27cb7b?w=800&q=80&auto=format&fit=crop",
-  "Pondy Bazaar, Chennai": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80&auto=format&fit=crop"
+  "Pondy Market, Chennai": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80&auto=format&fit=crop"
 };
 
 export const EVENT_IMAGE_MAP: Record<string, string> = {

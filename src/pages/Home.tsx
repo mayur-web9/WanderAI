@@ -1,12 +1,12 @@
-﻿import { handleImageError, FALLBACK_DESTINATION_IMAGE, FALLBACK_EVENT_IMAGE } from '../utils/imageFallback';
+﻿
 import { useState, useEffect, useMemo } from 'react';
-import { 
-  ArrowRight, 
-  Star, 
-  MapPin, 
-  Calendar, 
-  Sparkles, 
-  ExternalLink, 
+import {
+  ArrowRight,
+  Star,
+  MapPin,
+  Calendar,
+  Sparkles,
+
   Zap,
   Bot,
   Send,
@@ -30,15 +30,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { mockDestinations, mockEvents, mockReviews } from '../utils/mockData';
 import { Destination, Event as AppEvent } from '../types';
 import { QUICK_PROMPTS } from '../utils/aiData';
-import { UnsplashImage } from '../components/UnsplashImage';
+import { DetailModal, DetailModalType } from '../components/DetailModal';
 import { getDbDestinations, getDbEvents } from '../services/supabaseService';
-import { DESTINATION_IMAGE_MAP } from '../utils/imageService';
+
 
 // Feature cards with Lucide icons (replaces corrupted emoji strings)
 const FEATURES = [
   { icon: MessageSquare, color: 'text-blue-500', title: 'Multilingual Chat', desc: 'Get travel advice in 10+ Indian languages including Hindi, Marathi, Bengali, and Tamil.' },
   { icon: Route, color: 'text-forest-600', title: 'Smart Planner', desc: 'Generate custom day-by-day itineraries based on your interests, pace, and budget.' },
-  { icon: Zap, color: 'text-amber-500', title: 'Culture & Bazaars', desc: 'Discover historic artisan craft haats, handloom markets, and living tribal harvest festivals.' },
+  { icon: Zap, color: 'text-amber-500', title: 'Culture & Marketplaces', desc: 'Discover historic artisan craft haats, handloom markets, and living tribal harvest festivals.' },
   { icon: ShieldCheck, color: 'text-emerald-600', title: 'Safety Guide', desc: 'Real-time updates on weather, safety protocols, and 24x7 tourist emergency contacts.' },
   { icon: Leaf, color: 'text-green-600', title: 'Eco-Tourism', desc: 'Discover sustainable travel options that support local communities and pristine nature.' },
   { icon: Utensils, color: 'text-orange-500', title: 'Food Finder', desc: 'Find the most authentic local eateries and hidden culinary specialties in any city.' },
@@ -65,7 +65,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 4,
     vibe: 'nature',
     highlights: ['Alleppey Houseboat Cruise', 'Munnar Organic Tea Estates', 'Kathakali Cultural Night', 'Varkala Cliff Sunset'],
-    estimatedBudget: 'â‚¹14,000 - â‚¹22,000 / person',
+    estimatedBudget: '₹14,000 - ₹22,000 / person',
     prompt: 'Plan a detailed 4-day nature and relaxation trip to Kerala including Alleppey houseboat and Munnar tea hills with local seafood suggestions.'
   },
   {
@@ -74,8 +74,8 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     region: 'North India',
     days: 5,
     vibe: 'heritage',
-    highlights: ['Sunrise at Taj Mahal Agra', 'Amer Fort & Hawa Mahal Jaipur', 'Chokhi Dhani Heritage Village', 'Johari Bazaar Gemstones'],
-    estimatedBudget: 'â‚¹18,000 - â‚¹28,000 / person',
+    highlights: ['Sunrise at Taj Mahal Agra', 'Amer Fort & Hawa Mahal Jaipur', 'Chokhi Dhani Heritage Village', 'Johari Gems & Jewelry'],
+    estimatedBudget: '₹18,000 - ₹28,000 / person',
     prompt: 'Create a 5-day heritage trip covering Delhi, Agra (Taj Mahal), and Jaipur with exact visiting hours, entry tips, and traditional Rajasthani food.'
   },
   {
@@ -85,7 +85,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 3,
     vibe: 'spiritual',
     highlights: ['Dashashwamedh Ghat Evening Ganga Aarti', 'Subah-e-Banaras Sunrise Boat Ride', 'Kashi Vishwanath Corridor', 'Ancient Deer Park Sarnath'],
-    estimatedBudget: 'â‚¹7,500 - â‚¹12,000 / person',
+    estimatedBudget: '₹7,500 - ₹12,000 / person',
     prompt: 'Draft a 3-day spiritual immersion itinerary for Varanasi with boat timings, Ganga Aarti viewing tips, temple dress codes, and famous Banarasi street food.'
   },
   {
@@ -95,7 +95,7 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 6,
     vibe: 'adventure',
     highlights: ['Khardung La Pass (5,359m)', 'Cobalt-Blue Pangong Tso Lake', 'Nubra Valley Sand Dunes & Bactrian Camels', 'Thiksey Monastery Chants'],
-    estimatedBudget: 'â‚¹26,000 - â‚¹38,000 / person',
+    estimatedBudget: '₹26,000 - ₹38,000 / person',
     prompt: 'Design a 6-day adventure circuit in Leh-Ladakh with proper 48-hour acclimatization plan, Pangong Tso homestays, and Inner Line Permit guidance.'
   },
   {
@@ -105,13 +105,13 @@ const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
     days: 3,
     vibe: 'nature',
     highlights: ['Hundru & Jonha Cascades', 'Netarhat Queen of Chotanagpur Sunsets', 'Betla National Park Safari', 'Tribal Handloom & Dhuska Cuisine'],
-    estimatedBudget: 'â‚¹6,000 - â‚¹10,500 / person',
+    estimatedBudget: '₹6,000 - ₹10,500 / person',
     prompt: 'Give me a 3-day eco-tourism plan for Ranchi, Netarhat, and Hundru Falls in Jharkhand with tribal cuisine recommendations and scenic routes.'
   }
 ];
 
 const RANDOM_PROMPTS = [
-  "Plan a 3-day weekend food and heritage trip to Jaipur under â‚¹10,000",
+  "Plan a 3-day weekend food and heritage trip to Jaipur under ₹10,000",
   "Recommend offbeat tranquil hill stations in Himachal Pradesh for solo travelers",
   "What is the best 5-day circuit for temples and beaches in Tamil Nadu?",
   "How to travel by Vande Bharat train from Delhi to Varanasi with day-by-day plan?",
@@ -121,6 +121,17 @@ const RANDOM_PROMPTS = [
 
 const Home = () => {
   const navigate = useNavigate();
+
+  // Floating Detail Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalItem, setModalItem] = useState<Destination | AppEvent | null>(null);
+  const [modalType, setModalType] = useState<DetailModalType>('destination');
+
+  const handleOpenModal = (item: Destination | AppEvent, type: DetailModalType) => {
+    setModalItem(item);
+    setModalType(type);
+    setIsModalOpen(true);
+  };
 
   // Hero interactive state
   const [heroTab, setHeroTab] = useState<'chat' | 'plan' | 'vibe'>('chat');
@@ -146,18 +157,27 @@ const Home = () => {
     // Load from Supabase
     getDbDestinations().then((dests) => {
       if (dests && dests.length > 0) {
-        const formatted: Destination[] = dests.map((d, index) => ({
-          id: d.id || `dest-${index}`,
-          name: d.name,
-          district: d.location ? d.location.split(',')[0] : 'India',
-          category: (d.tag?.toLowerCase() || 'historical') as Destination['category'],
-          short_description: d.desc || '',
-          description: d.desc || '',
-          entry_fee: 0,
-          images: [(typeof d.image === 'string' && d.image.startsWith('http')) ? d.image : (DESTINATION_IMAGE_MAP[d.id] || DESTINATION_IMAGE_MAP[d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')] || 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop')],
-          is_featured: true,
-          created_at: new Date().toISOString(),
-        }));
+        const formatted: Destination[] = dests.map((d, index) => {
+          const localMatch = mockDestinations.find(loc => loc.id === d.id || loc.name.toLowerCase() === d.name.toLowerCase());
+          return {
+            id: d.id || `dest-${index}`,
+            name: d.name,
+            district: d.location ? d.location.split(',')[0].trim() : 'India',
+            state: d.state || localMatch?.state || 'India',
+            category: (d.tag?.toLowerCase() || localMatch?.category || 'historical') as Destination['category'],
+            short_description: d.desc || localMatch?.short_description || '',
+            description: d.desc || localMatch?.description || '',
+            entry_fee: d.entry_fee ?? localMatch?.entry_fee ?? 0,
+            rating: d.rating ?? localMatch?.rating ?? 4.8,
+            best_time: d.best_time || localMatch?.best_time,
+            famous_things: d.famous_things || localMatch?.famous_things,
+            nearby_markets: d.nearby_markets || localMatch?.nearby_markets,
+            local_festivals: d.local_festivals || localMatch?.local_festivals,
+            transit_info: d.transit_info || localMatch?.transit_info,
+            is_featured: true,
+            created_at: new Date().toISOString()
+          };
+        });
         setFeaturedDestinations(formatted);
       }
     });
@@ -209,8 +229,8 @@ const Home = () => {
   const filteredDestinationsList = useMemo(() => {
     return featuredDestinations.filter(d => {
       const matchesCategory = destCategoryFilter === 'All' || d.category.toLowerCase() === destCategoryFilter.toLowerCase();
-      const matchesSearch = !destinationSearch.trim() || 
-        d.name.toLowerCase().includes(destinationSearch.toLowerCase()) || 
+      const matchesSearch = !destinationSearch.trim() ||
+        d.name.toLowerCase().includes(destinationSearch.toLowerCase()) ||
         d.district.toLowerCase().includes(destinationSearch.toLowerCase()) ||
         d.short_description.toLowerCase().includes(destinationSearch.toLowerCase());
       return matchesCategory && matchesSearch;
@@ -223,7 +243,7 @@ const Home = () => {
         return "/itinerary?tab=chat&prompt=Namaste!%20Can%20you%20guide%20me%20in%20Hindi%20and%20English%3F";
       case "Smart Planner":
         return "/itinerary?tab=plan";
-      case "Culture & Bazaars":
+      case "Culture & Marketplaces":
         return "/events";
       case "Safety Guide":
         return "/itinerary?tab=chat&prompt=What%20are%20the%20essential%20safety%2C%20health%2C%20and%20emergency%20guidelines%20for%20traveling%20in%20India%3F";
@@ -242,12 +262,12 @@ const Home = () => {
 
   return (
     <div className="w-full min-h-screen bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-      
+
       {/* ========================================================================= */}
       {/* 1. HERO SECTION WITH INTERACTIVE AI HUB */}
       {/* ========================================================================= */}
       <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white pt-6 pb-12 sm:pt-8 sm:pb-16">
-        
+
         {/* Ambient background glowing circles */}
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-saffron-500/15 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
         <div className="absolute bottom-10 -right-20 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -255,10 +275,10 @@ const Home = () => {
         {/* Hero Content Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            
+
             {/* Left Column: Headlines & Value Prop */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              
+
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-saffron-300 text-xs font-bold shadow-lg">
                 <span className="w-2 h-2 rounded-full bg-saffron-400 animate-ping"></span>
@@ -278,7 +298,7 @@ const Home = () => {
 
               {/* Subtitle */}
               <p className="text-sm sm:text-base text-emerald-100/90 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                From high-altitude Himalayan mountain passes and sacred ghats in Varanasi to tranquil backwaters in Kerala and vibrant traditional bazaarsâ€”explore India with customized, intelligent AI travel planning.
+                From high-altitude Himalayan mountain passes and sacred ghats in Varanasi to tranquil backwaters in Kerala and vibrant local marketplaces"”explore India with customized, intelligent AI travel planning.
               </p>
 
               {/* Action Buttons */}
@@ -321,7 +341,7 @@ const Home = () => {
             {/* Right Column: Interactive Live AI Hub Card */}
             <div className="lg:col-span-5">
               <div className="rounded-3xl bg-white/10 dark:bg-gray-900/80 backdrop-blur-xl border border-white/20 p-5 sm:p-6 shadow-2xl space-y-4">
-                
+
                 {/* Hub Header & Tabs */}
                 <div className="flex items-center justify-between pb-3 border-b border-white/15">
                   <div className="flex items-center gap-2.5">
@@ -371,8 +391,8 @@ const Home = () => {
                         heroTab === 'chat'
                           ? "e.g. Best offbeat places near Varanasi for a day trip?"
                           : heroTab === 'plan'
-                          ? "e.g. Plan a 4-day budget trip in Kerala..."
-                          : "e.g. Where should I travel in October for lush waterfalls?"
+                            ? "e.g. Plan a 4-day budget trip in Kerala..."
+                            : "e.g. Where should I travel in October for lush waterfalls?"
                       }
                       className="w-full pl-4 pr-24 py-3 rounded-2xl bg-white/90 dark:bg-gray-800/90 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-saffron-400 shadow-inner font-medium"
                     />
@@ -410,7 +430,7 @@ const Home = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
-                    {QUICK_PROMPTS.slice(0, 5).map((p) => (
+                    {QUICK_PROMPTS.slice(0, 5).map((p: string) => (
                       <Link
                         key={p}
                         to={`/itinerary?tab=chat&prompt=${encodeURIComponent(p)}`}
@@ -449,12 +469,12 @@ const Home = () => {
       {/* ========================================================================= */}
       <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-gradient-to-br from-forest-900 via-forest-800 to-obsidian-900 text-white p-5 sm:p-7 lg:p-8 shadow-2xl relative overflow-hidden border border-forest-700/60">
-          
+
           {/* Subtle decoration */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-saffron-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
+
             {/* Left info & interactive selector */}
             <div className="lg:col-span-6 space-y-5">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-saffron-500/20 text-saffron-300 border border-saffron-500/30">
@@ -467,26 +487,25 @@ const Home = () => {
               </h2>
 
               <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                Click any popular circuit to inspect key stops, estimated budgets, and launch instant customized AI itineraries with 1 click.
+                Click any popular circuit to inspect main stops, estimated budgets, and launch instant customized AI itineraries with 1 click.
               </p>
 
               {/* Vibe filter pills */}
               <div className="flex flex-wrap gap-2 pt-2">
                 {[
                   { id: 'all', label: 'All Circuits' },
-                  { id: 'nature', label: 'ðŸŒ¿ Nature' },
-                  { id: 'heritage', label: 'ðŸ° Heritage' },
-                  { id: 'spiritual', label: 'ðŸ•‰ï¸ Spiritual' },
-                  { id: 'adventure', label: 'â›°ï¸ Adventure' }
+                  { id: 'nature', label: '🌿 Nature' },
+                  { id: 'heritage', label: '🏰 Heritage' },
+                  { id: 'spiritual', label: '🕉️ Spiritual' },
+                  { id: 'adventure', label: '⛰️ Adventure' }
                 ].map((v) => (
                   <button
                     key={v.id}
                     onClick={() => setActiveVibeFilter(v.id as typeof activeVibeFilter)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                      activeVibeFilter === v.id
-                        ? 'bg-saffron-500 text-forest-950 shadow-md'
-                        : 'bg-white/10 hover:bg-white/20 text-gray-200 border border-white/15'
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${activeVibeFilter === v.id
+                      ? 'bg-saffron-500 text-forest-950 shadow-md'
+                      : 'bg-white/10 hover:bg-white/20 text-gray-200 border border-white/15'
+                      }`}
                   >
                     {v.label}
                   </button>
@@ -501,21 +520,19 @@ const Home = () => {
                     <button
                       key={circuit.id}
                       onClick={() => setSelectedCircuit(circuit)}
-                      className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-center justify-between border ${
-                        isSelected
-                          ? 'bg-white/20 border-saffron-400 shadow-md transform scale-[1.01]'
-                          : 'bg-white/5 border-white/10 hover:bg-white/10'
-                      }`}
+                      className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-center justify-between border ${isSelected
+                        ? 'bg-white/20 border-saffron-400 shadow-md transform scale-[1.01]'
+                        : 'bg-white/5 border-white/10 hover:bg-white/10'
+                        }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
-                          isSelected ? 'bg-saffron-400 text-forest-950' : 'bg-white/10 text-white'
-                        }`}>
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${isSelected ? 'bg-saffron-400 text-forest-950' : 'bg-white/10 text-white'
+                          }`}>
                           {circuit.days}D
                         </div>
                         <div>
                           <div className="font-bold text-sm text-white">{circuit.name}</div>
-                          <div className="text-xs text-gray-400">{circuit.region} â€¢ {circuit.vibe.toUpperCase()}</div>
+                          <div className="text-xs text-gray-400">{circuit.region} "¢ {circuit.vibe.toUpperCase()}</div>
                         </div>
                       </div>
                       <span className={`text-xs font-bold ${isSelected ? 'text-saffron-300' : 'text-gray-400'}`}>
@@ -530,7 +547,7 @@ const Home = () => {
             {/* Right Live Teaser Display */}
             <div className="lg:col-span-6">
               <div className="rounded-3xl bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4 sm:p-6 shadow-2xl border border-white/20 dark:border-gray-800 space-y-6">
-                
+
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <span className="px-2.5 py-0.5 rounded-full bg-forest-100 dark:bg-forest-950 text-forest-700 dark:text-forest-300 text-xs font-bold uppercase tracking-wider">
@@ -552,7 +569,7 @@ const Home = () => {
                 {/* Highlights List */}
                 <div className="space-y-2">
                   <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Key Highlights Included:
+                    Highlights Included:
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {selectedCircuit.highlights.map((h, i) => (
@@ -643,13 +660,13 @@ const Home = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-forest-400">
-              Top Handpicked Gems
+              Iconic & Heritage
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-gray-900 dark:text-white mt-1">
-              Featured Indian Destinations
+              Explore Unseen India
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              Explore iconic architectural marvels, sacred pilgrimage sites, and pristine wilderness.
+              Explore iconic architectural marvels, sacred ghats, misty hill stations, and untouched wilderness.
             </p>
           </div>
 
@@ -657,98 +674,70 @@ const Home = () => {
             to="/itinerary?tab=destinations"
             className="inline-flex items-center text-sm font-bold text-forest-700 dark:text-forest-400 hover:text-forest-800 dark:hover:text-forest-300 group"
           >
-            <span>View All Destinations</span>
+            <span>Explore All</span>
             <ArrowRight className="ml-1.5 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {/* Category & Search Filter Strip */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-          <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-            {['All', 'Historical', 'Nature', 'Wildlife', 'Waterfall', 'Temple'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setDestCategoryFilter(cat)}
-                className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all ${
-                  destCategoryFilter === cat
-                    ? 'bg-forest-700 text-white shadow-sm'
-                    : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border border-gray-200/80 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              value={destinationSearch}
-              onChange={(e) => setDestinationSearch(e.target.value)}
-              placeholder="Search destination or state..."
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-forest-500 shadow-sm"
-            />
-          </div>
-        </div>
-
         {/* Destinations Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredDestinationsList.slice(0, 9).map((destination) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {featuredDestinations.slice(0, 9).map((destination) => (
             <div
               key={destination.id}
-              className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5"
+              onClick={() => handleOpenModal(destination, 'destination')}
+              className="group cursor-pointer flex flex-col justify-between rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 hover:border-forest-500/50 dark:hover:border-forest-500/50 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-5 sm:p-6"
             >
-              {/* Image Container */}
-              <div className="relative h-48 sm:h-52 overflow-hidden">
-                <UnsplashImage src={destination.images?.[0] || FALLBACK_DESTINATION_IMAGE} fallbackSrc={FALLBACK_DESTINATION_IMAGE} alt={destination.name} onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                
-                {/* Category Pill */}
-                <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/20">
+              <div className="space-y-3.5">
+                {/* Header Tag & Rating */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-3 py-1 rounded-full bg-forest-50 dark:bg-forest-950/60 border border-forest-200 dark:border-forest-800/80 text-forest-800 dark:text-forest-300 text-[11px] font-bold uppercase tracking-wider">
                     {destination.category}
                   </span>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-xl font-bold font-display text-white">
-                    {destination.name}
-                  </h3>
-                  <div className="flex items-center text-xs text-gray-200 mt-1">
-                    <MapPin className="h-3.5 w-3.5 mr-1 text-saffron-400 shrink-0" />
-                    <span>{destination.district}, India</span>
+                  <div className="flex items-center gap-1 text-xs font-bold text-amber-500 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-900/60">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                    <span>{destination.rating || 4.8}</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Card Body */}
-              <div className="p-6 flex flex-col flex-1">
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6 flex-1 line-clamp-3">
+                {/* Title & Location */}
+                <div>
+                  <h3 className="text-xl font-bold font-display text-gray-900 dark:text-white group-hover:text-forest-700 dark:group-hover:text-forest-400 transition-colors">
+                    {destination.name}
+                  </h3>
+                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
+                    <MapPin className="h-3.5 w-3.5 mr-1 text-saffron-500 shrink-0" />
+                    <span>{destination.district}, {destination.state || 'India'}</span>
+                  </div>
+                </div>
+
+                {/* Short Description */}
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">
                   {destination.short_description || destination.description}
                 </p>
 
-                {/* Actions */}
-                <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-3">
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination.name + ' ' + destination.district)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition text-xs font-bold flex items-center gap-1.5"
-                    title="View on Google Maps"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
-                    <span>Maps</span>
-                  </a>
-
-                  <Link
-                    to={`/itinerary?tab=chat&prompt=${encodeURIComponent(`Tell me everything about ${destination.name} in ${destination.district} including best visiting season, timings, entry tickets, and nearby spots.`)}`}
-                    className="flex-1 px-4 py-2.5 rounded-xl bg-forest-700 hover:bg-forest-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-saffron-400" />
-                    <span>Plan Trip Here</span>
-                  </Link>
+                {/* Quick Info Badges */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {destination.best_time && (
+                    <span className="px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-gray-800 text-[11px] font-semibold text-gray-600 dark:text-gray-300">
+                      📅 {destination.best_time.split('(')[0].trim()}
+                    </span>
+                  )}
+                  <span className="px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-gray-800 text-[11px] font-semibold text-gray-600 dark:text-gray-300">
+                    🎟️ {destination.entry_fee ? `₹${destination.entry_fee}` : 'Free Entry'}
+                  </span>
                 </div>
+              </div>
+
+              {/* Bottom Action Strip */}
+              <div className="pt-4 mt-5 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+                <span className="text-xs font-bold text-forest-700 dark:text-forest-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                  <span>View Full Details</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+
+                <span className="px-3 py-1.5 rounded-xl bg-forest-700 text-white text-xs font-bold shadow-xs">
+                  Guide
+                </span>
               </div>
             </div>
           ))}
@@ -768,13 +757,13 @@ const Home = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-gray-900 dark:text-white">
             Find Your Ideal Indian Vacation Vibe
           </h2>
-          
+
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Choose your preferred travel rhythm and vacation duration below to let WanderAI construct your tailored Indian route.
           </p>
 
           <div className="bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-xl space-y-6 text-left">
-            
+
             {/* Step 1: Vibe */}
             <div>
               <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 block mb-3">
@@ -782,19 +771,18 @@ const Home = () => {
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { id: "heritage",  VibeIcon: Crown,    title: "Royal Heritage",  desc: "Forts, Palaces & Lore",        color: "text-amber-500" },
-                  { id: "nature",    VibeIcon: Mountain,  title: "Nature & Mist",   desc: "Backwaters, Hills & Falls",    color: "text-emerald-500" },
-                  { id: "adventure", VibeIcon: Flame,     title: "High Adventure",  desc: "Passes, Rafting & Treks",      color: "text-orange-500" },
-                  { id: "food",      VibeIcon: ChefHat,   title: "Culinary Trails", desc: "Bazaars, Spices & Cuisines",   color: "text-rose-500" }
+                  { id: "heritage", VibeIcon: Crown, title: "Royal Heritage", desc: "Forts, Palaces & Lore", color: "text-amber-500" },
+                  { id: "nature", VibeIcon: Mountain, title: "Nature & Mist", desc: "Backwaters, Hills & Falls", color: "text-emerald-500" },
+                  { id: "adventure", VibeIcon: Flame, title: "High Adventure", desc: "Passes, Rafting & Treks", color: "text-orange-500" },
+                  { id: "food", VibeIcon: ChefHat, title: "Culinary Trails", desc: "Local Markets, Spices & Cuisines", color: "text-rose-500" }
                 ].map((v) => (
                   <button
                     key={v.id}
                     onClick={() => setQuizVibe(v.id as typeof quizVibe)}
-                    className={`p-4 rounded-2xl border text-left transition-all ${
-                      quizVibe === v.id
-                        ? 'bg-forest-50 dark:bg-forest-950/60 border-forest-600 dark:border-forest-500 shadow-md transform scale-[1.02]'
-                        : 'bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700/60 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
+                    className={`p-4 rounded-2xl border text-left transition-all ${quizVibe === v.id
+                      ? 'bg-forest-50 dark:bg-forest-950/60 border-forest-600 dark:border-forest-500 shadow-md transform scale-[1.02]'
+                      : 'bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700/60 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      }`}
                   >
                     <div className="text-2xl mb-1.5">{(() => { const VI = v.VibeIcon; return <VI className={`w-7 h-7 mb-1.5 ${v.color}`} />; })()}</div>
                     <div className="font-bold text-xs text-gray-900 dark:text-white">{v.title}</div>
@@ -818,11 +806,10 @@ const Home = () => {
                   <button
                     key={p.id}
                     onClick={() => setQuizPace(p.id as typeof quizPace)}
-                    className={`p-3.5 rounded-2xl border text-center transition-all ${
-                      quizPace === p.id
-                        ? 'bg-saffron-50 dark:bg-saffron-950/60 border-saffron-500 text-saffron-900 dark:text-saffron-200 shadow-md font-bold'
-                        : 'bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100'
-                    }`}
+                    className={`p-3.5 rounded-2xl border text-center transition-all ${quizPace === p.id
+                      ? 'bg-saffron-50 dark:bg-saffron-950/60 border-saffron-500 text-saffron-900 dark:text-saffron-200 shadow-md font-bold'
+                      : 'bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100'
+                      }`}
                   >
                     <div className="text-xs font-bold">{p.title}</div>
                     <div className="text-[11px] opacity-75">{p.days}</div>
@@ -865,47 +852,59 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
             {upcomingEvents.map((event) => (
               <div
                 key={event.id}
-                className="group flex flex-col rounded-3xl bg-white/10 dark:bg-gray-900/60 backdrop-blur-md border border-white/20 dark:border-gray-700/60 overflow-hidden hover:bg-white/15 transition-all duration-300 transform hover:-translate-y-1"
+                onClick={() => handleOpenModal(event, 'event')}
+                className="group cursor-pointer flex flex-col justify-between rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 hover:border-saffron-500/50 dark:hover:border-saffron-500/50 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-5 sm:p-6"
               >
-                {/* Event Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <UnsplashImage src={event.image_url || FALLBACK_EVENT_IMAGE} fallbackSrc={FALLBACK_EVENT_IMAGE} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                  
-                  <div className="absolute top-3 left-3">
-                    <span className="px-3 py-1 rounded-full bg-saffron-500 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                <div className="space-y-3.5">
+                  {/* Category Pill & Dates */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="px-3 py-1 rounded-full bg-saffron-50 dark:bg-saffron-950/60 border border-saffron-200 dark:border-saffron-800/80 text-saffron-800 dark:text-saffron-300 text-[11px] font-bold uppercase tracking-wider">
                       {event.category}
                     </span>
+                    <div className="flex items-center text-xs font-bold text-forest-700 dark:text-forest-400 bg-forest-50 dark:bg-forest-950/40 px-2.5 py-1 rounded-full border border-forest-200 dark:border-forest-800/60">
+                      <Calendar className="w-3.5 h-3.5 mr-1" />
+                      <span>{event.date_start ? new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : 'Upcoming'}</span>
+                    </div>
                   </div>
 
-                  <div className="absolute bottom-3 left-4 right-4">
-                    <h3 className="text-xl font-bold font-display text-white">
+                  {/* Title & Location */}
+                  <div>
+                    <h3 className="text-xl font-bold font-display text-gray-900 dark:text-white group-hover:text-saffron-600 dark:group-hover:text-saffron-400 transition-colors">
                       {event.name}
                     </h3>
+                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
+                      <MapPin className="h-3.5 w-3.5 mr-1 text-saffron-500 shrink-0" />
+                      <span>{event.location}</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-6 flex flex-col flex-1">
-                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6 flex-1 line-clamp-3">
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">
                     {event.description}
                   </p>
 
-                  <div className="space-y-2.5 pt-4 border-t border-white/10 text-xs">
-                    <div className="flex items-center justify-between text-gray-300">
-                      <span className="text-gray-400">Location:</span>
-                      <span className="font-semibold text-white">{event.location}</span>
+                  {/* Ritual preview if present */}
+                  {event.famous_for && event.famous_for.length > 0 && (
+                    <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/70 dark:border-gray-700/60 text-[11px] font-medium text-gray-700 dark:text-gray-300 truncate">
+                      🌟 {event.famous_for[0]}
                     </div>
-                    <div className="flex items-center justify-between text-gray-300">
-                      <span className="text-gray-400">Dates:</span>
-                      <span className="font-bold text-saffron-300">
-                        {new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} â€“ {new Date(event.date_end).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      </span>
-                    </div>
-                  </div>
+                  )}
+                </div>
+
+                {/* Bottom Action */}
+                <div className="pt-4 mt-5 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-saffron-700 dark:text-saffron-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                    <span>Festival Guide & Feasts</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+
+                  <span className="px-3 py-1.5 rounded-xl bg-saffron-600 text-white text-xs font-bold shadow-xs">
+                    Explore
+                  </span>
                 </div>
               </div>
             ))}
@@ -990,7 +989,7 @@ const Home = () => {
           <h2 className="text-3xl sm:text-5xl font-extrabold font-display">
             Ready to Begin Your Incredible Indian Adventure?
           </h2>
-          
+
           <p className="text-sm sm:text-base text-white/90 max-w-2xl mx-auto font-light">
             Ask WanderAI anything about offbeat routes, regional cuisines, booking tricks, or local cultural customs.
           </p>
@@ -1007,6 +1006,14 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Floating Destination / Event Details Modal */}
+      <DetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={modalType}
+        item={modalItem}
+      />
 
     </div>
   );

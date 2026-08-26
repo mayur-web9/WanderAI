@@ -1,5 +1,4 @@
-﻿import { DESTINATION_IMAGE_MAP } from '../utils/imageService';
-import { supabase } from '../utils/supabaseClient';
+﻿import { supabase } from '../utils/supabaseClient';
 import { 
   Event, 
   Marketplace, 
@@ -14,7 +13,7 @@ import { DESTINATIONS, AiDestination } from '../utils/aiData';
 import { mockEvents, DEFAULT_MARKETPLACES } from '../utils/mockData';
 
 /**
- * PROFILES & USER SETTINGS (Safe non-destructive interaction with shared public.profiles)
+ * USER PROFILES & SETTINGS
  */
 export async function getProfile(userId: string): Promise<Profile | null> {
   try {
@@ -23,57 +22,125 @@ export async function getProfile(userId: string): Promise<Profile | null> {
       .select('*')
       .eq('id', userId)
       .single();
-
-    if (error) {
-      return null;
-    }
-    return data;
+    if (!error && data) return data;
   } catch {
-    return null;
+    console.warn('getProfile error:');
   }
+  return null;
 }
 
 export async function upsertProfile(profile: Partial<Profile> & { id: string }): Promise<Profile | null> {
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .upsert({
-        ...profile,
-        updated_at: new Date().toISOString()
-      })
+      .upsert(profile)
       .select()
       .single();
-
-    if (error) {
-      return null;
-    }
-    return data;
+    if (!error && data) return data;
   } catch {
-    return null;
+    console.warn('upsertProfile error:');
   }
+  return null;
 }
 
-export async function getUserSettings(userId: string): Promise<UserSettings | null> {
+export async function getUserSettings(userId: string): Promise<any> {
   try {
     const { data, error } = await supabase
       .from('user_settings')
       .select('*')
       .eq('user_id', userId)
       .single();
-
-    if (error) {
-      return null;
-    }
-    return data;
+    if (!error && data) return data;
   } catch {
-    return null;
+    // fallback if user_settings is not migrated
   }
+  return null;
 }
 
 /**
  * DEDICATED TRAVEL CHATS & MESSAGES (travel_chats, travel_messages)
  * Isolated so it does not interfere with other AI chatbot projects
  */
+export async function getUserChats(userId: string): Promise<Chat[]> {
+  if (!userId) return [];
+  try {
+    const { data, error } = await supabase
+      .from('travel_chats')
+      .select('*')
+      .eq('user_id', userId)
+      .order('updated_at', { ascending: false });
+
+    if (!error && data) {
+      return data;
+    }
+  } catch {
+    console.warn('travel_chats getUserChats error');
+  }
+
+  // Fallback to legacy chats
+  try {
+    const { data } = await supabase
+      .from('chats')
+      .select('*')
+      .eq('user_id', userId)
+      .order('updated_at', { ascending: false });
+    if (data) return data;
+  } catch {}
+
+  return [];
+}
+
+export async function createNewUserChat(userId: string, title = 'New Travel Discussion'): Promise<Chat | null> {
+  if (!userId) return null;
+  try {
+    const { data, error } = await supabase
+      .from('travel_chats')
+      .insert({
+        user_id: userId,
+        title,
+        is_pinned: false
+      })
+      .select()
+      .single();
+
+    if (!error && data) {
+      return data;
+    }
+  } catch {
+    console.warn('createNewUserChat error');
+  }
+  return null;
+}
+
+export async function deleteUserChat(chatId: string, userId: string): Promise<boolean> {
+  if (!userId || !chatId) return false;
+  try {
+    const { error } = await supabase
+      .from('travel_chats')
+      .delete()
+      .eq('id', chatId)
+      .eq('user_id', userId);
+    return !error;
+  } catch {
+    console.warn('deleteUserChat error');
+    return false;
+  }
+}
+
+export async function updateChatTitle(chatId: string, userId: string, title: string): Promise<boolean> {
+  if (!userId || !chatId || !title) return false;
+  try {
+    const { error } = await supabase
+      .from('travel_chats')
+      .update({ title, updated_at: new Date().toISOString() })
+      .eq('id', chatId)
+      .eq('user_id', userId);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
 export async function getOrCreateActiveChat(userId: string, title = 'WanderAI Travel Plan'): Promise<Chat | null> {
   try {
     // Check travel_chats table first
@@ -206,37 +273,47 @@ export async function saveMessageToSupabase(
  * DEDICATED TRAVEL DESTINATIONS (travel_destinations)
  */
 export async function getDbDestinations(): Promise<AiDestination[]> {
-  try {
-    // Query travel_destinations first
-    const { data, error } = await supabase
-      .from('travel_destinations')
-      .select('*')
-      .order('name', { ascending: true });
+    try {
+      const { data, error } = await supabase
+        .from('travel_destinations')
+        .select('*')
+        .order('name', { ascending: true });
 
-    if (!error && data && data.length > 0) {
-      return (data as Array<Record<string, unknown>>).map((d) => ({
-        id: typeof d.id === 'string' ? d.id : String(d.id || ''),
-        name: typeof d.name === 'string' ? d.name : 'Destination',
-        emoji: typeof d.emoji === 'string' ? d.emoji : 'ðŸ“',
-        tag: typeof d.tag === 'string' ? d.tag : (typeof d.category === 'string' ? d.category : 'Historical'),
-        desc: typeof d.desc === 'string' ? d.desc : (typeof d.description === 'string' ? d.description : (typeof d.short_description === 'string' ? d.short_description : '')),
-        location: typeof d.location === 'string' ? d.location : (typeof d.district === 'string' ? `${d.district}, India` : 'India'),
-        image: (typeof d.image === 'string' && d.image.startsWith('http')) ? d.image : (DESTINATION_IMAGE_MAP[typeof d.id === 'string' ? d.id : ''] || DESTINATION_IMAGE_MAP[typeof d.name === 'string' ? d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : ''] || 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop')
-      }));
+      if (!error && data && data.length > 0) {
+        return (data as Array<Record<string, unknown>>).map((d) => {
+          const id = typeof d.id === 'string' ? d.id : String(d.id || '');
+          const localMatch = DESTINATIONS.find(loc => loc.id === id || loc.name.toLowerCase() === String(d.name || '').toLowerCase());
+          return {
+            id,
+            name: typeof d.name === 'string' ? d.name : 'Destination',
+            emoji: typeof d.emoji === 'string' ? d.emoji : (localMatch?.emoji || '🏛️'),
+            tag: typeof d.tag === 'string' ? d.tag : (typeof d.category === 'string' ? d.category : (localMatch?.tag || 'Historical')),
+            desc: typeof d.desc === 'string' ? d.desc : (typeof d.description === 'string' ? d.description : (typeof d.short_description === 'string' ? d.short_description : (localMatch?.desc || ''))),
+            location: typeof d.location === 'string' ? d.location : (typeof d.district === 'string' ? `${d.district}, ${d.state || 'India'}` : (localMatch?.location || 'India')),
+            category: typeof d.category === 'string' ? d.category : localMatch?.category,
+            state: typeof d.state === 'string' ? d.state : localMatch?.state,
+            best_time: typeof d.best_time === 'string' ? d.best_time : localMatch?.best_time,
+            entry_fee: typeof d.entry_fee === 'number' ? d.entry_fee : localMatch?.entry_fee,
+            rating: typeof d.rating === 'number' ? d.rating : localMatch?.rating,
+            famous_things: Array.isArray(d.famous_things) ? d.famous_things as string[] : localMatch?.famous_things,
+            nearby_markets: Array.isArray(d.nearby_markets) ? d.nearby_markets as string[] : localMatch?.nearby_markets,
+            local_festivals: Array.isArray(d.local_festivals) ? d.local_festivals as string[] : localMatch?.local_festivals,
+            transit_info: typeof d.transit_info === 'string' ? d.transit_info : localMatch?.transit_info
+          };
+        });
+      }
+    } catch {
+      console.warn('travel_destinations query fallback');
     }
-  } catch {
-    console.warn('travel_destinations query fallback');
-  }
 
-  // Fallback to local data
-  return DESTINATIONS;
-}
+    return DESTINATIONS;
+  }
 
 export async function saveDbDestination(dest: AiDestination): Promise<AiDestination> {
   try {
     const payload = {
       name: dest.name,
-      emoji: dest.emoji || 'ðŸ“',
+      emoji: dest.emoji || '📍',
       tag: dest.tag,
       desc: dest.desc,
       location: dest.location,
@@ -454,7 +531,7 @@ export async function deleteDbFeedback(id: string): Promise<boolean> {
  * DEDICATED TRAVEL ITINERARIES (travel_itineraries)
  */
 export async function saveDbItinerary(plan: {
-  user_id?: string;
+  user_id: string;
   session_id?: string;
   days: string;
   interest: string;
@@ -464,6 +541,10 @@ export async function saveDbItinerary(plan: {
   itinerary_text: string;
   place_notes?: string;
 }): Promise<ItineraryRecord | null> {
+  if (!plan.user_id) {
+    console.warn('saveDbItinerary rejected: user must be signed in');
+    return null;
+  }
   try {
     const { data, error } = await supabase
       .from('travel_itineraries')
@@ -481,12 +562,16 @@ export async function saveDbItinerary(plan: {
 }
 
 export async function getDbItineraries(userId?: string): Promise<ItineraryRecord[]> {
+  if (!userId) {
+    // Only return saved itineraries for explicitly authenticated users
+    return [];
+  }
   try {
-    let query = supabase.from('travel_itineraries').select('*').order('created_at', { ascending: false });
-    if (userId) {
-      query = query.eq('user_id', userId);
-    }
-    const { data, error } = await query;
+    const { data, error } = await supabase
+      .from('travel_itineraries')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
     if (!error && data) {
       return data;
     }
@@ -494,6 +579,21 @@ export async function getDbItineraries(userId?: string): Promise<ItineraryRecord
     console.warn('getDbItineraries error:');
   }
   return [];
+}
+
+export async function deleteDbItinerary(id: string, userId: string): Promise<boolean> {
+  if (!userId || !id) return false;
+  try {
+    const { error } = await supabase
+      .from('travel_itineraries')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', userId);
+    return !error;
+  } catch {
+    console.warn('deleteDbItinerary error:');
+    return false;
+  }
 }
 
 

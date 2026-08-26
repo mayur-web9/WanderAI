@@ -1,29 +1,38 @@
-﻿import { handleImageError, FALLBACK_EVENT_IMAGE, FALLBACK_MARKETPLACE_IMAGE } from '../utils/imageFallback';
-import { UnsplashImage } from '../components/UnsplashImage';
+﻿import { DetailModal, DetailModalType } from '../components/DetailModal';
 import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Calendar, 
   Store, 
   MapPin, 
   Search, 
-  ExternalLink, 
   Sparkles, 
   ShoppingBag, 
-  Clock, 
   SlidersHorizontal,
   Compass,
+  ArrowRight
 } from 'lucide-react';
 import { mockEvents, DEFAULT_MARKETPLACES } from '../utils/mockData';
 import { Event, Marketplace } from '../types';
 import { getDbEvents, getDbMarketplaces } from '../services/supabaseService';
 
-export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 'bazaars' | 'all' }) {
+export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 'marketplaces' | 'all' }) {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // Floating Detail Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalItem, setModalItem] = useState<Event | Marketplace | null>(null);
+  const [modalType, setModalType] = useState<DetailModalType>('event');
+
+  const handleOpenModal = (item: Event | Marketplace, type: DetailModalType) => {
+    setModalItem(item);
+    setModalType(type);
+    setIsModalOpen(true);
+  };
   
-  // Tab state: 'events' | 'bazaars' | 'all'
-  const initialTab = (searchParams.get('tab') as 'events' | 'bazaars' | 'all') || defaultTab || 'all';
-  const [activeTab, setActiveTab] = useState<'events' | 'bazaars' | 'all'>(initialTab);
+  // Tab state: 'events' | 'marketplaces' | 'all'
+  const initialTab = (searchParams.get('tab') as 'events' | 'marketplaces' | 'all') || defaultTab || 'all';
+  const [activeTab, setActiveTab] = useState<'events' | 'marketplaces' | 'all'>(initialTab);
 
   const [events, setEvents] = useState<Event[]>(mockEvents);
   const [marketplaces, setMarketplaces] = useState<Marketplace[]>(DEFAULT_MARKETPLACES);
@@ -37,8 +46,8 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
 
   useEffect(() => {
     // Sync with URL query param if present
-    const urlTab = searchParams.get('tab') as 'events' | 'bazaars' | 'all';
-    if (urlTab && (urlTab === 'events' || urlTab === 'bazaars' || urlTab === 'all')) {
+    const urlTab = searchParams.get('tab') as 'events' | 'marketplaces' | 'all';
+    if (urlTab && (urlTab === 'events' || urlTab === 'marketplaces' || urlTab === 'all')) {
       setActiveTab(urlTab);
     }
   }, [searchParams]);
@@ -54,7 +63,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
     });
   }, []);
 
-  const handleTabChange = (tab: 'events' | 'bazaars' | 'all') => {
+  const handleTabChange = (tab: 'events' | 'marketplaces' | 'all') => {
     setActiveTab(tab);
     setSearchParams({ tab });
   };
@@ -110,11 +119,11 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white">
-            Cultural Festivals & Traditional Bazaars
+            Cultural Festivals & Marketplaces
           </h1>
 
           <p className="text-sm sm:text-base text-emerald-100/90 max-w-2xl mx-auto leading-relaxed">
-            Immerse yourself in Indiaâ€™s vibrant harvest celebrations, sacred rituals, authentic craft haats, and century-old spice bazaars.
+            Immerse yourself in India's vibrant harvest celebrations, sacred rituals, authentic craft haats, and century-old spice marketplaces.
           </p>
 
           {/* Unified Mode Switcher Tabs */}
@@ -145,15 +154,15 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
               </button>
 
               <button
-                onClick={() => handleTabChange('bazaars')}
+                onClick={() => handleTabChange('marketplaces')}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'bazaars'
+                  activeTab === 'marketplaces'
                     ? 'bg-saffron-500 text-forest-950 shadow-md'
                     : 'text-gray-200 hover:text-white hover:bg-white/10'
                 }`}
               >
                 <Store className="w-4 h-4" />
-                <span>Traditional Bazaars ({marketplaces.length})</span>
+                <span>Marketplaces & Craft Haats ({marketplaces.length})</span>
               </button>
             </div>
           </div>
@@ -184,7 +193,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
             <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 flex items-center gap-2">
               <SlidersHorizontal className="w-4 h-4 text-forest-600 dark:text-forest-400" />
               <span>
-                Showing {activeTab === 'events' ? filteredEvents.length : activeTab === 'bazaars' ? filteredMarketplaces.length : (filteredEvents.length + filteredMarketplaces.length)} cultural experiences
+                Showing {activeTab === 'events' ? filteredEvents.length : activeTab === 'marketplaces' ? filteredMarketplaces.length : (filteredEvents.length + filteredMarketplaces.length)} cultural experiences
               </span>
             </div>
           </div>
@@ -211,10 +220,10 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
             </div>
           )}
 
-          {(activeTab === 'bazaars' || activeTab === 'all') && (
+          {(activeTab === 'marketplaces' || activeTab === 'all') && (
             <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-gray-100 dark:border-gray-800">
               <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mr-2 flex items-center gap-1">
-                <ShoppingBag className="w-3 h-3 text-forest-600" /> Bazaar Specialties:
+                <ShoppingBag className="w-3 h-3 text-forest-600" /> Marketplace Specialties:
               </span>
               {marketTags.map((tag) => (
                 <button
@@ -233,7 +242,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
           )}
         </div>
 
-        {/* ========================================================================= */}
+                {/* ========================================================================= */}
         {/* SECTION 1: CULTURAL FESTIVALS & FAIRS */}
         {/* ========================================================================= */}
         {(activeTab === 'events' || activeTab === 'all') && (
@@ -267,73 +276,59 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 {filteredEvents.map((event) => (
                   <div
                     key={event.id}
-                    className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm hover:shadow-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5"
+                    onClick={() => handleOpenModal(event, 'event')}
+                    className="group cursor-pointer flex flex-col justify-between rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 hover:border-saffron-500/50 dark:hover:border-saffron-500/50 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-5 sm:p-6"
                   >
-                    {/* Image Header */}
-                    <div className="relative h-44 sm:h-48 overflow-hidden">
-                      <UnsplashImage src={event.image_url || FALLBACK_EVENT_IMAGE} fallbackSrc={FALLBACK_EVENT_IMAGE} alt={event.name} onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      
-                      {/* Category Pill */}
-                      <div className="absolute top-3 left-3">
-                        <span className="px-3 py-1 rounded-full bg-saffron-500 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                    <div className="space-y-3.5">
+                      {/* Category Pill & Dates */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="px-3 py-1 rounded-full bg-saffron-50 dark:bg-saffron-950/60 border border-saffron-200 dark:border-saffron-800/80 text-saffron-800 dark:text-saffron-300 text-[11px] font-bold uppercase tracking-wider">
                           {event.category}
                         </span>
+                        <div className="flex items-center text-xs font-bold text-forest-700 dark:text-forest-400 bg-forest-50 dark:bg-forest-950/40 px-2.5 py-1 rounded-full border border-forest-200 dark:border-forest-800/60">
+                          <Calendar className="w-3.5 h-3.5 mr-1" />
+                          <span>{event.date_start ? new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : 'Festival'}</span>
+                        </div>
                       </div>
 
-                      <div className="absolute bottom-3 left-4 right-4">
-                        <h3 className="text-xl font-bold font-display text-white">
+                      {/* Title & Location */}
+                      <div>
+                        <h3 className="text-xl font-bold font-display text-gray-900 dark:text-white group-hover:text-saffron-600 dark:group-hover:text-saffron-400 transition-colors">
                           {event.name}
                         </h3>
-                        <div className="flex items-center text-xs text-gray-200 mt-0.5">
-                          <MapPin className="h-3.5 w-3.5 mr-1 text-saffron-400 shrink-0" />
+                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
+                          <MapPin className="h-3.5 w-3.5 mr-1 text-saffron-500 shrink-0" />
                           <span>{event.location}</span>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Card Body */}
-                    <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between space-y-4">
+                      {/* Description */}
                       <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">
                         {event.description}
                       </p>
 
-                      <div className="space-y-2 pt-3 border-t border-gray-100 dark:border-gray-800 text-xs">
-                        <div className="flex items-center justify-between text-gray-500 dark:text-gray-400">
-                          <span className="flex items-center gap-1 font-medium">
-                            <Clock className="w-3.5 h-3.5 text-forest-600" /> Dates:
-                          </span>
-                          <span className="font-bold text-saffron-600 dark:text-saffron-400">
-                            {new Date(event.date_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} â€“ {new Date(event.date_end).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
-                          </span>
+                      {/* Ritual Highlight */}
+                      {event.famous_for && event.famous_for.length > 0 && (
+                        <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/70 dark:border-gray-700/60 text-[11px] font-medium text-gray-700 dark:text-gray-300 truncate">
+                          🌟 {event.famous_for[0]}
                         </div>
-                      </div>
+                      )}
+                    </div>
 
-                      {/* Card Actions */}
-                      <div className="pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center gap-2">
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location + ' ' + event.name)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition text-xs font-bold flex items-center gap-1"
-                          title="View on Google Maps"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
-                          <span>Maps</span>
-                        </a>
+                    {/* Bottom Action */}
+                    <div className="pt-4 mt-5 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-saffron-700 dark:text-saffron-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                        <span>Festival Guide & Feasts</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
 
-                        <Link
-                          to={`/itinerary?tab=chat&prompt=${encodeURIComponent(`Tell me about the ${event.name} festival in ${event.location}. What are the major rituals, best viewpoints, local dress codes, and food specialties during this celebration?`)}`}
-                          className="flex-1 px-4 py-2.5 rounded-xl bg-forest-700 hover:bg-forest-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition"
-                        >
-                          <Sparkles className="w-3.5 h-3.5 text-saffron-400" />
-                          <span>AI Event Guide</span>
-                        </Link>
-                      </div>
+                      <span className="px-3 py-1.5 rounded-xl bg-saffron-600 text-white text-xs font-bold shadow-xs">
+                        Festival
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -343,9 +338,9 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
         )}
 
         {/* ========================================================================= */}
-        {/* SECTION 2: TRADITIONAL BAZAARS & MARKETS */}
+        {/* SECTION 2: TRADITIONAL MARKETPLACES & CRAFT HAATS */}
         {/* ========================================================================= */}
-        {(activeTab === 'bazaars' || activeTab === 'all') && (
+        {(activeTab === 'marketplaces' || activeTab === 'all') && (
           <section className="space-y-6 pt-6">
             <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3">
               <div className="flex items-center gap-2.5">
@@ -354,92 +349,82 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
                 </div>
                 <div>
                   <h2 className="text-xl sm:text-2xl font-extrabold font-display text-gray-900 dark:text-white">
-                    Traditional Bazaars & Craft Markets
+                    Traditional Marketplaces & Craft Markets
                   </h2>
                   <p className="text-xs text-gray-500 dark:text-gray-400">Authentic artisan handlooms, spices, jewelry, and antique treasures</p>
                 </div>
               </div>
               <span className="text-xs font-bold text-forest-700 dark:text-forest-300 px-3 py-1 rounded-full bg-forest-50 dark:bg-forest-950/60 border border-forest-200 dark:border-forest-800">
-                {filteredMarketplaces.length} Bazaars
+                {filteredMarketplaces.length} Marketplaces
               </span>
             </div>
 
             {filteredMarketplaces.length === 0 ? (
               <div className="p-10 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-center space-y-3">
                 <Store className="w-8 h-8 text-gray-400 mx-auto" />
-                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400">No traditional bazaars match your current filter or search criteria.</p>
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400">No traditional marketplaces match your current filter or search criteria.</p>
                 <button
                   onClick={() => { setSearchTerm(''); setSelectedMarketTag('All'); }}
                   className="px-4 py-2 rounded-xl bg-forest-700 text-white text-xs font-bold"
                 >
-                  Reset Bazaar Filters
+                  Reset Marketplace Filters
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 {filteredMarketplaces.map((market) => (
                   <div
                     key={market.id}
-                    className="group flex flex-col rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm hover:shadow-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5"
+                    onClick={() => handleOpenModal(market, 'marketplace')}
+                    className="group cursor-pointer flex flex-col justify-between rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 hover:border-forest-500/50 dark:hover:border-forest-500/50 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-5 sm:p-6"
                   >
-                    {/* Image Header */}
-                    <div className="relative h-44 sm:h-48 overflow-hidden">
-                      <UnsplashImage src={market.image || FALLBACK_MARKETPLACE_IMAGE} fallbackSrc={FALLBACK_MARKETPLACE_IMAGE} alt={market.name} onError={(e) => handleImageError(e, FALLBACK_MARKETPLACE_IMAGE)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      
-                      {/* Tags */}
-                      <div className="absolute bottom-3 left-4 right-4 flex flex-wrap gap-1.5">
+                    <div className="space-y-3.5">
+                      {/* Tags Bar */}
+                      <div className="flex flex-wrap items-center gap-1.5">
                         {market.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/20"
+                            className="px-2.5 py-0.5 rounded-full bg-forest-50 dark:bg-forest-950/60 border border-forest-200 dark:border-forest-800/80 text-forest-800 dark:text-forest-300 text-[10px] font-bold uppercase tracking-wider"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      <div className="absolute top-3 left-4">
-                        <h3 className="text-xl font-bold font-display text-white drop-shadow-md">
+                      {/* Title & Location */}
+                      <div>
+                        <h3 className="text-xl font-bold font-display text-gray-900 dark:text-white group-hover:text-forest-700 dark:group-hover:text-forest-400 transition-colors">
                           {market.name}
                         </h3>
-                      </div>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between space-y-4">
-                      <div>
-                        <div className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
                           <MapPin className="h-3.5 w-3.5 mr-1 text-forest-600 dark:text-forest-400 shrink-0" />
                           <span>{market.location}</span>
                         </div>
-
-                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">
-                          {market.description}
-                        </p>
                       </div>
 
-                      {/* Card Actions */}
-                      <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center gap-2">
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(market.location + ' ' + market.name)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition text-xs font-bold flex items-center gap-1"
-                          title="View on Google Maps"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
-                          <span>Maps</span>
-                        </a>
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">
+                        {market.description}
+                      </p>
 
-                        <Link
-                          to={`/itinerary?tab=chat&prompt=${encodeURIComponent(`What are the best items to shop for at ${market.name} in ${market.location}? Give me bargaining tips, typical price ranges, and nearby authentic eateries.`)}`}
-                          className="flex-1 px-4 py-2.5 rounded-xl bg-forest-700 hover:bg-forest-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition"
-                        >
-                          <Sparkles className="w-3.5 h-3.5 text-saffron-400" />
-                          <span>Bazaar Guide</span>
-                        </Link>
-                      </div>
+                      {/* Famous Items Preview */}
+                      {market.famous_items && market.famous_items.length > 0 && (
+                        <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/70 dark:border-gray-700/60 text-[11px] font-medium text-gray-700 dark:text-gray-300 truncate">
+                          🛍️ {market.famous_items[0]}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bottom Action */}
+                    <div className="pt-4 mt-5 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-forest-700 dark:text-forest-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                        <span>Shopping Guide & Stalls</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+
+                      <span className="px-3 py-1.5 rounded-xl bg-forest-700 text-white text-xs font-bold shadow-xs">
+                        Marketplace
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -449,6 +434,14 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
         )}
 
       </div>
+
+      {/* Floating Event / Marketplace Detail Modal */}
+      <DetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={modalType}
+        item={modalItem}
+      />
     </div>
   );
 }

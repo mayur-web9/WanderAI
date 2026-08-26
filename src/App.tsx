@@ -5,7 +5,6 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
 import CultureEvents from './pages/CultureEvents';
 import Feedback from './pages/Feedback';
 import NotFound from './pages/NotFound';
@@ -23,7 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Navigate to="/" replace />} />
           <Route path="/itinerary" element={<Ai />} />
           <Route path="/ai" element={<Navigate to="/itinerary?tab=chat" replace />} />
           <Route path="/chat" element={<Navigate to="/itinerary?tab=chat" replace />} />
@@ -32,7 +31,7 @@ function App() {
           <Route path="/marketplaces" element={<CultureEvents defaultTab="bazaars" />} />
           <Route path="/Marketplaces" element={<CultureEvents defaultTab="bazaars" />} />
           <Route path="/culture" element={<CultureEvents defaultTab="all" />} />
-          <Route path="/bazaars" element={<CultureEvents defaultTab="bazaars" />} />
+          <Route path="/markets" element={<CultureEvents defaultTab="bazaars" />} />
           <Route path="/events" element={<CultureEvents defaultTab="events" />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="*" element={<NotFound />} />

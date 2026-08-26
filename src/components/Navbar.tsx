@@ -43,7 +43,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Compass },
     { name: 'AI Itinerary', path: '/itinerary', icon: Sparkles, badge: 'AI' },
-    { name: 'Events & Bazaars', path: '/events', icon: Calendar, badge: 'Culture' },
+    { name: 'Festivals & Marketplaces', path: '/events', icon: Calendar, badge: 'Culture' },
     { name: 'Feedback', path: '/feedback', icon: MessageSquare },
   ];
 
@@ -173,14 +173,7 @@ const Navbar = () => {
                     >
                       Register Free
                     </Link>
-                    <div className="border-t border-gray-100 dark:border-gray-800 my-1" />
-                    <Link
-                      to="/login?mode=admin"
-                      className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-saffron-600 dark:text-saffron-400 hover:bg-saffron-50 dark:hover:bg-gray-800"
-                    >
-                      <LayoutDashboard className="w-3.5 h-3.5" />
-                      Admin Portal
-                    </Link>
+                    
                   </div>
                 )}
               </div>
@@ -203,15 +196,7 @@ const Navbar = () => {
                       <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
                     </div>
 
-                    {user.role === 'admin' && (
-                      <Link
-                        to="/dashboard"
-                        className="flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-forest-50 dark:hover:bg-gray-800"
-                      >
-                        <LayoutDashboard className="w-4 h-4 text-forest-600" />
-                        Admin Dashboard
-                      </Link>
-                    )}
+                    
 
                     <Link
                       to="/itinerary"
