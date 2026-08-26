@@ -49,6 +49,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
 
   return (
+    <>
     <nav 
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled 
@@ -224,7 +225,8 @@ const Navbar = () => {
         </div>
       </div>
 
-            {/* Mobile Bottom Navigation Bar */}
+            </nav>
+{/* Mobile Bottom Navigation Bar */}
       <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/95 dark:bg-obsidian-950/95 backdrop-blur-xl border-t border-gray-200/80 dark:border-gray-800 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] safe-area-pb">
         <div className="flex items-center justify-around h-16 px-2">
           {navLinks.map((link) => {
@@ -254,7 +256,8 @@ const Navbar = () => {
           })}
         </div>
       </div>
-    </nav>
+    
+    </>
   );
 };
 
