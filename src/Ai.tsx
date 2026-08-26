@@ -1712,6 +1712,16 @@ Format with:
         </div>
       )}
 
+      
+      {/* ========================================================================= */}
+      {/* TAB 5: FESTIVALS & MARKETPLACES */}
+      {/* ========================================================================= */}
+      {activeTab === 'events' && (
+        <div className="flex-1 w-full h-full pb-20 md:pb-0 overflow-y-auto">
+          <CultureEvents defaultTab="all" />
+        </div>
+      )}
+
       {/* Floating Destination Details Modal */}
       <DetailModal
         isOpen={isModalOpen}
