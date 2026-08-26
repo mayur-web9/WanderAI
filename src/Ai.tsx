@@ -749,16 +749,7 @@ Format with:
               <span>Surprise</span>
             </button>
 
-            <button
-              onClick={() => setActiveTab('events')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${activeTab === 'events'
-                ? 'bg-white dark:bg-gray-900 text-forest-800 dark:text-forest-300 shadow-xs'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                }`}
-            >
-              <Calendar className="w-3.5 h-3.5 text-blue-500" />
-              <span>Festivals & Markets</span>
-            </button>
+
           </div>
 
           {/* Mode Switcher Tabs */}
@@ -804,7 +795,7 @@ Format with:
                 }`}
             >
               <Calendar className="w-3.5 h-3.5 text-blue-500" />
-              <span>Festivals</span>
+              <span>Festivals & Marketplaces</span>
             </button>
 
             <button
