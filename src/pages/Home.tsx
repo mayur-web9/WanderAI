@@ -27,7 +27,7 @@ import {
   ChefHat,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { mockDestinations, mockEvents, mockReviews } from '../utils/mockData';
+import { mockDestinations, mockEvents } from '../utils/mockData';
 import { Destination, Event as AppEvent } from '../types';
 import { QUICK_PROMPTS } from '../utils/aiData';
 import { DetailModal, DetailModalType } from '../components/DetailModal';
@@ -920,59 +920,6 @@ const Home = () => {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 8. TRAVELER TESTIMONIALS SECTION */}
-      {/* ========================================================================= */}
-      <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-forest-400">
-            Community Experiences
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-gray-900 dark:text-white mt-1">
-            What Travelers Are Saying
-          </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            Authentic stories from explorers who journeyed through India with WanderAI assistance.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {mockReviews.slice(0, 3).map((review) => (
-            <div
-              key={review.id}
-              className="bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-6 border border-gray-200/80 dark:border-gray-800 shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-saffron-500 text-saffron-500" />
-                  ))}
-                </div>
-
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed italic mb-6">
-                  "{review.comment}"
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-forest-600 to-saffron-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-                  {review.user_name.charAt(0)}
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-gray-900 dark:text-white">
-                    {review.user_name}
-                  </div>
-                  <div className="text-[11px] text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    {review.location}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
