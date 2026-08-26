@@ -122,6 +122,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/about" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
+                  About WanderAI
+                </Link>
+              </li>
+              <li>
                 <Link to="/feedback" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
                   Community Feedback
                 </Link>

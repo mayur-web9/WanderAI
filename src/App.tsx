@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import CultureEvents from './pages/CultureEvents';
 import Feedback from './pages/Feedback';
+import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Ai from './Ai';
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/markets" element={<CultureEvents defaultTab="bazaars" />} />
           <Route path="/events" element={<CultureEvents defaultTab="events" />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
