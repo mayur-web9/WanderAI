@@ -59,64 +59,106 @@ interface PlaygroundCircuit {
 
 const PLAYGROUND_CIRCUITS: PlaygroundCircuit[] = [
   {
-    id: 'kerala-backwaters',
-    name: 'Kerala Backwaters & Tea Hills',
-    region: 'South India',
-    days: 4,
-    vibe: 'nature',
-    highlights: ['Alleppey Houseboat Cruise', 'Munnar Organic Tea Estates', 'Kathakali Cultural Night', 'Varkala Cliff Sunset'],
-    estimatedBudget: '₹14,000 - ₹22,000 / person',
-    prompt: 'Plan a detailed 4-day nature and relaxation trip to Kerala including Alleppey houseboat and Munnar tea hills with local seafood suggestions.'
+    "id": "sahyadri-forts",
+    "name": "Sahyadri Maratha Forts & Heritage",
+    "region": "Maharashtra",
+    "days": 4,
+    "vibe": "heritage",
+    "highlights": [
+      "Raigad Capital of Swarajya",
+      "Rajgad King of Forts",
+      "Sinhagad Kondhana Ridge",
+      "Authentic Pune Misal & Pithla Bhakri"
+    ],
+    "estimatedBudget": "₹7,000 - ₹12,000 / person",
+    "prompt": "Plan a 4-day heritage and trekking circuit for the iconic Maratha forts of Maharashtra (Raigad, Rajgad, Sinhagad) starting from Pune with trekking routes and local stay options."
   },
   {
-    id: 'rajasthan-royal',
-    name: 'Golden Triangle & Royal Palaces',
-    region: 'North India',
-    days: 5,
-    vibe: 'heritage',
-    highlights: ['Sunrise at Taj Mahal Agra', 'Amer Fort & Hawa Mahal Jaipur', 'Chokhi Dhani Heritage Village', 'Johari Gems & Jewelry'],
-    estimatedBudget: '₹18,000 - ₹28,000 / person',
-    prompt: 'Create a 5-day heritage trip covering Delhi, Agra (Taj Mahal), and Jaipur with exact visiting hours, entry tips, and traditional Rajasthani food.'
+    "id": "konkan-coastal",
+    "name": "Konkan Coast & Marine Fortress",
+    "region": "Maharashtra",
+    "days": 4,
+    "vibe": "nature",
+    "highlights": [
+      "Murud Janjira Sea Fortress",
+      "Alibaug Coconut Groves & Kolaba Fort",
+      "Tarkarli Scuba & Coral Reefs",
+      "Malvani Seafood & Sol Kadhi"
+    ],
+    "estimatedBudget": "₹10,000 - ₹16,000 / person",
+    "prompt": "Design a 4-day coastal road trip along the Konkan belt of Maharashtra with Murud Janjira island fort, Alibaug, water sports, and Malvani food recommendations."
   },
   {
-    id: 'varanasi-spiritual',
-    name: 'Varanasi Spiritual Ghats & Sarnath',
-    region: 'Central India',
-    days: 3,
-    vibe: 'spiritual',
-    highlights: ['Dashashwamedh Ghat Evening Ganga Aarti', 'Subah-e-Banaras Sunrise Boat Ride', 'Kashi Vishwanath Corridor', 'Ancient Deer Park Sarnath'],
-    estimatedBudget: '₹7,500 - ₹12,000 / person',
-    prompt: 'Draft a 3-day spiritual immersion itinerary for Varanasi with boat timings, Ganga Aarti viewing tips, temple dress codes, and famous Banarasi street food.'
+    "id": "ajanta-ellora-lonar",
+    "name": "Ajanta, Ellora & Lonar Crater",
+    "region": "Maharashtra",
+    "days": 3,
+    "vibe": "spiritual",
+    "highlights": [
+      "UNESCO Ajanta Fresco Caves",
+      "Ellora Monolithic Kailasa Temple",
+      "Lonar 50,000-year Meteorite Lake",
+      "Daulatabad Hill Citadel"
+    ],
+    "estimatedBudget": "₹8,500 - ₹14,000 / person",
+    "prompt": "Draft a 3-day cultural and geological tour for Aurangabad covering Ajanta Caves, Ellora Kailasa Temple, and Lonar Meteor Crater with entry fees and local guides."
   },
   {
-    id: 'ladakh-circuit',
-    name: 'Leh-Ladakh High Altitude Passes',
-    region: 'Himalayas',
-    days: 6,
-    vibe: 'adventure',
-    highlights: ['Khardung La Pass (5,359m)', 'Cobalt-Blue Pangong Tso Lake', 'Nubra Valley Sand Dunes & Bactrian Camels', 'Thiksey Monastery Chants'],
-    estimatedBudget: '₹26,000 - ₹38,000 / person',
-    prompt: 'Design a 6-day adventure circuit in Leh-Ladakh with proper 48-hour acclimatization plan, Pangong Tso homestays, and Inner Line Permit guidance.'
+    "id": "kerala-backwaters",
+    "name": "Kerala Backwaters & Tea Hills",
+    "region": "South India",
+    "days": 4,
+    "vibe": "nature",
+    "highlights": [
+      "Alleppey Houseboat Cruise",
+      "Munnar Organic Tea Estates",
+      "Kathakali Cultural Night",
+      "Varkala Cliff Sunset"
+    ],
+    "estimatedBudget": "₹14,000 - ₹22,000 / person",
+    "prompt": "Plan a detailed 4-day nature and relaxation trip to Kerala including Alleppey houseboat and Munnar tea hills with local seafood suggestions."
   },
   {
-    id: 'jharkhand-eco',
-    name: 'Jharkhand Waterfalls & Sal Forests',
-    region: 'East India',
-    days: 3,
-    vibe: 'nature',
-    highlights: ['Hundru & Jonha Cascades', 'Netarhat Queen of Chotanagpur Sunsets', 'Betla National Park Safari', 'Tribal Handloom & Dhuska Cuisine'],
-    estimatedBudget: '₹6,000 - ₹10,500 / person',
-    prompt: 'Give me a 3-day eco-tourism plan for Ranchi, Netarhat, and Hundru Falls in Jharkhand with tribal cuisine recommendations and scenic routes.'
+    "id": "rajasthan-royal",
+    "name": "Golden Triangle & Royal Palaces",
+    "region": "North India",
+    "days": 5,
+    "vibe": "heritage",
+    "highlights": [
+      "Sunrise at Taj Mahal Agra",
+      "Amer Fort & Hawa Mahal Jaipur",
+      "Chokhi Dhani Heritage Village",
+      "Johari Gems & Jewelry"
+    ],
+    "estimatedBudget": "₹18,000 - ₹28,000 / person",
+    "prompt": "Create a 5-day heritage trip covering Delhi, Agra (Taj Mahal), and Jaipur with exact visiting hours, entry tips, and traditional Rajasthani food."
+  },
+  {
+    "id": "varanasi-spiritual",
+    "name": "Varanasi Spiritual Ghats & Sarnath",
+    "region": "Central India",
+    "days": 3,
+    "vibe": "spiritual",
+    "highlights": [
+      "Dashashwamedh Ghat Evening Ganga Aarti",
+      "Subah-e-Banaras Sunrise Boat Ride",
+      "Kashi Vishwanath Corridor",
+      "Ancient Deer Park Sarnath"
+    ],
+    "estimatedBudget": "₹7,500 - ₹12,000 / person",
+    "prompt": "Draft a 3-day spiritual immersion itinerary for Varanasi with boat timings, Ganga Aarti viewing tips, temple dress codes, and famous Banarasi street food."
   }
 ];
 
 const RANDOM_PROMPTS = [
-  "Plan a 3-day weekend food and heritage trip to Jaipur under ₹10,000",
-  "Recommend offbeat tranquil hill stations in Himachal Pradesh for solo travelers",
-  "What is the best 5-day circuit for temples and beaches in Tamil Nadu?",
-  "How to travel by Vande Bharat train from Delhi to Varanasi with day-by-day plan?",
-  "Suggest budget-friendly homestays and trekking trails in Meghalaya",
-  "Plan a family vacation in Goa covering spice plantations and heritage churches"
+  "Plan a 3-day Sahyadri Forts & Trekking trip (Raigad, Rajgad, Sinhagad) from Pune under ₹8,000",
+  "Suggest a 4-day Konkan coastal road trip covering Murud Janjira sea fort, Alibaug & Malvan",
+  "Design a 3-day UNESCO heritage itinerary for Ajanta-Ellora caves, Daulatabad & Lonar Lake",
+  "Where to experience the best street food in Mumbai (Colaba, Girgaon Chowpatty, Mohammad Ali Road)?",
+  "Plan a 3-day weekend food and heritage trip to Jaipur including Amer Fort under ₹10,000",
+  "Recommend tranquil offbeat hill stations in Himachal Pradesh for solo travelers",
+  "What is the best 5-day circuit for temples and backwaters in Kerala?",
+  "How to travel from Delhi to Varanasi by Vande Bharat with complete spiritual day-by-day plan?"
 ];
 
 const Home = () => {

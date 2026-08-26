@@ -238,18 +238,71 @@ const PROMPT_CATEGORIES = [
 ];
 
 const CURATED_PROMPTS = [
-  { category: 'itinerary', text: 'Plan a 3-day Golden Triangle (Delhi, Agra, Jaipur) express circuit', icon: '🏛️' },
-  { category: 'itinerary', text: '5-day tranquil Kerala backwaters, tea gardens & houseboat trip', icon: '🚣' },
-  { category: 'food', text: 'Must-try street food walking tour in Varanasi & Old Delhi', icon: '🥘' },
-  { category: 'food', text: 'Best handicraft marketplaces and jewelry haats in Jaipur and Hyderabad', icon: '🛍️' },
-  { category: 'budget', text: 'How to travel across Himachal & Ladakh on a ₹15,000 budget', icon: '💰' },
-  { category: 'budget', text: 'Guide to luxury & Vande Bharat express train routes in India', icon: '🚆' },
-  { category: 'culture', text: 'Ancient rock-cut temple wonders of Ajanta, Ellora, and Hampi', icon: '🛕' },
-  { category: 'culture', text: 'Sacred river ghats, evening Ganga Aarti rituals, and dress etiquette', icon: '✨' },
+  {
+    "category": "itinerary",
+    "text": "3-day Sahyadri Forts expedition: Raigad Capital, Rajgad & Sinhagad from Pune",
+    "icon": "🏰"
+  },
+  {
+    "category": "itinerary",
+    "text": "4-day Konkan coastal road trip covering Murud Janjira, Alibaug & Tarkarli scuba",
+    "icon": "🏖️"
+  },
+  {
+    "category": "food",
+    "text": "Authentic Maharashtrian food trail in Mumbai & Pune (Misal, Vada Pav, Puran Poli & Malvani seafood)",
+    "icon": "🥘"
+  },
+  {
+    "category": "culture",
+    "text": "Explore ancient UNESCO rock-cut wonders: Ajanta, Ellora Kailasa Temple & Elephanta",
+    "icon": "🛕"
+  },
+  {
+    "category": "budget",
+    "text": "Budget-friendly weekend trek and camping guide in Lonavala, Rajmachi & Harishchandragad under ₹4,000",
+    "icon": "🎒"
+  },
+  {
+    "category": "itinerary",
+    "text": "Plan a 3-day Golden Triangle (Delhi, Agra, Jaipur) express circuit",
+    "icon": "🏛️"
+  },
+  {
+    "category": "itinerary",
+    "text": "5-day tranquil Kerala backwaters, Munnar tea hills & houseboat voyage",
+    "icon": "🚣"
+  },
+  {
+    "category": "food",
+    "text": "Street food and royal culinary walk in Varanasi, Lucknow & Old Delhi",
+    "icon": "🥘"
+  },
+  {
+    "category": "budget",
+    "text": "How to travel across Himachal & Ladakh on a ₹15,000 budget",
+    "icon": "💰"
+  },
+  {
+    "category": "culture",
+    "text": "Sacred river ghats, evening Ganga Aarti rituals, and dress etiquette in Kashi & Haridwar",
+    "icon": "✨"
+  }
 ];
 
 const POPULAR_STARTING_CITIES = [
-  'New Delhi', 'Mumbai', 'Jaipur', 'Varanasi', 'Kochi', 'Bengaluru', 'Ranchi', 'Kolkata', 'Goa', 'Amritsar', 'Udaipur'
+  "Mumbai",
+  "Pune",
+  "Nagpur",
+  "Nashik",
+  "Chhatrapati Sambhajinagar",
+  "Jaipur",
+  "New Delhi",
+  "Varanasi",
+  "Kochi",
+  "Bengaluru",
+  "Goa",
+  "Udaipur"
 ];
 
 const DEFAULT_GREETING_MESSAGE = {

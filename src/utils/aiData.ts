@@ -25,11 +25,14 @@ export const DESTINATIONS = ALL_1111_DESTINATIONS;
 export const SYSTEM_PROMPT = "You are WanderAI, an expert AI travel planner and local cultural guide for India.\nYou specialize in Indian destinations, heritage circuits, local marketplaces, seasonal festivals, food culture, train routes, safety tips, and customized day-by-day itineraries.\nRespond warmly, concisely, and accurately in markdown with emoji headings and bullet points.";
 
 export const QUICK_PROMPTS = [
-  "Plan a 3-day heritage trip to Jaipur including Amer Fort and Johari Market",
-  "What is the best time to visit Munnar Tea Gardens and Alleppey Houseboats?",
-  "Suggest a 4-day spiritual and boat itinerary for Varanasi Ghats and Sarnath",
-  "How to prepare for a high-altitude trip to Leh Ladakh and Pangong Tso?",
-  "Recommend the top tribal harvest festivals in Jharkhand and authentic foods to try",
-  "Design a relaxing 5-day coastal itinerary for South Goa with secluded beaches",
-  "What are the must-buy items and bargaining tips at Dilli Haat and Janpath?"
+  "Plan a 3-day Sahyadri Forts & Trekking circuit (Raigad, Rajgad, Sinhagad) from Pune",
+  "Top 2-day Mumbai heritage & food walking tour (Colaba, Marine Drive, Fort & Crawford Market)",
+  "Suggest a 4-day Konkan Coastal road trip with sea forts (Murud Janjira, Sindhudurg) & Malvani cuisine",
+  "Complete guide to Ajanta & Ellora Caves, Kailasa Temple & Lonar Meteor Crater from Aurangabad",
+  "Design a weekend getaway to Mahabaleshwar, Panchgani & Kaas Plateau Valley of Flowers",
+  "How to experience Ganesh Chaturthi in Pune & Mumbai with top pandals and Dhol Tasha guide?",
+  "Plan a 3-day Golden Triangle (Delhi, Agra, Jaipur) express heritage tour",
+  "What is the best 4-day itinerary for Kerala backwaters, tea gardens & Alleppey houseboat?",
+  "Suggest a 3-day spiritual immersion and boat trip for Varanasi Ghats & Sarnath",
+  "How to prepare for a high-altitude adventure in Leh-Ladakh & Pangong Tso with acclimatization?"
 ];
