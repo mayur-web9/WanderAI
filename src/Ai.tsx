@@ -327,6 +327,7 @@ export default function Ai() {
   // Destinations & Saved Itineraries State
   const [destinationsList, setDestinationsList] = useState<AiDestination[]>(DESTINATIONS);
   const [destSearch, setDestSearch] = useState('');
+  const [displayCount, setDisplayCount] = useState<number>(36);
   const [savedItinerariesList, setSavedItinerariesList] = useState<ItineraryRecord[]>([]);
   const [savedLoading, setSavedLoading] = useState(false);
 
@@ -357,14 +358,25 @@ export default function Ai() {
     }
     const tabParam = searchParams.get('tab');
     if (tabParam === 'saved') {
+      setActiveTab('saved');
       setSidebarTab('saved');
+    } else if (tabParam === 'destinations' || tabParam === 'explore') {
+      setActiveTab('explore');
+    } else if (tabParam === 'planner' || tabParam === 'plan') {
+      setActiveTab('planner');
+    } else if (tabParam === 'chat') {
+      setActiveTab('chat');
     }
   }, [searchParams]);
 
   // Fetch Destinations & Saved Itineraries
   useEffect(() => {
     getDbDestinations().then(data => {
-      if (data && data.length > 0) setDestinationsList(data);
+      if (data && data.length >= DESTINATIONS.length) {
+        setDestinationsList(data);
+      } else {
+        setDestinationsList(DESTINATIONS);
+      }
     });
 
     if (user?.id) {
