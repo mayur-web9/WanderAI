@@ -32,6 +32,7 @@ import { Destination, Event as AppEvent } from '../types';
 import { QUICK_PROMPTS } from '../utils/aiData';
 import { UnsplashImage } from '../components/UnsplashImage';
 import { getDbDestinations, getDbEvents } from '../services/supabaseService';
+import { DESTINATION_IMAGE_MAP } from '../utils/imageService';
 
 // Feature cards with Lucide icons (replaces corrupted emoji strings)
 const FEATURES = [
@@ -153,7 +154,7 @@ const Home = () => {
           short_description: d.desc || '',
           description: d.desc || '',
           entry_fee: 0,
-          images: [d.image || 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop'],
+          images: [(typeof d.image === 'string' && d.image.startsWith('http')) ? d.image : (DESTINATION_IMAGE_MAP[d.id] || DESTINATION_IMAGE_MAP[d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')] || 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop')],
           is_featured: true,
           created_at: new Date().toISOString(),
         }));
@@ -1012,6 +1013,7 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
 
