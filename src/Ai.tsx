@@ -773,7 +773,7 @@ Format with:
   const activeChat = userChats.find(c => c.id === activeChatId);
 
   return (
-    <div className={`w-full ${activeTab === 'chat' ? 'h-[calc(100vh-56px)] overflow-hidden' : 'min-h-[calc(100vh-56px)]'} bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 flex flex-col transition-colors duration-200`}>
+    <div className={`w-full ${activeTab === 'chat' ? 'h-[calc(100vh-120px)] md:h-[calc(100vh-56px)] overflow-hidden' : 'min-h-[calc(100vh-56px)]'} bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 flex flex-col transition-colors duration-200`}>
 
       {/* ========================================================================= */}
       {/* TOP COMPACT COMMAND BAR */}
@@ -885,7 +885,7 @@ Format with:
       {/* TAB 1: AI CHAT COMPANION WITH STATIC INTEGRATED SIDEBAR */}
       {/* ========================================================================= */}
       {activeTab === 'chat' && (
-        <div className="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 py-2 flex flex-col h-[calc(100vh-112px)] overflow-hidden min-h-0">
+        <div className="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 py-1.5 sm:py-2 flex flex-col h-[calc(100vh-168px)] md:h-[calc(100vh-112px)] overflow-hidden min-h-0">
 
           <div className="flex-1 flex gap-3 overflow-hidden h-full min-h-0">
 
@@ -1576,7 +1576,7 @@ Format with:
       {/* TAB 3: DESTINATIONS CATALOGUE EXPLORER */}
       {/* ========================================================================= */}
       {activeTab === 'destinations' && (
-        <div className="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-5 py-3 space-y-4">
+        <div className="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-5 py-3 space-y-4 pb-24 md:pb-8">
 
           {/* Header & Filter Toolbar */}
           <div className="bg-white dark:bg-gray-900 rounded-2xl p-3 sm:p-3.5 border border-gray-200/80 dark:border-gray-800 shadow-xs space-y-2.5">

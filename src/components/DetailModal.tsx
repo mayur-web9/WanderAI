@@ -104,7 +104,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
 
       {/* Floating Modal Window */}
       <div 
-        className="relative w-full max-w-3xl bg-white dark:bg-obsidian-900 border border-gray-200/90 dark:border-gray-800 rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[88vh] animate-in zoom-in-95 fade-in duration-200"
+        className="relative w-full max-w-3xl bg-white dark:bg-obsidian-900 border border-gray-200/90 dark:border-gray-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[86vh] sm:max-h-[90vh] animate-in zoom-in-95 fade-in duration-200"
       >
         {/* Modal Header Bar */}
         <div className="bg-gradient-to-br from-forest-950 via-forest-900 to-forest-800 text-white p-5 sm:p-7 relative overflow-hidden">
@@ -453,7 +453,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                   className="w-full py-3.5 px-4 rounded-2xl bg-forest-50 dark:bg-forest-950/40 border border-forest-300 dark:border-forest-700 text-forest-800 dark:text-forest-300 hover:bg-forest-100 dark:hover:bg-forest-900/60 transition flex items-center justify-center gap-2 font-bold text-sm"
                 >
                   <MapPin className="w-4 h-4 text-saffron-500" />
-                  <span>Open ${title} in Google Maps Navigation</span>
+                  <span>Open {title} in Google Maps Navigation</span>
                   <ExternalLink className="w-3.5 h-3.5 ml-1" />
                 </a>
               </div>

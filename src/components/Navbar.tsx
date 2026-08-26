@@ -230,7 +230,7 @@ const Navbar = () => {
       <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/95 dark:bg-obsidian-950/95 backdrop-blur-xl border-t border-gray-200/80 dark:border-gray-800 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] safe-area-pb">
         <div className="flex items-center justify-around h-16 px-2">
           {navLinks.map((link) => {
-            const isActive = location.pathname.toLowerCase() === link.path.toLowerCase() || (link.path === '/itinerary' && location.pathname.startsWith('/itinerary'));
+            const isActive = location.pathname.toLowerCase() === link.path.toLowerCase() || (link.path === '/itinerary' && (location.pathname.startsWith('/itinerary') || location.pathname === '/plan' || location.pathname === '/chat' || location.pathname === '/events' || location.pathname === '/marketplaces'));
             const Icon = link.icon;
             return (
               <Link
