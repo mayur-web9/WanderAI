@@ -1,13 +1,23 @@
 ﻿/**
  * Unsplash Image Service for WanderAI
- * - Free Unsplash API (50 req/hour on demo, 5000/hour on production)
- * - Results are cached in localStorage for 24 hours to avoid repeated calls
- * - Falls back to a curated static Unsplash URL if API is unavailable
+ * ─────────────────────────────────────────────────────────────────────────────
+ * AUTOMATIC IMAGE FETCHING — no manual mapping ever needed.
+ *
+ * How it works:
+ *   1. Pass any destination/event/marketplace object to buildQuery()
+ *   2. It constructs the best possible Unsplash search term from the item's
+ *      own metadata (name, location, category, type)
+ *   3. fetchUnsplashImage() searches Unsplash API and returns the top result
+ *   4. Results are cached in localStorage for 24 hours per unique query
+ *   5. Falls back gracefully to a static URL if API is unavailable
+ *
+ * Adding a new destination/event/marketplace? Zero extra config needed.
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 
 const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY as string;
 const BASE_URL = 'https://api.unsplash.com';
-const CACHE_PREFIX = 'wanderai_img_';
+const CACHE_PREFIX = 'wanderai_img_v2_';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 interface UnsplashPhoto {
@@ -22,22 +32,21 @@ interface CacheEntry {
   url: string;
   thumb: string;
   alt: string;
-  credit: { name: string; link: string };
   cachedAt: number;
 }
 
+// ─── Cache helpers ────────────────────────────────────────────────────────────
 function getCacheKey(query: string): string {
-  return CACHE_PREFIX + query.toLowerCase().replace(/\s+/g, '_');
+  return CACHE_PREFIX + query.toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 80);
 }
 
 function getFromCache(query: string): CacheEntry | null {
   try {
-    const key = getCacheKey(query);
-    const raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(getCacheKey(query));
     if (!raw) return null;
     const entry: CacheEntry = JSON.parse(raw);
     if (Date.now() - entry.cachedAt > CACHE_TTL_MS) {
-      localStorage.removeItem(key);
+      localStorage.removeItem(getCacheKey(query));
       return null;
     }
     return entry;
@@ -49,23 +58,19 @@ function getFromCache(query: string): CacheEntry | null {
 function setCache(query: string, entry: CacheEntry): void {
   try {
     localStorage.setItem(getCacheKey(query), JSON.stringify(entry));
-  } catch {
-    // localStorage full — ignore
-  }
+  } catch { /* localStorage full — ignore */ }
 }
 
+// ─── Core API fetch ───────────────────────────────────────────────────────────
 /**
- * Fetch a single highly-relevant photo from Unsplash for a given search query.
- * Results are cached 24h in localStorage.
+ * Fetch the single most relevant Unsplash photo for the given search query.
+ * Results are cached 24h. Returns null if no key or request fails.
  */
 export async function fetchUnsplashImage(query: string): Promise<CacheEntry | null> {
-  // Return cache immediately
   const cached = getFromCache(query);
   if (cached) return cached;
 
-  if (!ACCESS_KEY || ACCESS_KEY === 'YOUR_UNSPLASH_ACCESS_KEY') {
-    return null; // No key configured
-  }
+  if (!ACCESS_KEY || ACCESS_KEY === 'YOUR_UNSPLASH_ACCESS_KEY') return null;
 
   try {
     const params = new URLSearchParams({
@@ -87,7 +92,7 @@ export async function fetchUnsplashImage(query: string): Promise<CacheEntry | nu
     const photo: UnsplashPhoto = data?.results?.[0];
     if (!photo) return null;
 
-    // Trigger Unsplash download event (required by API guidelines)
+    // Required by Unsplash API guidelines
     fetch(`${BASE_URL}/photos/${photo.id}/download`, {
       headers: { Authorization: `Client-ID ${ACCESS_KEY}` },
     }).catch(() => {});
@@ -96,10 +101,6 @@ export async function fetchUnsplashImage(query: string): Promise<CacheEntry | nu
       url: photo.urls.regular + '&w=800&q=80',
       thumb: photo.urls.small,
       alt: photo.alt_description ?? query,
-      credit: {
-        name: photo.user.name,
-        link: photo.user.links.html + '?utm_source=wanderai&utm_medium=referral',
-      },
       cachedAt: Date.now(),
     };
 
@@ -110,59 +111,113 @@ export async function fetchUnsplashImage(query: string): Promise<CacheEntry | nu
   }
 }
 
-// ─── Curated search terms for every item in WanderAI ────────────────────────
-// Each is a precise English search phrase that gives maximum relevance on Unsplash
+// ─── AUTO QUERY BUILDERS ──────────────────────────────────────────────────────
+// These functions automatically generate the best Unsplash search query from
+// an item's own metadata. No lookup table needed — works for any new item.
 
-export const DESTINATION_QUERIES: Record<string, string> = {
-  'taj-mahal':           'Taj Mahal Agra India sunrise',
-  'varanasi-ghats':      'Varanasi Ganga ghats aarti India',
-  'kerala-backwaters':   'Kerala backwaters houseboat India',
-  'hampi-ruins':         'Hampi ruins stone chariot Karnataka India',
-  'leh-ladakh':          'Pangong Tso lake Ladakh mountains India',
-  'golden-temple':       'Golden Temple Amritsar Harmandir Sahib',
-  'munnar-tea-gardens':  'Munnar tea plantation Kerala rolling hills',
-  'mysore-palace':       'Mysore Palace illuminated Karnataka India',
-  'amer-fort':           'Amer Fort Jaipur Rajasthan hilltop',
-  'konark-sun-temple':   'Konark Sun Temple Odisha stone chariot',
-  'ranthambore':         'Bengal tiger wildlife Ranthambore India',
-  'victoria-memorial':   'Victoria Memorial Kolkata white marble',
-  'ajanta-ellora':       'Ellora Ajanta caves rock cut temple India',
-  'meenakshi-temple':    'Meenakshi Amman Temple Madurai gopuram',
-  'qutub-minar':         'Qutub Minar Delhi minaret India heritage',
-  'sundarbans':          'Sundarbans mangrove forest Bengal tiger delta',
-  'rishikesh-ganga':     'Rishikesh Ganga river bridge yoga ashram',
-  'cherrapunji-bridges': 'living root bridge Meghalaya Cherrapunji',
-  'jaisalmer-fort':      'Jaisalmer golden fort desert Rajasthan',
-  'kaziranga-park':      'Kaziranga one horned rhino Assam India',
-  'goa-coastal':         'Goa beach sunset palm fort coastal India',
-  'valley-of-flowers':   'Valley of Flowers Uttarakhand alpine meadow',
-  'jonha-falls':         'waterfall Jharkhand forest India cascade',
-  'betla-national-park': 'Betla national park elephant forest India',
-  'baidyanath-dham':     'Baidyanath Dham temple Deoghar Jharkhand',
-  'netarhat-hills':      'Netarhat sunrise hills Jharkhand India',
-  'ranchi-lake':         'Ranchi lake boating Jharkhand India',
+/**
+ * Category → Unsplash keyword mapping for Indian destinations.
+ * Helps narrow results to the right type of photo.
+ */
+const CATEGORY_KEYWORDS: Record<string, string> = {
+  historical: 'heritage monument India',
+  temple:     'temple India Hindu shrine',
+  wildlife:   'wildlife India national park',
+  park:       'nature India landscape',
+  beach:      'beach India coastal',
+  hill:       'hill station India mountains',
+  spiritual:  'spiritual India pilgrimage',
+  fort:       'fort palace Rajasthan India',
+  waterfall:  'waterfall India nature',
+  lake:       'lake India scenic',
+  forest:     'forest India jungle',
+  museum:     'museum India architecture',
 };
 
-export const EVENT_QUERIES: Record<string, string> = {
-  'Sarhul Festival':    'Sarhul tribal festival flowers India spring',
-  'Karma Festival':     'tribal harvest festival India dance ritual',
-  'Tusu Parab':         'Makar Sankranti India festival lamps celebration',
-  'Chhath Puja':        'Chhath puja river sunrise devotees India',
-  'Rohini Festival':    'Indian agriculture sowing festival rural fields',
-  'Bandna Festival':    'decorated cattle festival India Santhal rural',
-  'Mysore Dussehra':    'Mysore Dussehra elephant procession palace Karnataka',
-  'Pushkar Camel Fair': 'Pushkar camel fair Rajasthan desert India',
-  'Hornbill Festival':  'Hornbill festival Nagaland tribal dance Northeast India',
+const EVENT_CATEGORY_KEYWORDS: Record<string, string> = {
+  festival:   'Indian festival celebration colorful',
+  cultural:   'Indian cultural event dance tradition',
+  fair:       'India fair mela carnival',
+  religious:  'India religious ceremony ritual',
+  tribal:     'India tribal indigenous festival',
 };
 
-export const MARKETPLACE_QUERIES: Record<string, string> = {
-  'Dilli Haat, Delhi':                    'Dilli Haat Delhi handicraft market India',
-  'Colaba Causeway, Mumbai':              'Colaba Causeway Mumbai street market India',
-  'Johari Bazaar, Jaipur':               'Johari Bazaar Jaipur jewelry gemstone market',
-  'Anjuna Flea Market, Goa':             'Anjuna flea market Goa beach bohemian',
-  'Laad Bazaar, Hyderabad':              'Laad Bazaar Hyderabad bangles colorful Charminar',
-  'Floating Vegetable Market, Srinagar': 'Dal Lake shikara boat vegetable market Srinagar',
-  'Police Bazar, Shillong':              'Shillong market Meghalaya Northeast India shopping',
-  'Janpath Market, Delhi':               'Janpath market Delhi ethnic jewelry handicraft',
-  'Pondy Bazaar, Chennai':               'Pondy Bazaar Chennai T Nagar shopping saree',
-};
+/**
+ * Automatically build the best Unsplash search query for a DESTINATION.
+ * Works for any destination — new ones included — with zero configuration.
+ */
+export function buildDestinationQuery(destination: {
+  name: string;
+  district?: string;
+  category?: string;
+}): string {
+  const parts: string[] = [destination.name];
+
+  if (destination.district && !destination.name.toLowerCase().includes(destination.district.toLowerCase())) {
+    parts.push(destination.district);
+  }
+
+  const catKw = destination.category
+    ? CATEGORY_KEYWORDS[destination.category.toLowerCase()] ?? 'India travel'
+    : 'India tourism';
+
+  parts.push(catKw);
+
+  return parts.join(' ');
+}
+
+/**
+ * Automatically build the best Unsplash search query for an EVENT/FESTIVAL.
+ * Works for any event — new ones included — with zero configuration.
+ */
+export function buildEventQuery(event: {
+  name: string;
+  location?: string;
+  category?: string;
+}): string {
+  const parts: string[] = [event.name];
+
+  const locKw = event.location
+    ? event.location.split(',')[0].trim()
+    : 'India';
+
+  if (!event.name.toLowerCase().includes(locKw.toLowerCase())) {
+    parts.push(locKw);
+  }
+
+  const catKw = event.category
+    ? EVENT_CATEGORY_KEYWORDS[event.category.toLowerCase()] ?? 'India festival'
+    : 'India festival celebration';
+
+  parts.push(catKw);
+
+  return parts.join(' ');
+}
+
+/**
+ * Automatically build the best Unsplash search query for a MARKETPLACE/BAZAAR.
+ * Works for any marketplace — new ones included — with zero configuration.
+ */
+export function buildMarketplaceQuery(marketplace: {
+  name: string;
+  location?: string;
+  tags?: string[];
+}): string {
+  // Extract city from "Market Name, City" format
+  const nameParts = marketplace.name.split(',');
+  const marketName = nameParts[0].trim();
+  const city = nameParts[1]?.trim() ?? marketplace.location?.split(',')[0]?.trim() ?? '';
+
+  const parts: string[] = [marketName];
+  if (city && !marketName.toLowerCase().includes(city.toLowerCase())) {
+    parts.push(city);
+  }
+
+  // Add most relevant tag as keyword
+  const tag = marketplace.tags?.[0];
+  if (tag) parts.push(tag);
+
+  parts.push('market bazaar India shopping');
+
+  return parts.join(' ');
+}

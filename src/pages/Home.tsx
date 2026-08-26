@@ -31,7 +31,7 @@ import { mockDestinations, mockEvents, mockReviews } from '../utils/mockData';
 import { Destination, Event as AppEvent } from '../types';
 import { QUICK_PROMPTS } from '../utils/aiData';
 import { UnsplashImage } from '../components/UnsplashImage';
-import { DESTINATION_QUERIES, EVENT_QUERIES } from '../services/unsplashService';
+import { buildDestinationQuery, buildEventQuery } from '../services/unsplashService';
 import { getDbDestinations, getDbEvents } from '../services/supabaseService';
 
 // Feature cards with Lucide icons (replaces corrupted emoji strings)
@@ -701,7 +701,7 @@ const Home = () => {
             >
               {/* Image Container */}
               <div className="relative h-48 sm:h-52 overflow-hidden">
-                <UnsplashImage query={DESTINATION_QUERIES[destination.id] ?? destination.name + ' India'} staticSrc={destination.images?.[0] || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'} alt={destination.name} onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <UnsplashImage query={buildDestinationQuery(destination)} staticSrc={destination.images?.[0] || 'https://images.unsplash.com/photo-1548013146-59c1e67e02a4?w=800&q=80&auto=format&fit=crop'} alt={destination.name} onError={(e) => handleImageError(e, FALLBACK_DESTINATION_IMAGE)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 
                 {/* Category Pill */}
@@ -874,7 +874,7 @@ const Home = () => {
                 {/* Event Image */}
                 <div className="relative h-48 overflow-hidden">
                   <UnsplashImage
-                    query={EVENT_QUERIES[event.name] ?? event.name + ' India festival'}
+                    query={buildEventQuery(event)}
                     staticSrc={event.image_url || 'https://images.unsplash.com/photo-1533104858776-4a00e0f44e63?w=800&q=80&auto=format&fit=crop'}
                     alt={event.name}
                     onError={(e) => handleImageError(e, FALLBACK_EVENT_IMAGE)}
@@ -1019,6 +1019,7 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
 
