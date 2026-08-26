@@ -116,6 +116,83 @@ async function callGemini(messages: { role: string; content: string }[], systemP
   throw new Error("AI server is currently busy. Please try again.");
 }
 
+// OpenRouter API Caller (Hybrid Fallback Engine)
+async function callOpenRouter(messages: { role: string; content: string }[], systemPrompt: string): Promise<string> {
+  const openRouterKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
+  if (!openRouterKey) throw new Error("OpenRouter key not configured");
+
+  const openRouterModels = [
+    'openrouter/auto',
+    'deepseek/deepseek-chat',
+    'meta-llama/llama-3.3-70b-instruct',
+    'google/gemini-2.5-flash'
+  ];
+
+  const formattedMessages = [
+    { role: 'system', content: systemPrompt },
+    ...messages.map(m => ({
+      role: m.role === 'assistant' ? 'assistant' : 'user',
+      content: m.content
+    }))
+  ];
+
+  for (const model of openRouterModels) {
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${openRouterKey}`,
+          'HTTP-Referer': typeof window !== 'undefined' ? window.location.origin : 'https://wanderrai.netlify.app',
+          'X-Title': 'WanderAI Travel Platform'
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: formattedMessages,
+          max_tokens: 1600,
+          temperature: 0.7
+        })
+      });
+
+      const data = await res.json();
+      const text = data.choices?.[0]?.message?.content;
+      if (text && typeof text === 'string' && text.trim().length > 0) {
+        return text.trim();
+      }
+    } catch {
+      // Try next OpenRouter model
+    }
+  }
+
+  throw new Error("OpenRouter fallback unavailable");
+}
+
+// Unified Hybrid AI Engine (Primary Multi-Key Pool -> Automatic OpenRouter Fallback)
+async function callAiEngine(messages: { role: string; content: string }[], systemPrompt: string): Promise<string> {
+  // 1. Try Primary Multi-Key Pool
+  try {
+    const primaryReply = await callGemini(messages, systemPrompt);
+    if (primaryReply && primaryReply.trim().length > 0) {
+      return primaryReply;
+    }
+  } catch (primaryErr) {
+    console.warn("Primary engine busy, initiating OpenRouter fallback...", primaryErr);
+  }
+
+  // 2. Seamless Fallback to OpenRouter
+  try {
+    const fallbackReply = await callOpenRouter(messages, systemPrompt);
+    if (fallbackReply && fallbackReply.trim().length > 0) {
+      return fallbackReply;
+    }
+  } catch (fallbackErr) {
+    console.warn("OpenRouter fallback error:", fallbackErr);
+  }
+
+  throw new Error("AI server is currently busy. Please try again.");
+}
+
+
 // Intelligent content-based chat title generator
 function generateChatTitle(query: string): string {
   let clean = query.trim()
@@ -612,7 +689,7 @@ export default function Ai() {
         }
       }
 
-      const reply = await callGemini(newMsgs, SYSTEM_PROMPT);
+      const reply = await callAiEngine(newMsgs, SYSTEM_PROMPT);
       setMessages([...newMsgs, { role: 'assistant' as const, content: reply }]);
 
       if (user?.id && currentChatId) {
@@ -728,7 +805,7 @@ Format with:
 4. Essential local transport tips and cultural etiquette.`;
 
     try {
-      const reply = await callGemini([{ role: 'user', content: prompt }], SYSTEM_PROMPT);
+      const reply = await callAiEngine([{ role: 'user', content: prompt }], SYSTEM_PROMPT);
       setItinerary(reply);
     } catch {
       setItinerary(getRandomPlannerServerError());
