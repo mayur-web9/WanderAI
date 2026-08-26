@@ -104,7 +104,7 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
   }, [marketplaces, selectedMarketTag, searchTerm]);
 
   return (
-    <div className="w-full min-h-screen bg-sand-50 dark:bg-obsidian-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div className="w-full h-full text-gray-900 dark:text-gray-100 transition-colors duration-200">
       
       {/* Header Banner */}
       <section className="relative pt-6 pb-8 sm:pt-8 sm:pb-10 bg-gradient-to-b from-forest-950 via-forest-900 to-forest-800 text-white overflow-hidden">

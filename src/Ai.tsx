@@ -288,7 +288,7 @@ export default function Ai() {
   };
 
   // Tab state: 'chat' | 'plan' | 'destinations' | 'saved'
-  const [activeTab, setActiveTab] = useState<'chat' | 'plan' | 'destinations' | 'saved'>(() => {
+  const [activeTab, setActiveTab] = useState<'chat' | 'plan' | 'destinations' | 'saved' | 'events'>(() => {
     const tab = searchParams.get('tab');
     if (tab === 'plan' || tab === 'planner') return 'plan';
     if (tab === 'destinations') return 'destinations';
@@ -366,6 +366,8 @@ export default function Ai() {
       setActiveTab('plan');
     } else if (tabParam === 'chat') {
       setActiveTab('chat');
+    } else if (tabParam === 'events' || tabParam === 'culture' || tabParam === 'marketplaces') {
+      setActiveTab('events');
     }
   }, [searchParams]);
 
@@ -745,6 +747,17 @@ Format with:
             >
               <Dices className="w-3 h-3" />
               <span>Surprise</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('events')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${activeTab === 'events'
+                ? 'bg-white dark:bg-gray-900 text-forest-800 dark:text-forest-300 shadow-xs'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                }`}
+            >
+              <Calendar className="w-3.5 h-3.5 text-blue-500" />
+              <span>Festivals & Markets</span>
             </button>
           </div>
 

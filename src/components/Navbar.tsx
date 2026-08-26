@@ -43,7 +43,6 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Compass },
     { name: 'AI Itinerary', path: '/itinerary', icon: Sparkles, badge: 'AI' },
-    { name: 'Festivals & Marketplaces', path: '/events', icon: Calendar, badge: 'Culture' },
     { name: 'Feedback', path: '/feedback', icon: MessageSquare },
   ];
 
@@ -220,78 +219,39 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`md:hidden p-2 rounded-xl ${
-                !scrolled && isHome ? 'text-white hover:bg-white/10' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-              }`}
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      {isOpen && (
-        <div className="md:hidden border-t border-gray-200/80 dark:border-gray-800 bg-white/95 dark:bg-obsidian-950/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top duration-200 shadow-2xl">
+            {/* Mobile Bottom Navigation Bar */}
+      <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/95 dark:bg-obsidian-950/95 backdrop-blur-xl border-t border-gray-200/80 dark:border-gray-800 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] safe-area-pb">
+        <div className="flex items-center justify-around h-16 px-2">
           {navLinks.map((link) => {
-            const isActive = location.pathname.toLowerCase() === link.path.toLowerCase();
+            const isActive = location.pathname.toLowerCase() === link.path.toLowerCase() || (link.path === '/itinerary' && location.pathname.startsWith('/itinerary'));
             const Icon = link.icon;
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-bold transition-all ${
+                className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 ${
                   isActive
-                    ? 'bg-forest-600 text-white shadow-md'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/80'
+                    ? 'text-forest-600 dark:text-forest-400'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <Icon className="w-4 h-4" />
-                  <span>{link.name}</span>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${isActive ? 'bg-forest-100 dark:bg-forest-900/50' : 'bg-transparent'}`}>
+                  <Icon className={`w-5 h-5 transition-transform duration-300 ${isActive ? 'scale-110' : 'scale-100'}`} />
                 </div>
+                <span className={`text-[10px] font-bold transition-all duration-300 ${isActive ? 'opacity-100' : 'opacity-70'}`}>
+                  {link.name === 'AI Itinerary' ? 'Itinerary' : link.name}
+                </span>
                 {link.badge && (
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-saffron-500 text-white">
-                    {link.badge}
-                  </span>
+                  <span className="absolute top-1 right-2 w-2 h-2 rounded-full bg-saffron-500 border-2 border-white dark:border-obsidian-950" />
                 )}
               </Link>
             );
           })}
-
-          <div className="pt-3 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-2">
-            {!user ? (
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  to="/login"
-                  className="py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-center font-bold text-xs"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="py-2.5 rounded-xl bg-forest-600 text-white text-center font-bold text-xs"
-                >
-                  Register
-                </Link>
-              </div>
-            ) : (
-              <button
-                onClick={() => signOut()}
-                className="w-full py-2.5 rounded-xl bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 font-bold text-xs flex items-center justify-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out ({user.full_name || user.email})
-              </button>
-            )}
-          </div>
         </div>
-      )}
+      </div>
     </nav>
-  );
-};
-
-export default Navbar;
