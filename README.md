@@ -1,4 +1,4 @@
-# 🌍 WanderAI — Intelligent Travel Guide & Itinerary Planner for Incredible India
+# 🌍 WanderAI — AI-Powered Travel Intelligence & Itinerary Engine
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-wanderrai.netlify.app-047857?style=for-the-badge&logo=netlify&logoColor=white)](https://wanderrai.netlify.app)
 [![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
@@ -7,79 +7,62 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
 
-> **Live Platform URL**: [https://wanderrai.netlify.app](https://wanderrai.netlify.app)  
-> **Lead Developer & Creator**: [Mayur Patil](mailto:mayur.patil.ac@gmail.com) (`mayur.patil.ac@gmail.com`)
+> **Live Deployment**: [https://wanderrai.netlify.app](https://wanderrai.netlify.app)  
+> **Lead Developer**: [Mayur Patil](mailto:mayur.patil.ac@gmail.com) (`mayur.patil.ac@gmail.com`)
 
 ---
 
-## 📖 Overview
+## ⚡ Technical Architecture & AI Features
 
-**WanderAI** (WanderAI Studio) is India's premier AI-powered intelligent travel companion and cultural exploration ecosystem. Crafted with a luxury Indian Emerald (`#0f3e2e`) & Saffron (`#f97316`) glassmorphic design system, WanderAI empowers solo travelers, backpackers, families, and global tourists to discover both iconic national monuments and untamed, hidden heritage sites across all 28 Indian states and Union Territories.
+### 1. 🤖 Conversational AI Travel Companion
+- **Real-Time Natural Language Processing**: Context-aware travel guide capable of generating dynamic multi-day itineraries, regional transit logistics, cultural etiquette advice, and localized culinary recommendations.
+- **Smart Title Generation Engine**: Analyzes first-turn prompt semantics and automatically derives concise, content-based session titles for persistent chat histories.
+- **Integrated Web Speech Synthesis**: Native client-side speech engine providing hands-free audio playback and voice narration for AI responses.
+- **Interactive Markdown Parser**: Custom inline tokenizer rendering rich structured schedules, bullet points, code blocks, bold callouts, and clean typographic hierarchies.
+- **1-Click Plan Archival & Clipboard Export**: Instant conversion of unstructured AI output into persistent database records and clipboard text.
 
-From the majestic Sahyadri mountain fortresses of Maharashtra and snowy Himalayan passes of Ladakh to sacred river ghats in Varanasi, serene Kerala backwaters, and vibrant tribal craft haats, WanderAI creates instant, highly realistic, day-by-day itineraries complete with transit routes, budget breakdowns in INR (₹), authentic culinary recommendations, and living festival calendars.
+### 2. 🗺️ Multi-Parameter AI Trip Planner
+- **Algorithmic Itinerary Customization**: Generates highly realistic, structured travel schedules customized by:
+  - **Duration**: Flexible multi-day scheduling (1 to 14 days).
+  - **Travel Styles**: *Adventure, Cultural, Relaxation, Budget, Family, Luxury, Romantic, Offbeat*.
+  - **Budget Allocation**: Automated tiering in INR (₹) including food, entry fees, and local transit.
+  - **Pacing**: *Fast-Paced, Moderate, Relaxed*.
+- **Structured Day Breakdowns**: Granular morning, afternoon, evening, and night logistics with integrated external navigation links.
 
----
+### 3. 🛡️ Multi-Model Pool & Dynamic Load Protection
+- **Multi-Key Load Balancing Pool**: Client-side load balancing distributing inference requests randomly across an active key pool.
+- **Multi-Model Fallback Hierarchy**: Sequential fallback mechanism automatically cycling through multiple models to guarantee high availability.
+- **Graceful Load Masking**: Automatic interception of network anomalies or service latency, dynamically rotating through realistic server status notifications without exposing internal quotas or raw error codes.
 
-## 📊 Platform Catalog at a Glance
+### 4. 🧭 Intelligent Dynamic Prompt Recommendation System
+- **Curated Prompt Matrix**: Categorized recommendation carousel filtering prompts across *Itineraries, Food & Markets, Budget & Transit, and Temples & Culture*.
+- **Randomized Query Generator ("Surprise Me")**: Algorithmic prompt selector providing diverse discovery triggers across regions and travel themes.
 
-| Catalog | Count | Highlights |
-| :--- | :---: | :--- |
-| **🏰 Explore Destinations** | **1,111** | Full pan-India directory with Maharashtra's top forts, UNESCO caves, hill stations, and spiritual marvels leading at the top. |
-| **🎪 Festivals & Cultural Fairs** | **111** | Living calendar with dates, sacred rituals, key highlights, and feast foods (*Ganesh Chaturthi, Pandharpur Wari, Durga Puja, Pushkar, Hornbill*). |
-| **🛍️ Historic Marketplaces & Haats** | **111** | Iconic craft bazaars, jewelry lanes, spice alleys, and flea markets with opening hours, famous items, and bargaining tips. |
-| **🤖 AI Suggestions & Prompts** | **50%+ MH** | Tailored prompt suggestions, curated circuits, and starting cities highlighting Maharashtra's heritage alongside national circuits. |
+### 5. 📱 Reactive State & Mobile Viewport Engine
+- **Unified Workspace Switcher**: Seamless single-page tab switching (*Chat Companion, Trip Planner, Explore Catalog, Cultural Events, Saved Itineraries*).
+- **Responsive Stacking & Drawer Architecture**: Mobile slide-in workspace drawer with backdrop isolation and touch-friendly controls.
+- **Fixed Viewport Calculation**: Dynamic height adjustments (`h-[calc(100vh-...)]`) preventing virtual keyboard and bottom navigation clipping on mobile viewports.
 
----
-
-## ⚡ Key Features
-
-### 1. 🤖 WanderAI Conversational Travel Companion
-- **Real-Time Interactive Travel Assistant**: Instant customized itineraries, offbeat recommendations, and local travel tips.
-- **Smart Multi-Chat Session Management**: Create, switch, rename, and manage multiple trip discussions with automatic title generation.
-- **Voice Narration (Text-to-Speech)**: Integrated browser speech synthesis for hands-free audio itinerary playback.
-- **1-Click Copy & Save**: Instantly copy formatted markdown or store plans directly into your private tourist workspace.
-- **Dynamic AI Server Protection**: Graceful server busy and high-load status rotations with zero exposure of API quotas or internal limits.
-
-### 2. 🗺️ Smart AI Trip Planner
-- **Multi-Parameter Customization**: Configure duration (1 to 14 days), travel style (*Adventure, Cultural, Relaxation, Budget, Family, Luxury, Romantic, Offbeat*), budget tier, and pace.
-- **Detailed Day-by-Day Schedules**: Delivers Morning, Afternoon, Evening, and Night activity breakdowns with budget estimates in ₹.
-- **Direct Navigation**: Immediate Google Maps links for on-ground routing.
-
-### 3. 🏛️ Destination Explorer (1,111 Verified Places)
-- **Maharashtra Prioritization**: Features legendary Sahyadri forts (*Raigad, Sinhagad, Murud Janjira, Pratapgad, Rajgad, Shivneri*), UNESCO rock-cut caves (*Ajanta, Ellora, Elephanta*), hill stations (*Mahabaleshwar, Matheran, Lonavala, Kaas Plateau*), and spiritual landmarks (*Shirdi, Trimbakeshwar, Bhimashankar*) at the top.
-- **Pan-India Coverage**: Includes iconic national wonders (*Amer Fort, Taj Mahal, Varanasi Ghats, Munnar, Hampi, Pangong Tso, Qutub Minar, Golden Temple*).
-- **Fast Tag Filters**: Filter seamlessly by *Forts, Spiritual / Temples, Nature, Wildlife, Waterfalls, Hill Stations, Beaches, Caves, Tribal & Craft, Heritage, and Hidden Gems*.
-
-### 4. 🎭 Cultural Festivals & Living Heritage (111 Celebrations)
-- Detailed guides to India's harvest festivals, sacred temple gatherings, and tribal conclaves.
-- Filter by *All, Festivals, Fairs, Cultural, and Sports* with instant state and keyword searching.
-
-### 5. 🛍️ Traditional Bazaars & Craft Haats (111 Markets)
-- Directory of century-old spice alleys, gemstone markets, handloom haats, and flea markets (*Colaba Causeway, Crawford Market, Chor Bazaar, Fashion Street, Zaveri Bazaar, Laxmi Road Pune, Dilli Haat, Johari Bazaar Jaipur*).
-
-### 6. 📱 Responsive Mobile Experience & Navigation
-- **Fixed Bottom Navigation Bar**: Easy one-thumb access on mobile devices to Home, Itinerary/AI Studio, and Feedback.
-- **Closeable AI Workspace Drawer**: Slide-in mobile drawer for chat history and saved plans with a dedicated Close (✖) button and backdrop overlay.
-- **Floating Detail Modals**: Responsive dialogs (`DetailModal.tsx`) with directions, sharing, and 1-click AI trip planning.
-
-### 7. 💌 Verified Traveler Feedback Portal
-- Secure feedback channel for authenticated tourists to report issues, suggest features, or share appreciation.
-- Submissions include verified profile details (*Full Name, Username, Account Email, Tourist ID*) and dispatch directly to **`mayur.patil.ac@gmail.com`** via FormSubmit AJAX with Supabase logging.
-
-### 8. 🔐 Authentication & Private Workspaces
-- **1-Click Instant Demo Login**: Frictionless tourist test login.
-- **Email & Password Authentication**: Supabase Auth integration with secure profile state.
+### 6. 🔐 Cloud Data Layer & Authentication (Supabase)
+- **Isolated Schema Architecture**: Uses scoped `travel_*` tables (`travel_chats`, `travel_messages`, `travel_itineraries`, `travel_feedback`) preventing namespace collisions.
+- **Row Level Security (RLS)**: Fine-grained PostgreSQL policies securing tourist chat history and saved plans.
+- **1-Click Instant Demo Authentication**: Low-friction guest testing flow with session persistence.
+- **Verified Feedback Pipeline**: Authenticated form submission embedding tourist identity details with automated dispatch to the developer.
 
 ---
 
-## 🛠️ Technology & Architecture
+## 🛠️ Technology Stack
 
-- **Frontend Framework**: React 18 with TypeScript & Vite
-- **Styling & UI**: Tailwind CSS, Lucide Icons, Glassmorphic Emerald & Saffron theme
-- **Routing**: React Router v7
-- **Data Engine**: Static zero-latency catalogs (`destinations1111.ts`, `mockData.ts`, `aiData.ts`)
-- **Database & Auth**: Supabase PostgreSQL with isolated `travel_*` schema
-- **Deployment**: Netlify
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend Core** | React 18, TypeScript | Strongly typed component architecture |
+| **Build & Bundler** | Vite 5 | Fast HMR and optimized production bundling |
+| **Styling & Theme** | Tailwind CSS, PostCSS | Custom glassmorphic Emerald & Saffron design system |
+| **Icons & UI** | Lucide React | Lightweight vector iconography |
+| **Routing** | React Router v7 | Client-side routing and deep-link query parameter parsing |
+| **Cloud Backend** | Supabase (PostgreSQL) | Authentication, session persistence, and feedback logging |
+| **Voice & Speech** | Web Speech API | Client-side text-to-speech audio synthesis |
+| **Deployment** | Netlify | Continuous deployment with automated production builds |
 
 ---
 
@@ -96,24 +79,24 @@ cd travel.ai
 npm install
 ```
 
-### 3. Environment Variables Setup
+### 3. Environment Variables
 Create a `.env` file in the root directory:
 ```env
-VITE_GEMINI_API_KEYS=your_gemini_api_key
+VITE_GEMINI_API_KEYS=your_api_key
 VITE_SUPABASE_URL=https://your-supabase-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 ### 4. Database Setup (Optional)
-Run the migration script from [`supabase_schema.sql`](./supabase_schema.sql) in your **Supabase SQL Editor** to initialize the `travel_*` tables (`travel_chats`, `travel_messages`, `travel_itineraries`, `travel_feedback`).
+Execute the SQL migration from [`supabase_schema.sql`](./supabase_schema.sql) in your **Supabase SQL Editor** to initialize the required tables and security policies.
 
-### 5. Run Locally
+### 5. Start Development Server
 ```bash
 npm run dev
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+The application will be running at `http://localhost:5173`.
 
-### 6. Production Build
+### 6. Production Build & Verification
 ```bash
 npm run build
 npm run preview
@@ -121,33 +104,29 @@ npm run preview
 
 ---
 
-## 📂 Project Structure
+## 📂 Codebase Structure
 
 ```
-├── public/                     # Static assets (favicons, images, logos)
+├── public/                     # Static assets, logos, favicons
 ├── src/
 │   ├── components/             # Reusable UI components (Navbar, Footer, DetailModal, FormattedMarkdown)
-│   ├── contexts/               # AuthContext (Supabase Auth) & ThemeContext (Light/Dark)
-│   ├── pages/                  # Page views (Home, Login, Register, CultureEvents, Feedback, NotFound)
-│   ├── services/               # supabaseService.ts (Auth, Chats, Feedback, Saved Itineraries)
+│   ├── contexts/               # AuthContext (Supabase Auth) & ThemeContext (Light/Dark mode)
+│   ├── pages/                  # Views (Home, Login, Register, CultureEvents, Feedback, About, NotFound)
+│   ├── services/               # supabaseService.ts (Cloud database queries, auth, feedback)
 │   ├── types/                  # TypeScript interface definitions (Destination, Event, Marketplace, Chat)
-│   ├── utils/
-│   │   ├── aiData.ts           # System prompts, AI suggestions, and platform knowledge
-│   │   ├── destinations1111.ts # 1,111 Verified Indian destinations (Maharashtra-prioritized)
-│   │   ├── mockData.ts         # 111 Festivals & Fairs, 111 Marketplaces, and Mock Data
-│   │   └── supabaseClient.ts   # Supabase client initializer
-│   ├── Ai.tsx                  # WanderAI Studio (Chat, Planner, Explore, Festivals, Saved)
-│   ├── App.tsx                 # Route declarations & global layout
-│   └── main.tsx                # React application entry point
-├── supabase_schema.sql         # Non-destructive Supabase SQL migration script
-├── tailwind.config.js          # Theme colors (Forest Emerald, Saffron, Sand, Obsidian)
-├── tsconfig.json               # TypeScript configuration
-└── vite.config.ts              # Vite configuration
+│   ├── utils/                  # aiData.ts, destinations1111.ts, mockData.ts, supabaseClient.ts
+│   ├── Ai.tsx                  # WanderAI Studio workspace (Chat, Planner, Catalogs, Saved Vault)
+│   ├── App.tsx                 # Route declarations & global layout wrapper
+│   └── main.tsx                # Application bootstrap
+├── supabase_schema.sql         # Non-destructive Supabase SQL schema & RLS policies
+├── tailwind.config.js          # Design system color tokens & glassmorphic utilities
+├── tsconfig.json               # TypeScript compiler configuration
+└── vite.config.ts              # Vite bundler configuration
 ```
 
 ---
 
-## 👨‍💻 Developer & Support Contact
+## 👨‍💻 Developer & Contact
 
 - **Developer**: **Mayur Patil**
 - **Email**: [mayur.patil.ac@gmail.com](mailto:mayur.patil.ac@gmail.com)
@@ -156,6 +135,5 @@ npm run preview
 ---
 
 <p align="center">
-  <b>WanderAI — Discover the Soul of Incredible India 🇮🇳</b><br>
-  Built with ❤️ by Mayur Patil. All rights reserved.
+  <b>WanderAI Engine — Built by Mayur Patil</b>
 </p>
