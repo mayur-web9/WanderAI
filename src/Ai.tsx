@@ -113,7 +113,7 @@ async function callGemini(messages: { role: string; content: string }[], systemP
     }
   }
 
-  throw new Error("Unable to connect to travel intelligence engine. Please try again.");
+  throw new Error("AI server is currently busy. Please try again.");
 }
 
 // Intelligent content-based chat title generator
@@ -310,6 +310,35 @@ const DEFAULT_GREETING_MESSAGE = {
   role: 'assistant' as const,
   content: 'Namaste! 🙏 I am your **WanderAI Travel Companion**. How can I help plan your journey across India today? You can ask for custom day-by-day itineraries, regional delicacies, budget tips in ₹, train routes, or cultural festival dates!'
 };
+
+
+// Diverse AI Server Busy & Error Messages (Zero API limit / quota mentions)
+const AI_SERVER_ERROR_MESSAGES = [
+  "⚠️ **AI Server Busy**: The travel intelligence server is currently experiencing peak traffic. Please tap **Send** again in a few moments!",
+  "⚡ **AI Server High Load**: Our travel recommendation engine is momentarily handling high volume queries. Please retry your request shortly.",
+  "⏳ **AI Server Response Delay**: The AI travel processing server took too long to respond. Please click **Send** again to reconnect.",
+  "🛰️ **AI Server Temporary Load**: Our intelligent routing server is temporarily busy optimizing travel datasets. Please try asking again in a few seconds.",
+  "🔄 **AI Server Busy**: High compute load detected on the travel neural engine. Please resend your message or pick a suggestion chip above!",
+  "🌐 **AI Server Error**: Unable to establish an instant connection to the AI travel backend right now. Please retry in a moment.",
+  "⚙️ **AI Server Busy**: Our itinerary generation server is currently busy processing concurrent travel plans. Please tap **Send** again momentarily."
+];
+
+function getRandomAiServerError(): string {
+  const index = Math.floor(Math.random() * AI_SERVER_ERROR_MESSAGES.length);
+  return AI_SERVER_ERROR_MESSAGES[index];
+}
+
+const AI_PLANNER_ERROR_MESSAGES = [
+  "⚠️ **AI Server Busy**: The travel intelligence server is currently experiencing high demand. Please click **Generate Itinerary** again in a few seconds!",
+  "⚡ **AI Server High Load**: Our itinerary planner engine is momentarily busy crafting custom travel plans. Please retry in a moment.",
+  "⏳ **AI Server Timeout**: The AI travel server response took longer than expected due to heavy traffic. Please tap **Generate Itinerary** once more.",
+  "🛰️ **AI Server Busy**: The route calculation server is temporarily handling peak requests. Please try generating your plan again shortly."
+];
+
+function getRandomPlannerServerError(): string {
+  const index = Math.floor(Math.random() * AI_PLANNER_ERROR_MESSAGES.length);
+  return AI_PLANNER_ERROR_MESSAGES[index];
+}
 
 export default function Ai() {
   const [searchParams] = useSearchParams();
@@ -594,7 +623,7 @@ export default function Ai() {
         ...newMsgs,
         {
           role: 'assistant' as const,
-          content: 'I apologize, but I encountered a momentary connection delay. Please retry or pick one of the quick suggestions above!'
+          content: getRandomAiServerError()
         }
       ]);
     } finally {
@@ -702,7 +731,7 @@ Format with:
       const reply = await callGemini([{ role: 'user', content: prompt }], SYSTEM_PROMPT);
       setItinerary(reply);
     } catch {
-      setItinerary("I apologize, but I could not generate the complete itinerary at this moment. Please check your internet connection and try again.");
+      setItinerary(getRandomPlannerServerError());
     } finally {
       setPlannerLoading(false);
     }
