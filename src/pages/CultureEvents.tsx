@@ -55,11 +55,12 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
   useEffect(() => {
     // Fetch live data from Supabase
     getDbEvents().then((data) => {
-      if (data && data.length > 0) setEvents(data);
+      if (data && data.length > mockEvents.length) setEvents(data);
     });
 
     getDbMarketplaces().then((data) => {
-      if (data && data.length > 0) setMarketplaces(data);
+      // Only use DB data if it has MORE entries than local 111 marketplaces
+      if (data && data.length > DEFAULT_MARKETPLACES.length) setMarketplaces(data);
     });
   }, []);
 
