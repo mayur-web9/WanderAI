@@ -1,4 +1,22 @@
 import { Destination, Event, Review, Marketplace } from '../types';
+import { ALL_1111_DESTINATIONS } from './destinations1111';
+
+export const mockDestinations: Destination[] = ALL_1111_DESTINATIONS.map((d, i) => ({
+  id: d.id || String(i + 1),
+  name: d.name,
+  district: (d.location || '').split(',')[0].trim() || 'Central',
+  state: d.state || 'India',
+  category: (d.category as any) || 'heritage',
+  description: d.desc || '',
+  short_description: d.desc || '',
+  best_time: d.best_time || 'Oct - Mar',
+  is_featured: true,
+  famous_things: (d as any).famous_things || [d.tag || 'Sightseeing'],
+  transit_info: (d as any).transit_info || 'Well connected by air, rail, and state highways.'
+}));
+
+export const mockReviews: Review[] = [];
+
 
 export const DEFAULT_MARKETPLACES: Marketplace[] = [
   {
