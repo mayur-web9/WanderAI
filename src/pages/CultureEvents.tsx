@@ -84,10 +84,12 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
       const matchesCategory = selectedEventCategory === 'All' || event.category.toLowerCase() === selectedEventCategory.toLowerCase();
+      const q = searchTerm.toLowerCase();
       const matchesSearch = !searchTerm.trim() || 
-        event.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        event.location.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        event.description.toLowerCase().includes(searchTerm.toLowerCase());
+        event.name.toLowerCase().includes(q) || 
+        event.location.toLowerCase().includes(q) || 
+        (event.state && event.state.toLowerCase().includes(q)) ||
+        event.description.toLowerCase().includes(q);
       return matchesCategory && matchesSearch;
     });
   }, [events, selectedEventCategory, searchTerm]);
@@ -96,10 +98,12 @@ export default function CultureEvents({ defaultTab }: { defaultTab?: 'events' | 
   const filteredMarketplaces = useMemo(() => {
     return marketplaces.filter(market => {
       const matchesTag = selectedMarketTag === 'All' || market.tags.some(t => t.toLowerCase() === selectedMarketTag.toLowerCase());
+      const q = searchTerm.toLowerCase();
       const matchesSearch = !searchTerm.trim() || 
-        market.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        market.location.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        market.description.toLowerCase().includes(searchTerm.toLowerCase());
+        market.name.toLowerCase().includes(q) || 
+        market.location.toLowerCase().includes(q) || 
+        (market.state && market.state.toLowerCase().includes(q)) ||
+        market.description.toLowerCase().includes(q);
       return matchesTag && matchesSearch;
     });
   }, [marketplaces, selectedMarketTag, searchTerm]);
