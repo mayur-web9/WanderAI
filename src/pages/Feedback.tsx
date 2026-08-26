@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   MessageSquare, 
@@ -12,9 +12,9 @@ import {
   CheckCircle2,
   Lock,
   Mail,
-  User,
   ShieldCheck,
-  Phone
+  Phone,
+  UserCheck
 } from 'lucide-react';
 import { submitDbFeedback } from '../services/supabaseService';
 import { useAuth } from '../contexts/AuthContext';
@@ -29,22 +29,9 @@ const Feedback: React.FC = () => {
   const [emailStatus, setEmailStatus] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    user_name: '',
-    user_email: '',
     category: 'suggestion' as 'bug' | 'suggestion' | 'praise' | 'other',
     message: '',
   });
-
-  // Automatically populate user profile info when logged in
-  useEffect(() => {
-    if (user) {
-      setFormData(prev => ({
-        ...prev,
-        user_name: user.full_name || user.email?.split('@')[0] || 'Traveler',
-        user_email: user.email || ''
-      }));
-    }
-  }, [user]);
 
   const categories = [
     { id: 'suggestion', label: 'Suggestion', icon: Lightbulb, color: 'text-amber-500' },
@@ -60,20 +47,32 @@ const Feedback: React.FC = () => {
     setSubmitting(true);
     setEmailStatus(null);
 
+    const senderEmail = user.email || 'traveler@wanderai.com';
+    const senderName = user.full_name || user.email?.split('@')[0] || 'Traveler';
+
+    // Format full feedback message containing sender identity details
+    const fullMessageWithSender = `From: ${senderName} (${senderEmail})
+User ID: ${user.id}
+Category: ${formData.category.toUpperCase()}
+Rating: ${rating} / 5 Stars
+
+Message:
+${formData.message.trim()}`;
+
     const feedbackPayload = {
       user_id: user.id,
-      user_name: formData.user_name.trim() || user.full_name || 'Traveler',
-      user_email: formData.user_email.trim() || user.email || '',
+      user_name: senderName,
+      user_email: senderEmail,
       category: formData.category,
       rating: rating,
-      message: formData.message.trim(),
+      message: fullMessageWithSender,
     };
 
     try {
       // 1. Save to Supabase travel_feedback table
       await submitDbFeedback(feedbackPayload);
 
-      // 2. Send email notification to mayur.patil.ac@gmail.com via AJAX endpoint
+      // 2. Dispatch email to mayur.patil.ac@gmail.com with reply-to and sender email
       try {
         await fetch('https://formsubmit.co/ajax/mayur.patil.ac@gmail.com', {
           method: 'POST',
@@ -82,24 +81,25 @@ const Feedback: React.FC = () => {
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            _subject: `WanderAI Feedback [${formData.category.toUpperCase()} - ${rating}★] from ${feedbackPayload.user_name}`,
+            _subject: `WanderAI Feedback from ${senderName} <${senderEmail}> [${rating}★ ${formData.category.toUpperCase()}]`,
+            _replyto: senderEmail,
             _template: 'table',
-            traveler_name: feedbackPayload.user_name,
-            traveler_email: feedbackPayload.user_email,
-            rating: `${rating} / 5 Stars`,
-            feedback_category: formData.category,
-            user_message: feedbackPayload.message,
+            sender_name: senderName,
+            sender_email: senderEmail,
             user_id: user.id,
-            timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            star_rating: `${rating} / 5 Stars`,
+            feedback_category: formData.category.toUpperCase(),
+            feedback_content: formData.message.trim(),
+            submission_time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
           })
         });
-        setEmailStatus('Sent directly to Mayur Patil (mayur.patil.ac@gmail.com)');
+        setEmailStatus(`Dispatched to mayur.patil.ac@gmail.com with reply-to ${senderEmail}`);
       } catch (mailErr) {
-        console.warn('Direct email dispatch note:', mailErr);
+        console.warn('Email dispatch note:', mailErr);
       }
 
       setSubmitted(true);
-      setFormData(prev => ({ ...prev, message: '' }));
+      setFormData({ category: 'suggestion', message: '' });
       setRating(5);
     } catch {
       alert('Unable to submit feedback. Please check your network connection.');
@@ -129,7 +129,7 @@ const Feedback: React.FC = () => {
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Context, FAQs & Emergency Contacts */}
+          {/* Left Column: Context & Recipient Info */}
           <div className="lg:col-span-5 space-y-6">
             
             <div className="bg-gradient-to-br from-forest-900 to-forest-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
@@ -141,29 +141,29 @@ const Feedback: React.FC = () => {
                 </div>
                 
                 <h3 className="text-xl font-bold font-display">
-                  Community-Driven Cultural Intelligence
+                  Direct Traveler Feedback Channel
                 </h3>
                 
                 <p className="text-xs sm:text-sm text-forest-100 leading-relaxed">
-                  WanderAI is continuously enriched by travelers across all Indian states. Every comment goes directly to our core developer:
+                  Your feedback is sent directly to the core developer along with your verified sender email for direct responses.
                 </p>
 
                 <div className="p-3.5 rounded-2xl bg-forest-950/60 border border-forest-700/60 flex items-center gap-3">
                   <Mail className="w-4 h-4 text-saffron-400 shrink-0" />
                   <div className="text-xs truncate">
-                    <span className="text-forest-300 block text-[10px] uppercase font-bold">Direct Recipient</span>
+                    <span className="text-forest-300 block text-[10px] uppercase font-bold">Recipient Mailbox</span>
                     <span className="font-bold text-white">mayur.patil.ac@gmail.com</span>
                   </div>
                 </div>
 
                 <div className="pt-2 border-t border-forest-700/60 space-y-2 text-xs text-forest-200">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Logged-in tourist verification</span>
+                    <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Includes your logged-in sender email ID</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Instant dispatch to developer mailbox</span>
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Verified tourist authentication</span>
                   </div>
                 </div>
               </div>
@@ -176,7 +176,7 @@ const Feedback: React.FC = () => {
                 <span>24x7 India Tourist Helpline</span>
               </h4>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                Ministry of Tourism toll-free multilingual assistance for domestic & international travelers:
+                Ministry of Tourism toll-free multilingual assistance:
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <a
@@ -211,7 +211,7 @@ const Feedback: React.FC = () => {
                     Tourist Sign In Required
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    To maintain high-quality recommendations and verify genuine travel experiences, submitting feedback is reserved for registered travelers.
+                    To ensure all feedback is authentic and directly tied to your sender email address, submitting feedback is reserved for signed-in travelers.
                   </p>
                 </div>
 
@@ -240,7 +240,7 @@ const Feedback: React.FC = () => {
                   Dhanyavaad! Feedback Dispatched 🙏
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
-                  Thank you, <b>{user.full_name || user.email}</b>. Your feedback has been sent directly to <b>mayur.patil.ac@gmail.com</b> and recorded in our travel intelligence database.
+                  Thank you, <b>{user.full_name || user.email}</b>. Your feedback was sent to <b>mayur.patil.ac@gmail.com</b> including your registered email <b>({user.email})</b> as sender.
                 </p>
                 {emailStatus && (
                   <p className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 py-1.5 px-3 rounded-lg inline-block border border-emerald-200 dark:border-emerald-800">
@@ -260,23 +260,28 @@ const Feedback: React.FC = () => {
               /* Authenticated Feedback Form */
               <form onSubmit={handleSubmit} className="space-y-5">
                 
-                {/* Logged in User Badge */}
-                <div className="p-3 rounded-2xl bg-forest-50/80 dark:bg-forest-950/40 border border-forest-200/80 dark:border-forest-800/80 flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-forest-700 text-white flex items-center justify-center text-xs font-bold">
+                {/* Verified Sender Info Banner */}
+                <div className="p-3.5 rounded-2xl bg-forest-50/80 dark:bg-forest-950/40 border border-forest-200/80 dark:border-forest-800/80 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-forest-700 text-white flex items-center justify-center text-xs font-bold shadow-xs">
                       {user.full_name?.charAt(0) || user.email?.charAt(0) || 'T'}
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-forest-700 dark:text-forest-400 block">
-                        Verified Tourist
-                      </span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">
-                        {user.full_name || user.email}
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs font-bold text-gray-900 dark:text-white">
+                          {user.full_name || user.email?.split('@')[0]}
+                        </span>
+                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                          Sender Verified
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-forest-700 dark:text-forest-300 font-semibold block">
+                        Email: {user.email}
                       </span>
                     </div>
                   </div>
-                  <span className="text-[10px] text-gray-500 font-medium hidden sm:inline">
-                    {user.email}
+                  <span className="text-[10px] text-gray-400 font-medium hidden sm:inline">
+                    Automatic Sender Tagging
                   </span>
                 </div>
 
@@ -360,7 +365,7 @@ const Feedback: React.FC = () => {
                   className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-forest-700 via-forest-800 to-forest-900 hover:from-forest-800 hover:to-forest-950 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
-                  {submitting ? 'Dispatching to mayur.patil.ac@gmail.com…' : 'Submit Feedback to Developer'}
+                  {submitting ? `Dispatching from ${user.email}…` : `Submit Feedback as ${user.email}`}
                 </button>
               </form>
             )}
